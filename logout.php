@@ -1,6 +1,7 @@
 <?php 
 include 'header.php';
-$_SESSION['loggedin'] = false;
+$_SESSION = array();
+session_destroy();
 
 header('Location: login.php'); 
 ?>

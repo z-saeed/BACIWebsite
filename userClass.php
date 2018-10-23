@@ -104,9 +104,9 @@ class User
     public function getGender()
     {
         if($this->gender == 0)
-            return 'male';
+            return 'Male';
         else
-            return 'female';
+            return 'Female';
     }
 
     public function setGender($gender)
