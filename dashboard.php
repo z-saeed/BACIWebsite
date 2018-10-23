@@ -32,7 +32,7 @@ function passwordToDots($password) {
 						<h4>User Information</h4>
 					</div>
 					<div class="col-md-8 col-sm-12">
-						<p class="lead"><a href="">Edit User Information</a></p>
+						<p class="lead"><a href="editUserInformation.php">Edit User Information</a></p>
 					</div>
 				</div>
 				<div class="row">
