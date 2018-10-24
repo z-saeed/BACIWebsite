@@ -48,7 +48,7 @@ function passwordToDots($password) {
 						<p class="lead">Password:</p>
 					</div>
 					<div class="col-md-8 col-sm-12">
-						<p class="lead"><?php echo(passwordToDots($user->getPassword())); ?> <a href="">Change Password</a></p>
+						<p class="lead"><?php echo(passwordToDots($user->getPassword())); ?> <a href="changePassword.php">Change Password</a></p>
 					</div>
 				</div>
 				<div class="row">
