@@ -1,13 +1,62 @@
 <?php 
 include 'header.php';
+include 'db_connect.php';
 
 if($_SESSION['loggedin'] == false) {
 	header('Location: login.php'); 
 }
 
-include 'db_connect.php';
-
 $user = $_SESSION['user'];
+
+$userID = $user->getID();
+$userName = "";
+$email = "";
+$firstName = "";
+$lastName = "";
+$phoneNumber = "";
+$gender = "";
+$userStatus = "";
+
+$userNameReq = "";
+$emailReq = "";
+
+$success = "";
+
+if (isset($_POST['update'])) {
+	$userName = trim($_POST['userName']);
+	$userName = strtolower($userName);
+	if ($userName != $user->getUserName()) {
+		$checkUserName = $con->prepare('SELECT userName FROM user_tbl WHERE userName = :userName');
+		$checkUserName->execute(array('userName'=>$userName));
+		if ($checkUserName->rowCount() > 0) {
+			$userNameReq = '<span style="color:red">User Name Taken</span>';
+		} 
+	}
+	if(!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL))
+		$emailReq = '<span style="color:red">Please Enter a Valid Email</span>';
+	else 
+		$email = trim($_POST['email']);
+
+	$firstName = trim($_POST['firstName']);
+	$lastName = trim($_POST['lastName']);
+	$phoneNumber = trim($_POST['phoneNumber']);
+	$gender = trim($_POST['gender']);
+	$userStatus = trim($_POST['userStatus']);
+	if($userNameReq == "") {
+		$updateUserInfo = $con->prepare("UPDATE user_tbl SET userName = '$userName', email = '$email', firstName = '$firstName', lastName = '$lastName', gender = '$gender', userStatus = '$userStatus' WHERE ID = '$userID'");
+		$updateUserInfo->execute(array());
+		$user->setUserName($userName);
+		$user->setFirstName($firstName);
+		$user->setLastName($lastName);
+		$user->setEmail($email);
+		$user->setGender($gender);
+		$user->setPhoneNumber($phoneNumber);
+		$user->setUserStatus($userStatus);
+
+		$success = "Update Successful";
+	}
+
+}
 ?>
 
 <section id="editUserInfo">
@@ -21,10 +70,10 @@ $user = $_SESSION['user'];
 					<p class="lead">Click the information you wish to edit</p>
 				</div>
 			</div>
-			<form action="editUserInformation.php">
+			<form action="editUserInformation.php" method="post">
 				<div class="form-row">
 					<div class="col-md-4 col-sm-8">
-						<p class="lead">UserName:</p>
+						<p class="lead">UserName: <?php echo $userNameReq; ?></p>
 					</div>
 					<div class="form-group col-md-8 col-sm-12">
 						<input type="text" class="form-control editUser" id="userName" name="userName" value="<?php echo($user->getUserName()); ?>">
@@ -32,7 +81,7 @@ $user = $_SESSION['user'];
 				</div>
 				<div class="form-row">
 					<div class="col-md-4 col-sm-8">
-						<p class="lead">Email:</p>
+						<p class="lead">Email: <?php echo $emailReq; ?></p>
 					</div>
 					<div class="col-md-8 col-sm-12">
 						<input type="text" class="form-control editUser" id="email" name="email" value="<?php echo($user->getEmail()); ?>">
@@ -83,6 +132,12 @@ $user = $_SESSION['user'];
 							<option value="1" <?php if($user->getUserStatus() == "Mentor") echo "selected"  ?>>Mentor</option>
 							<option value="2" <?php if($user->getUserStatus() != "Mentor" && $user->getUserStatus() != "Mentee") echo "selected"  ?>>Other</option>					
 						</select>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-sm-12 col-md-8 offset-md-4">
+						<button type="submit" class="btn btn-dark btn-sm" name="update">Update <i class="fas fa-cloud-upload-alt"></i></button>
+						<?php echo $success; ?>
 					</div>
 				</div>
 			</form>
