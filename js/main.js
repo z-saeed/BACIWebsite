@@ -52,6 +52,5 @@ function addEducation() {
 
 function removeEducation(rid) {
 	$('#removeDiv'+rid).remove();
-	num--;
 }
 

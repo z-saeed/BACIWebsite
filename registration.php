@@ -80,7 +80,7 @@ if (isset($_POST['enter'])) {
 		$school = array();
 		$yearCompleted = array();
 		$eduNum = 1;
-		while (isset($_POST["degree".$eduNum])) {
+		while (isset($_POST["degree".$eduNum]) || isset($_POST["degree".$eduNum + 1]) ) {
 			array_push($degree, trim($_POST["degree".$eduNum]));
 			array_push($major, trim($_POST["major".$eduNum]));
 			array_push($school, trim($_POST["school".$eduNum]));

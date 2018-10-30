@@ -9,14 +9,25 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == 'index.php') { echo 'active';} ?>">
-						<a class="nav-link" href="index.php">Home</a>
+						<a class="nav-link" href="index.php">Home<span class="sr-only">(current)</span></a>
 					</li>
+					<?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) { ?>
+					<!--##### ADD LOGGED IN HEADER LINKS BELOW ##### -->
+					<li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == 'dashboard.php') { echo 'active';} ?>">
+						<a class="nav-link" href="dashboard.php">Dashboard</a>
+					</li>
+					<li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == 'logout.php') { echo 'active';} ?>">
+						<a class="nav-link" href="logout.php">Logout</a>
+					</li>
+					<?php } else { ?>
+					<!--##### ADD NOT LOGGED IN HEADER LINKS BELOW ##### -->
 					<li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == 'registration.php') { echo 'active';} ?>">
 						<a class="nav-link" href="registration.php">Register</a>
 					</li>
-					<li class="nav-item" <?php if (basename($_SERVER['PHP_SELF']) == 'registration.php') { echo 'active';} ?>>
+					<li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == 'login.php') { echo 'active';} ?>">
 						<a class="nav-link" href="login.php">Login</a>
 					</li>
+					<?php } ?>
 				</ul>
 			</div>
 		</div>
