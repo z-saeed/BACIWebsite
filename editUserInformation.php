@@ -23,15 +23,6 @@ $emailReq = "";
 $success = "";
 
 if (isset($_POST['update'])) {
-	$userName = trim($_POST['userName']);
-	$userName = strtolower($userName);
-	if ($userName != $user->getUserName()) {
-		$checkUserName = $con->prepare('SELECT userName FROM user_tbl WHERE userName = :userName');
-		$checkUserName->execute(array('userName'=>$userName));
-		if ($checkUserName->rowCount() > 0) {
-			$userNameReq = '<span style="color:red">User Name Taken</span>';
-		} 
-	}
 	if(!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL))
 		$emailReq = '<span style="color:red">Please Enter a Valid Email</span>';
 	else 
@@ -43,9 +34,8 @@ if (isset($_POST['update'])) {
 	$gender = trim($_POST['gender']);
 	$userStatus = trim($_POST['userStatus']);
 	if($userNameReq == "") {
-		$updateUserInfo = $con->prepare("UPDATE user_tbl SET userName = '$userName', email = '$email', firstName = '$firstName', lastName = '$lastName', gender = '$gender', userStatus = '$userStatus' WHERE ID = '$userID'");
+		$updateUserInfo = $con->prepare("UPDATE user_tbl SET email = '$email', firstName = '$firstName', lastName = '$lastName', gender = '$gender', userStatus = '$userStatus' WHERE ID = '$userID'");
 		$updateUserInfo->execute(array());
-		$user->setUserName($userName);
 		$user->setFirstName($firstName);
 		$user->setLastName($lastName);
 		$user->setEmail($email);
@@ -71,14 +61,6 @@ if (isset($_POST['update'])) {
 				</div>
 			</div>
 			<form action="editUserInformation.php" method="post">
-				<div class="form-row">
-					<div class="col-md-4 col-sm-8">
-						<p class="lead">UserName: <?php echo $userNameReq; ?></p>
-					</div>
-					<div class="form-group col-md-8 col-sm-12">
-						<input type="text" class="form-control editUser" id="userName" name="userName" value="<?php echo($user->getUserName()); ?>">
-					</div>
-				</div>
 				<div class="form-row">
 					<div class="col-md-4 col-sm-8">
 						<p class="lead">Email: <?php echo $emailReq; ?></p>
