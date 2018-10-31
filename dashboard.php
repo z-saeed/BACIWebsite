@@ -9,6 +9,7 @@ $user = $_SESSION['user'];
 $address = $_SESSION['address'];
 
 $firstName = $user->getFirstName();
+$userPriv = $user->getUserPrivilege();
 
 function passwordToDots($password) {
     $len = strlen($password);
@@ -20,11 +21,28 @@ function passwordToDots($password) {
 }
 ?>
 
+<?php if ($userPriv == 0) { //IF USER has privilege 0 (GENERAL USER)?>
 <section id="dashboard">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-2 col-sm-4" style="padding-right:20px; border-right: 1px solid #ccc; text-align: center;">
+			<div class="col-md-2 col-sm-4" style="padding-right:20px; border-right: 1px solid #ccc;">
 				<h3>Dashboard</h3>
+				<?php 
+				if ($user->getUserStatus() == 'Mentee' || $user->getUserStatus() == 'Other') { ?>
+				<div class="row">
+					<div class="col-md-4 col-sm-8">
+						<h4><a href="#">View Mentors</a></h4>
+					</div>
+				</div>
+				<?php 
+				}
+				if ($user->getUserStatus() == 'Mentor' || $user->getUserStatus() == 'Other') { ?>
+				<div class="row">
+					<div class="col-md-4 col-sm-8">
+						<h4><a href="#">View Mentees</a></h4>
+					</div>
+				</div>
+				<?php } ?>
 			</div>
 			<div class="col-md-10 col-sm-12">
 				<div class="row">
@@ -162,3 +180,32 @@ function passwordToDots($password) {
 		</div>
 	</div>
 </section>
+<?php } else if ($userPriv == 2) {?>
+
+<section id="dashboard">
+	<div class="container">
+		<h3>Admin Dashboard</h3>
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+							<h5 class="card-title">User List</h5>
+							<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+							<a href="#" class="btn btn-primary">User List</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Add/Delete Country</h5>
+						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<a href="#" class="btn btn-primary">Add/Delete Country</a>
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+</section>
+
+<?php } ?>
