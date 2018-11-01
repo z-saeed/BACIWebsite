@@ -37,7 +37,7 @@ if (isset($_POST['login'])) {
 			$user->setGender($row->gender);
 			$user->setUserStatus($row->userStatus);
 			$user->setAddressID($row->addressID);
-			$user->setUserPrivilege($row->userPrivilege);
+			$user->setUserPrivilege($row->privilege);
 			$_SESSION['user'] = $user;
 
 			$addressSTMT = $con->prepare('SELECT * FROM address_tbl WHERE ID = :ID');
