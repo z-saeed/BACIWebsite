@@ -9,13 +9,13 @@
 $hostname = 'localhost';
 
 /*** mysql username ***/
-$username = 'zasaeed';
+$username = 'pjoyjr';
 
 /*** mysql password ***/
-$password = 'zasaeed';
+$password = 'Burmese4!';
 
 try {
-    $con = new PDO("mysql:host=$hostname;dbname=zasaeed_db", $username, $password);
+    $con = new PDO("mysql:host=$hostname;dbname=pjoyjr_db", $username, $password);
     /*** echo a message saying we have connected ***/
     //echo 'Connected to database';
     }
