@@ -209,7 +209,7 @@ function passwordToDots($password) {
 					<div class="card-body">
 						<h5 class="card-title">Configure State list</h5>
 						<p class="card-text">Add, edit or delete a state from the database</p>
-						<a href="configureState.php" class="btn btn-primary">Configure Country list</a>
+						<a href="configureState.php" class="btn btn-primary">Configure State list</a>
 					</div>
 				</div>
 			</div>
