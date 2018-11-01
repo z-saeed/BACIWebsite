@@ -198,9 +198,27 @@ function passwordToDots($password) {
 			<div class="col-sm-4">
 				<div class="card">
 					<div class="card-body">
-						<h5 class="card-title">Add/Delete Country</h5>
-						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-						<a href="#" class="btn btn-primary">Add/Delete Country</a>
+						<h5 class="card-title">Configure Country list</h5>
+						<p class="card-text">Add, edit or delete a country from the database</p>
+						<a href="configureCountry.php" class="btn btn-primary">Configure Country list</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Configure State list</h5>
+						<p class="card-text">Add, edit or delete a state from the database</p>
+						<a href="configureState.php" class="btn btn-primary">Configure Country list</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Configure Degree Level list</h5>
+						<p class="card-text">Add, edit or delete an educational degree from the database</p>
+						<a href="configureDegree.php" class="btn btn-primary">Configure Degree level list</a>
 					</div>
 				</div>
 			</div>
