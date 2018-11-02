@@ -28,7 +28,7 @@ if (isset($_POST['login'])) {
 		else {
 			$_SESSION['loggedin'] = true;
 			$user->setID($row->ID);
-			$user->setUserName($row->userName);
+			$user->setUserName($row->username);
 			$user->setPassword($row->password);
 			$user->setEmail($row->email);
 			$user->setFirstName($row->firstName);
@@ -49,7 +49,7 @@ if (isset($_POST['login'])) {
 			$stateRow = $stateSTMT->fetch(PDO::FETCH_OBJ);
 
 			$countrySTMT = $con->prepare('SELECT * FROM country_tbl WHERE ID = :ID');
-			$countrySTMT->execute(array('ID'=>$addressRow->countryID));
+			$countrySTMT->execute(array('ID'=>$stateRow->countryID));
 			$countryRow = $countrySTMT->fetch(PDO::FETCH_OBJ);
 
 			$address->setID($addressRow->ID);
@@ -59,8 +59,8 @@ if (isset($_POST['login'])) {
 			$address->setState($stateRow->stateName);
 			$address->setStateID($addressRow->stateID);
 			$address->setZipCode($addressRow->zipCode);
-			$address->setCountry($countryRow->Country);
-			$address->setCountryID($addressRow->countryID);
+			$address->setCountry($countryRow->name);
+			$address->setCountryID($stateRow->countryID);
 
 			$_SESSION['address'] = $address;
 

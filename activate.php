@@ -10,7 +10,7 @@ $userID = ($_GET["userID"]);
 $msg = "";
 
 if (validateCode($code)) {
-	$stmt = $con->prepare("UPDATE user_tbl SET active=1 WHERE ID= :userID");
+	$stmt = $con->prepare("UPDATE user_tbl SET active=1 WHERE ID = :userID");
 	$stmt -> execute(array('userID' => $userID));
 
 	header('Location: login.php');

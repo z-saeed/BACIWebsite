@@ -20,187 +20,72 @@ function passwordToDots($password) {
     return $hiddenPSW;
 }
 ?>
-
-<?php if ($userPriv == 0) { //IF USER has privilege 0 (GENERAL USER)?>
 <section id="dashboard">
 	<div class="container">
-		<div class="row">
-			<div class="col-md-2 col-sm-4" style="padding-right:20px; border-right: 1px solid #ccc;">
-				<h3>Dashboard</h3>
-				<?php 
-				if ($user->getUserStatus() == 'Mentee' || $user->getUserStatus() == 'Other') { ?>
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
-						<h4><a href="#">View Mentors</a></h4>
+
+		<?php if ($userPriv == 3) {?>
+		<h3>Super-Admin Dashboard</h3>
+		<div class="row mt-1">
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Add Super Admin</h5>
+						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<a href="#" class="btn btn-danger">Add Super Admin</a>
 					</div>
 				</div>
-				<?php 
-				}
-				if ($user->getUserStatus() == 'Mentor' || $user->getUserStatus() == 'Other') { ?>
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
-						<h4><a href="#">View Mentees</a></h4>
-					</div>
-				</div>
-				<?php } ?>
 			</div>
-			<div class="col-md-10 col-sm-12">
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
-						<h4>User Information</h4>
-					</div>
-					<div class="col-md-8 col-sm-12">
-						<p class="lead"><a href="editUserInformation.php">Edit User Information</a></p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
-						<p class="lead">UserName:</p>
-					</div>
-					<div class="col-md-8 col-sm-12">
-						<p class="lead"><?php echo($user->getUserName()); ?></p>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Delete User</h5>
+						<p class="card-text">Delete a User, Coordinator, or Admin from the database.</p>
+						<a href="#" class="btn btn-danger">Delete User</a>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
-						<p class="lead">Password:</p>
-					</div>
-					<div class="col-md-8 col-sm-12">
-						<p class="lead"><?php echo(passwordToDots($user->getPassword())); ?> <a href="changePassword.php">Change Password</a></p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
-						<p class="lead">Email:</p>
-					</div>
-					<div class="col-md-8 col-sm-12">
-						<p class="lead"><?php echo($user->getEmail()); ?></p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
-						<p class="lead">First Name:</p>
-					</div>
-					<div class="col-md-8 col-sm-12">
-						<p class="lead"><?php echo($user->getFirstName()); ?></p>
+			</div>
+		</div>	
+		<hr>
+	<?php } ?>
+	
+	<?php if ($userPriv == 2 || $userPriv == 3) {?>
+		<h3>Admin Dashboard</h3>
+		<div class="row mt-1">
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">User List</h5>
+						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<a href="#" class="btn btn-secondary">User List</a>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
-						<p class="lead">Last Name:</p>
-					</div>
-					<div class="col-md-8 col-sm-12">
-						<p class="lead"><?php echo($user->getLastName()); ?></p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
-						<p class="lead">Phone Number:</p>
-					</div>
-					<div class="col-md-8 col-sm-12">
-						<p class="lead"><?php echo($user->getPhoneNumber()); ?></p>
+			</div>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Add User</h5>
+						<p class="card-text">Add a User, Coordinator, or Admin Manually</p>
+						<a href="addUser.php" class="btn btn-secondary">Add User</a>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
-						<p class="lead">Gender:</p>
-					</div>
-					<div class="col-md-8 col-sm-12">
-						<p class="lead"><?php echo($user->getGender()); ?></p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
-						<p class="lead">User Status:</p>
-					</div>
-					<div class="col-md-8 col-sm-12">
-						<p class="lead"><?php echo($user->getUserStatus()); ?></p>
-					</div>
-				</div>
-				<hr>
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
-						<h4>Address Information</h4>
-					</div>
-					<div class="col-md-8 col-sm-12">
-						<p class="lead"><a href="">Edit Address Information</a></p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
-						<p class="lead">Street 1:</p>
-					</div>
-					<div class="col-md-8 col-sm-12">
-						<p class="lead"><?php echo($address->getStreet1()); ?></p>
-					</div>
-				</div>
-				<?php if($address->getStreet2() != "") {?>
-					<div class="row">
-						<div class="col-md-4 col-sm-8">
-							<p class="lead">Street 2:</p>
-						</div>
-						<div class="col-md-8 col-sm-12">
-							<p class="lead"><?php echo($address->getStreet2()); ?></p>
-						</div>
-					</div>
-				<?php } ?>
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
-						<p class="lead">City:</p>
-					</div>
-					<div class="col-md-8 col-sm-12">
-						<p class="lead"><?php echo($address->getCity()); ?></p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
-						<p class="lead">State:</p>
-					</div>
-					<div class="col-md-8 col-sm-12">
-						<p class="lead"><?php echo($address->getState()); ?></p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
-						<p class="lead">ZipCode:</p>
-					</div>
-					<div class="col-md-8 col-sm-12">
-						<p class="lead"><?php echo($address->getZipCode()); ?></p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
-						<p class="lead">Country:</p>
-					</div>
-					<div class="col-md-8 col-sm-12">
-						<p class="lead"><?php echo($address->getCountry()); ?></p>
+			</div>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">User Search</h5>
+						<p class="card-text">Search for a registered user and view thier profile</p>
+						<a href="#" class="btn btn-secondary">User Search</a>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</section>
-<?php } else if ($userPriv == 2) {?>
-
-<section id="dashboard">
-	<div class="container">
-		<h3>Admin Dashboard</h3>
-		<div class="row">
-			<div class="col-sm-4">
-				<div class="card">
-					<div class="card-body">
-							<h5 class="card-title">User List</h5>
-							<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-							<a href="#" class="btn btn-primary">User List</a>
-					</div>
-				</div>
-			</div>
+		<div class="row mt-1">
 			<div class="col-sm-4">
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Configure Country list</h5>
 						<p class="card-text">Add, edit or delete a country from the database</p>
-						<a href="configureCountry.php" class="btn btn-primary">Configure Country list</a>
+						<a href="configureCountry.php" class="btn btn-secondary">Configure Country list</a>
 					</div>
 				</div>
 			</div>
@@ -209,7 +94,7 @@ function passwordToDots($password) {
 					<div class="card-body">
 						<h5 class="card-title">Configure State list</h5>
 						<p class="card-text">Add, edit or delete a state from the database</p>
-						<a href="configureState.php" class="btn btn-primary">Configure State list</a>
+						<a href="configureState.php" class="btn btn-secondary">Configure State list</a>
 					</div>
 				</div>
 			</div>
@@ -218,12 +103,80 @@ function passwordToDots($password) {
 					<div class="card-body">
 						<h5 class="card-title">Configure Degree Level list</h5>
 						<p class="card-text">Add, edit or delete an educational degree from the database</p>
-						<a href="configureDegree.php" class="btn btn-primary">Configure Degree level list</a>
+						<a href="configureDegree.php" class="btn btn-secondary">Configure Degree level list</a>
 					</div>
 				</div>
 			</div>
 		</div>	
+		<hr>
+	<?php } ?>
+
+	<?php if ($userPriv == 1 || $userPriv == 2 || $userPriv == 3) {?>
+		<h3>Coordinator Dashboard</h3>
+		<div class="row mt-1">
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">User List</h5>
+						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<a href="#" class="btn btn-primary">User List</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Mentor List</h5>
+						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<a href="#" class="btn btn-primary">Mentor List</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Mentee List</h5>
+						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<a href="#" class="btn btn-primary">Mentor List</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-1">
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Pending Pairings</h5>
+						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<a href="#" class="btn btn-primary">Pending Pairings</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Current Pairings</h5>
+						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<a href="#" class="btn btn-primary">Current Pairings</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+	<?php } ?>
+
+		<h3>User Dashboard</h3>
+		<div class="row mt-1">
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">User Profile</h5>
+						<p class="card-text">View and Edit your public profile.</p>
+						<a href="userProfile.php" class="btn btn-success">User Profile</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 </section>
-
-<?php } ?>

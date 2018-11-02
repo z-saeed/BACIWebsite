@@ -43,6 +43,7 @@ if (isset($_POST['enter'])) {
 	if ($checkUserName->rowCount() > 0) {
 		$userNameReq = '<span style="color:red">User Name Taken</span>';
 	} else {
+		$userType = trim($_POST['userType']);
 		$firstName = trim($_POST['firstName']);
 		$lastName = trim($_POST['lastName']);
 
@@ -101,8 +102,6 @@ if (isset($_POST['enter'])) {
 		if ($confirmEmailReq != "*"|| $confirmPasswordReq != "*" || $userNameReq != "*") {
 			$msg = "Please enter valid data";
 		} else {
-			$code = randomCodeGenerator(50); //get random code generated
-
 			$stmtAddress = $con->prepare("INSERT INTO address_tbl (ID, street1, street2, city, stateID, zipCode) VALUES (NULL, :street1, :street2, :city, :stateID, :zipCode)");
 			$stmtAddress->execute(array('street1'=>$address1, 'street2'=>$address2, 'city'=>$city, 'stateID'=>$state, 'zipCode'=>$zip));
 			$address_id = $con->lastInsertID();
@@ -112,21 +111,14 @@ if (isset($_POST['enter'])) {
         	$identity_id = $con->lastInsertId();
 
 			$stmtUser = $con->prepare("INSERT INTO user_tbl (username, email, password, firstName, lastName, gender, addressID, phone, identityID, fbLink, twLink, lkdLink, registerDate, activationURL, active, privilege, userStatus) VALUES ( :username, :email, :password, :firstName, :lastName, :gender, :addressID, :phone, :identityID, :fbLink, :twLink, :lkdLink, :registerDate, :activationURL, :active, :privilege, :userStatus)");
-			$stmtUser->execute(array('username'=>$userName, 'email'=>$email, 'password'=>$password, 'firstName'=>$firstName, 'lastName'=>$lastName, 'gender'=>$gender, 'addressID'=>$address_id, 'phone'=>$phoneNumber, 'identityID'=>$identity_id, 'fbLink'=>$fbLink, 'twLink'=>$twLink, 'lkdLink'=>$lkdLink, 'registerDate'=>$registrationDate, 'activationURL'=>$code, 'active'=>0, 'privilege'=>0, 'userStatus'=>$userStatus));
+			$stmtUser->execute(array('username'=>$userName, 'email'=>$email, 'password'=>$password, 'firstName'=>$firstName, 'lastName'=>$lastName, 'gender'=>$gender, 'addressID'=>$address_id, 'phone'=>$phoneNumber, 'identityID'=>$identity_id, 'fbLink'=>$fbLink, 'twLink'=>$twLink, 'lkdLink'=>$lkdLink, 'registerDate'=>$registrationDate, 'activationURL'=>'Admin Added', 'active'=>1, 'privilege'=>$userType, 'userStatus'=>$userStatus));
 			$user_id = $con->lastInsertID();
 
 			$stmtEdu = $con->prepare("INSERT INTO education_tbl (degreeType, major, schoolName, completionYear, userID) VALUES (:degree, :major, :school, :yearCompleted, :userID)");
 			while(!empty($degree)) {
 				$stmtEdu->execute(array('degree'=>array_pop($degree), 'major'=>array_pop($major), 'school'=>array_pop($school),  'yearCompleted'=>array_pop($yearCompleted), 'userID'=>$user_id));
 			}
-
-	        $subject = "Registration Activation"; //set email subject
-	        $body = 'Please click the url to activate your account. http://corsair.cs.iupui.edu:23151/BaciProjectAlt/activate.php?code='.$code.'&userID='.$user_id; //set email body
-	        $mailer = new Mail();
-	        if(($mailer->sendMail($email, $firstName, $subject, $body))){ //send email
-	        	$msg = "Email Sent";
-	        	Header ("Location:userConfirmation.php?email=".$email);
-	        }
+			$msg = "User Added Successfully";
 		}
 	}
 }
@@ -135,11 +127,21 @@ if (isset($_POST['enter'])) {
 
 <div class="container" id="registration">
 	<section id="registrationHeader">
-		<h2>Registeration</h2>
+		<h2>Add User</h2>
 	</section>
 	
 	<?php echo $msg; ?>
 	<form action="registration.php" method="post">
+		<div class="form-row">
+			<div class="form-group col-sm-12 col-md-6">
+				<label for="userType">User Type</label>
+				<select id="userType" class="form-control" name="userType">
+					<option value="0" selected>User</option>
+					<option value="1">Coordinator</option>
+					<option value="2">Admin</option>					
+				</select>
+			</div>
+		</div>
 		<div class="form-row">
 			<div class="form-group col-md-6 col-sm-12">
 				<label for="userName">User Name <?php echo $userNameReq; ?></label>
@@ -265,22 +267,7 @@ if (isset($_POST['enter'])) {
 				<input type="text" class="form-control" id="employer" name="employer">
 			</div>
 		</div>
-		<hr>
-		<div class="form-row">
-			<div class="form-group col-sm-6 col-md-4 ">
-				<label for="fbLink">Facebook Link</label>
-				<input type="text" class="form-control" id="fbLink" name="fbLink">
-			</div>
-			<div class="form-group col-sm-6 col-md-4 ">
-				<label for="twLink">Twitter Link</label>
-				<input type="text" class="form-control" id="twLink" name="twLink">
-			</div>
-			<div class="form-group col-sm-6 col-md-4 ">
-				<label for="lkdLink">LinkedIn Link</label>
-				<input type="text" class="form-control" id="lkdLink" name="lkdLink">
-			</div>
-		</div>
-		<button type="submit" class="btn btn-primary" name="enter">Register</button>
+		<button type="submit" class="btn btn-primary" name="enter">Add User</button>
 	</form>
 </div>
 
