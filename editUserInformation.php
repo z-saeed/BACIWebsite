@@ -118,7 +118,7 @@ if (isset($_POST['update'])) {
 				</div>
 				<div class="form-row">
 					<div class="col-md-4 col-sm-8">
-						<a href="dashboard.php" class="btn btn-secondary btn-sm">Back to Dashboard <i class="fas fa-undo-alt"></i></a>
+						<a href="userProfile.php" class="btn btn-secondary btn-sm">Back to User Profile <i class="fas fa-undo-alt"></i></a>
 					</div>
 					<div class="form-group col-sm-12 col-md-8">
 						<button type="submit" class="btn btn-dark btn-sm" name="update">Update <i class="fas fa-cloud-upload-alt"></i></button>

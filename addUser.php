@@ -2,11 +2,21 @@
 require_once 'header.php';
 require_once 'db_connect.php';
 
+if($_SESSION['loggedin'] == false) {
+	header('Location: login.php'); 
+}
+$user = $_SESSION['user'];
+
+if ($user->getUserPrivilege() != 2 || $user->getUserPrivilege() != 3) {
+	header('Location: dashboard.php');
+}
 
 $msg = "";
 
 $userName = "";
 $userNameReq = "*";
+
+$userType = "";
 
 $firstName = "";
 $firstNameReq = "*";
@@ -27,6 +37,10 @@ $confirmPasswordReq = "*";
 $phoneNumber = "";
 $gender = "";
 $userStatus = "";
+
+$fbLink = "";
+$twLink = "";
+$lkdLink = "";
 
 $address1 = "";
 $address2 = "";
@@ -127,11 +141,11 @@ if (isset($_POST['enter'])) {
 
 <div class="container" id="registration">
 	<section id="registrationHeader">
-		<h2>Add User</h2>
+		<h2>Add User, Coordinator, or Admin</h2>
 	</section>
 	
 	<?php echo $msg; ?>
-	<form action="registration.php" method="post">
+	<form action="addUser.php" method="post">
 		<div class="form-row">
 			<div class="form-group col-sm-12 col-md-6">
 				<label for="userType">User Type</label>

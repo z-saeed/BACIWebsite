@@ -22,7 +22,8 @@ function passwordToDots($password) {
 ?>
 <section id="dashboard">
 	<div class="container">
-		<div class="row">
+		<a href="dashboard.php" class="btn btn-primary btn-sm">Back to Dashboard <i class="fas fa-undo-alt"></i></a>
+		<div class="row mt-4">
 			<div class="col-md-2 col-sm-4" style="padding-right:20px; border-right: 1px solid #ccc;">
 				<h3>User Profile</h3>
 			</div>

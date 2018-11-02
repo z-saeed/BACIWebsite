@@ -56,7 +56,7 @@ function passwordToDots($password) {
 					<div class="card-body">
 						<h5 class="card-title">User List</h5>
 						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-						<a href="#" class="btn btn-secondary">User List</a>
+						<a href="#" class="btn btn-warning">User List</a>
 					</div>
 				</div>
 			</div>
@@ -65,7 +65,7 @@ function passwordToDots($password) {
 					<div class="card-body">
 						<h5 class="card-title">Add User</h5>
 						<p class="card-text">Add a User, Coordinator, or Admin Manually</p>
-						<a href="addUser.php" class="btn btn-secondary">Add User</a>
+						<a href="addUser.php" class="btn btn-warning">Add User</a>
 					</div>
 				</div>
 			</div>
@@ -74,7 +74,7 @@ function passwordToDots($password) {
 					<div class="card-body">
 						<h5 class="card-title">User Search</h5>
 						<p class="card-text">Search for a registered user and view thier profile</p>
-						<a href="#" class="btn btn-secondary">User Search</a>
+						<a href="#" class="btn btn-warning">User Search</a>
 					</div>
 				</div>
 			</div>
@@ -85,7 +85,7 @@ function passwordToDots($password) {
 					<div class="card-body">
 						<h5 class="card-title">Configure Country list</h5>
 						<p class="card-text">Add, edit or delete a country from the database</p>
-						<a href="configureCountry.php" class="btn btn-secondary">Configure Country list</a>
+						<a href="configureCountry.php" class="btn btn-warning">Configure Country list</a>
 					</div>
 				</div>
 			</div>
@@ -94,7 +94,7 @@ function passwordToDots($password) {
 					<div class="card-body">
 						<h5 class="card-title">Configure State list</h5>
 						<p class="card-text">Add, edit or delete a state from the database</p>
-						<a href="configureState.php" class="btn btn-secondary">Configure State list</a>
+						<a href="configureState.php" class="btn btn-warning">Configure State list</a>
 					</div>
 				</div>
 			</div>
@@ -103,7 +103,7 @@ function passwordToDots($password) {
 					<div class="card-body">
 						<h5 class="card-title">Configure Degree Level list</h5>
 						<p class="card-text">Add, edit or delete an educational degree from the database</p>
-						<a href="configureDegree.php" class="btn btn-secondary">Configure Degree level list</a>
+						<a href="configureDegree.php" class="btn btn-warning">Configure Degree level list</a>
 					</div>
 				</div>
 			</div>
