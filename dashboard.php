@@ -176,6 +176,15 @@ function passwordToDots($password) {
 					</div>
 				</div>
 			</div>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Upload Files</h5>
+						<p class="card-text">Upload a picture or resume to your profile</p>
+						<a href="fileUpload.php" class="btn btn-success">Upload Files</a>
+					</div>
+				</div>
+			</div>
 		</div>
 
 	</div>

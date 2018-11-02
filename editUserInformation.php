@@ -9,7 +9,6 @@ if($_SESSION['loggedin'] == false) {
 $user = $_SESSION['user'];
 
 $userID = $user->getID();
-$userName = "";
 $email = "";
 $firstName = "";
 $lastName = "";
@@ -33,18 +32,17 @@ if (isset($_POST['update'])) {
 	$phoneNumber = trim($_POST['phoneNumber']);
 	$gender = trim($_POST['gender']);
 	$userStatus = trim($_POST['userStatus']);
-	if($userNameReq == "") {
-		$updateUserInfo = $con->prepare("UPDATE user_tbl SET email = '$email', firstName = '$firstName', lastName = '$lastName', gender = '$gender', userStatus = '$userStatus' WHERE ID = '$userID'");
-		$updateUserInfo->execute(array());
-		$user->setFirstName($firstName);
-		$user->setLastName($lastName);
-		$user->setEmail($email);
-		$user->setGender($gender);
-		$user->setPhoneNumber($phoneNumber);
-		$user->setUserStatus($userStatus);
+	
+	$updateUserInfo = $con->prepare("UPDATE user_tbl SET email = '$email', firstName = '$firstName', lastName = '$lastName', gender = '$gender', userStatus = '$userStatus' WHERE ID = '$userID'");
+	$updateUserInfo->execute(array());
+	$user->setFirstName($firstName);
+	$user->setLastName($lastName);
+	$user->setEmail($email);
+	$user->setGender($gender);
+	$user->setPhoneNumber($phoneNumber);
+	$user->setUserStatus($userStatus);
 
-		$success = "Update Successful";
-	}
+	$success = "Update Successful";
 
 }
 ?>
