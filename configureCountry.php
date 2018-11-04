@@ -7,15 +7,15 @@ $country = "";
 
 //add to database
 if(isset($_POST['add'])) {
-	$newCountry = trim($_POST['country']);
+	$newCountry = trim($_POST['addCountry']);
 	$stmt = $con->prepare('INSERT INTO country_tbl (ID, name) VALUES (Null, :country)');
 	$stmt->execute(array('country' => $newCountry));
 }
 
 //edit from database
 if(isset($_POST['edit'])){
-		$countryNum = trim($_POST['countryNum']);
-		$country = trim($_POST['country']);
+		$countryNum = trim($_POST['countryNameEdit']);
+		$country = trim($_POST['editCountry']);
 		$stmt = $con->prepare('UPDATE country_tbl SET name = :name WHERE ID = :num');
 		$stmt->execute(array('name' => $country, 'num' => $countryNum));
 	}	
@@ -23,7 +23,7 @@ if(isset($_POST['edit'])){
 //delete from database
 if(isset($_POST['delete'])){
 		$stmt = $con->prepare('DELETE FROM country_tbl WHERE ID = :countryID');
-		$stmt->execute(array('countryID' => $_POST['countryNum']));
+		$stmt->execute(array('countryID' => $_POST['countryNameRemove']));
 	}		
 	
 $result = $con->query("select * from country_tbl ORDER BY name ASC");	
@@ -65,7 +65,7 @@ $result = $con->query("select * from country_tbl ORDER BY name ASC");
 						<form action="configureCountry.php" method="post">
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
-									<label class="input-group-text" for="countryNameEdit">Counties</label>
+									<label class="input-group-text" for="countryNameEdit">Countries</label>
 								</div>
 								<select class="custom-select" name="countryNameEdit">
 									<?php
@@ -75,7 +75,7 @@ $result = $con->query("select * from country_tbl ORDER BY name ASC");
 									}
 									?>
 								</select>
-								<input type="text" class="form-control" name="addCountry">
+								<input type="text" class="form-control" name="editCountry">
 								<div class="input-group-append">
 									<button type="submit" class="btn btn-outline-primary" name="edit">Edit Country</button>
 								</div>
@@ -89,7 +89,7 @@ $result = $con->query("select * from country_tbl ORDER BY name ASC");
 						<form action="configureCountry.php" method="post">
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
-									<label class="input-group-text" for="countryNameRemove">Counties</label>
+									<label class="input-group-text" for="countryNameRemove">Countries</label>
 								</div>
 								<select class="custom-select" name="countryNameRemove">
 									<?php
