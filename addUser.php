@@ -6,9 +6,11 @@ if($_SESSION['loggedin'] == false) {
 	header('Location: login.php'); 
 }
 $user = $_SESSION['user'];
+$priv = $user->getUserPrivilege();
 
-if ($user->getUserPrivilege() != 2 || $user->getUserPrivilege() != 3) {
-	header('Location: dashboard.php');
+if ($priv != 2) {
+	if ($priv != 3)
+ 		header('Location: dashboard.php');
 }
 
 $msg = "";

@@ -31,63 +31,84 @@ $result = $con->query("select * from country_tbl ORDER BY name ASC");
 
 <div class="container" id="configureCountry">
 	<section id="blankHeader">
-		<h2>Configure Countries</h2>
-		<!-- PRINT ALL COUNTRIES-->
-		List of countries in current database are:</br>
-		<?php
-		while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-			echo $row["name"] . "<br>";
-		}
-		?>
-		<br><br>
-		
-		<!--ADD COUNTRY FORM -->
-		<form action="configureCountry.php" method="post">
-			<div class="form-row">
-				Add Country: </br>
-				<input type="text" maxlength = "75" name = "country" id = "country" />
-			</div> <br>
-			<button type="submit" class="btn btn-primary" name="add">Add Country</button>
-		</form>
-		<br><br>
-		
-		<!--EDIT COUNTRY FORM -->
-		<form action="configureCountry.php" method="post">
-			<div class="form-row">
-				Select from list which country to edit:
-				<select  name = "countryNum">
-					<?php
-					$result1 = $con->query("select * from country_tbl ORDER BY name ASC");
-					while($row1 = $result1->fetch(PDO::FETCH_ASSOC)) {
-						echo "<option value = '".$row1['ID']."'>".$row1['name']."</option>";
-					}
-					?>
-				</select></br>
+		<div class="row mt-4">
+			<div class="col-sm-12">
+				<a href="dashboard.php" class="btn btn-secondary btn-sm">Back to Dashboard <i class="fas fa-undo-alt"></i></a>
 			</div>
-			<div class="form-row">
-			Edit Country Level (Max 75 characters):
-				<input type="text" maxlength = "75" name = "country" id = "country" />
-			</div><br>
-			<button type="submit" class="btn btn-primary" name="edit">Edit Country</button>
-		</form>
-		<br><br>
+		</div>
+		<div class="row mt-3">
+			<div class="col-sm-6 col-md-4" style="padding-right:20px; border-right: 1px solid #ccc;">
+				<!-- PRINT ALL COUNTRIES-->
+				<h4>List of countries in current database are:</h4>
+				<?php 
+				while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+					echo $row["name"] . "<br>";
+				} ?>
+			</div>
+			<div class="col-sm-6 col-md-8">
+				<div class="row">
+					<div class="col-sm-12">
+						<h4>Add Country</h4>
+						<form action="configureCountry.php" method="post">
+							<div class="input-group mb-3">
+								<input type="text" class="form-control" name="addCountry">
+								<div class="input-group-append">
+									<button type="submit" class="btn btn-outline-primary" name="add">Add Country</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="row mt-2">
+					<div class="col-sm-12">
+						<h4>Edit Country</h4>
+						<form action="configureCountry.php" method="post">
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<label class="input-group-text" for="countryNameEdit">Counties</label>
+								</div>
+								<select class="custom-select" name="countryNameEdit">
+									<?php
+									$result1 = $con->query("select * from country_tbl ORDER BY name ASC");
+									while($row1 = $result1->fetch(PDO::FETCH_ASSOC)) {
+										echo "<option value = '".$row1['ID']."'>".$row1['name']."</option>";
+									}
+									?>
+								</select>
+								<input type="text" class="form-control" name="addCountry">
+								<div class="input-group-append">
+									<button type="submit" class="btn btn-outline-primary" name="edit">Edit Country</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="row mt-2">
+					<div class="col-sm-12">
+						<h4>Remove Country</h4>
+						<form action="configureCountry.php" method="post">
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<label class="input-group-text" for="countryNameRemove">Counties</label>
+								</div>
+								<select class="custom-select" name="countryNameRemove">
+									<?php
+									$result1 = $con->query("select * from country_tbl ORDER BY name ASC");
+									while($row1 = $result1->fetch(PDO::FETCH_ASSOC)) {
+										echo "<option value = '".$row1['ID']."'>".$row1['name']."</option>";
+									}
+									?>
+								</select>
+								<div class="input-group-append">
+									<button type="submit" class="btn btn-outline-danger" name="delete">Remove Country</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 		
-		<!--DELETE COUNTRY -->
-		<form action="configureCountry.php" method="post">
-			Select from list which country to remove:
-			<select  name = "countryNum">
-				<?php
-				$result2 = $con->query("select * from country_tbl ORDER BY name ASC");
-				while($row2 = $result2->fetch(PDO::FETCH_ASSOC)) {
-					echo "<option value = '".$row2['ID']."'>".$row2['name']."</option>";
-				}
-				?>
-			</select></br>
-			<br>
-			<button type="submit" class="btn btn-primary" name="delete">Delete Country</button>
-		</form>
 	</section>
 	
 </div>
-
-<?php include 'footer.php'; ?>
