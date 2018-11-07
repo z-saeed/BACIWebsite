@@ -51,6 +51,11 @@ if (isset($_FILES["picture"]["name"])) {
 
 				if ($didUpload) {
 					$msg = $msg."The picture " . basename($picName) . " has been uploaded\n";
+					$stmt = $con->prepare('INSERT INTO picture_tbl (location) VALUES (:location)');
+		        	$stmt->execute(array('location'=>$uploadPath));
+		        	$picture_id = $con->lastInsertId();
+					$updateUserInfo = $con->prepare("UPDATE user_tbl SET pictureID = '$picture_id' WHERE ID = '$userID'");
+					$updateUserInfo->execute(array());
 				} else {
 					$msg = $msg."An error occurred with uploading the Picture. Try again or contact the admin";
 				}
@@ -87,6 +92,11 @@ if (isset($_FILES["resume"]["name"])) {
 
 				if ($didUpload) {
 					$msg = $msg."The resume " . basename($resumeName) . " has been uploaded\n";
+					$stmt = $con->prepare('INSERT INTO resume_tbl (location) VALUES (:location)');
+		        	$stmt->execute(array('location'=>$uploadPath));
+		        	$resume_id = $con->lastInsertId();
+					$updateUserInfo = $con->prepare("UPDATE user_tbl SET resumeID = '$resume_id' WHERE ID = '$userID'");
+					$updateUserInfo->execute(array());
 				} else {
 					$msg = $msg."An error occurred with uploading the Resume. Try again or contact the admin";
 				}
