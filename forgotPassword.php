@@ -26,7 +26,11 @@ if (isset($_POST['reset'])){
 	$stmtEmail = $con->prepare("SELECT email FROM user_tbl WHERE username = :un");
 	$stmtEmail -> execute(array('un' => $un));
 	$row = $stmtEmail->fetch(PDO::FETCH_OBJ);
+<<<<<<< HEAD
 	$body = "Please follow this link to reset your BACI password: http://corsair.cs.iupui.edu:23151/BaciProjectAlt/resetPassword.php?code=".$code;
+=======
+	$body = "Please follow this link to reset your BACI password: http://corsair.cs.iupui.edu:23041/CourseProject/BaciProjectAlt/resetPassword.php?code=".$code;
+>>>>>>> 12e74d72f42b3bd169c6281c5b9bf5fb30677dd5
 	
 	$mailer = new Mail();
 	if(($mailer->sendMail($row->email, "User", "BACI email reset", $body))){
