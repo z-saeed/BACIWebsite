@@ -4,10 +4,10 @@ require_once "db_connect.php";
 
 //verify logged in as a admin
 $user = $_SESSION['user'];
-$userPriv = $user->getUserPrivilege();
 if($_SESSION['loggedin'] == false) {
 	header('Location: login.php'); 
 }
+$userPriv = $user->getUserPrivilege();
 if($userPriv < 2 || $userPriv > 3){
 	header('Location: dashboard.php');
 }	

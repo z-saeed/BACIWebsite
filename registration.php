@@ -34,6 +34,12 @@ $city = "";
 $state = "";
 $zip = "";
 $country = "";
+$tosre = "*";
+
+$fbLink = "";
+$twLink = "";
+$lkdLink = "";
+
 
 if (isset($_POST['enter'])) {
 	$userName = trim($_POST['userName']);
@@ -97,8 +103,11 @@ if (isset($_POST['enter'])) {
 		$lkdLink = trim($_POST['lkdLink']);
 
 		$registrationDate = date("Y/m/d");
+		
+		if(!isset($_POST['tos']))
+			$tosre = '<span style="color:red">*</span>';
 
-		if ($confirmEmailReq != "*"|| $confirmPasswordReq != "*" || $userNameReq != "*") {
+		if ($confirmEmailReq != "*"|| $confirmPasswordReq != "*" || $userNameReq != "*" || $tosre != "*") {
 			$msg = "Please enter valid data";
 		} else {
 			$code = randomCodeGenerator(50); //get random code generated
@@ -107,11 +116,12 @@ if (isset($_POST['enter'])) {
 			$stmtAddress->execute(array('street1'=>$address1, 'street2'=>$address2, 'city'=>$city, 'stateID'=>$state, 'zipCode'=>$zip));
 			$address_id = $con->lastInsertID();
 
-			$stmtID = $con->prepare('INSERT INTO identity_tbl (employment, field, employer) VALUES (:employment, :field, :employer)');
+			$stmtID = $con->prepare("INSERT INTO identity_tbl (employment, field, employer) VALUES (:employment, :field, :employer)");
         	$stmtID->execute(array('employment'=>$employment, 'field'=>$field, 'employer'=>$employer));
         	$identity_id = $con->lastInsertId();
 
-			$stmtUser = $con->prepare("INSERT INTO user_tbl (username, email, password, firstName, lastName, gender, addressID, phone, identityID, fbLink, twLink, lkdLink, registerDate, activationURL, active, privilege, userStatus) VALUES ( :username, :email, :password, :firstName, :lastName, :gender, :addressID, :phone, :identityID, :fbLink, :twLink, :lkdLink, :registerDate, :activationURL, :active, :privilege, :userStatus)");
+			/* Header ("Location:blankPage.php?username=".$username."?email=".$email."?password=".$password."?firstName=".$firstName."?lastName=".$lastName."?gender=".$gender."?addressID=".$address_id."?phone=".$phoneNumber."?identityID=".$identity_id."?registerDate=".$registrationDate."?activationURL=".$code."?active=0"."?privilege=0"."?userStatus=".$userStatus); */
+			$stmtUser = $con->prepare("INSERT INTO user_tbl (`ID`, `username`, `email`, `password`, `firstName`, `lastName`, `gender`, `addressID`, `phone`, `identityID`, `fbLink`, `twLink`, `lkdLink`, `resumeID`, `pictureID`, `registerDate`, `activationURL`, `active`, `privilege`, `userStatus`) VALUES (NULL, :username, :email, :password, :firstName, :lastName, :gender, :addressID, :phone, :identityID, :fbLink, :twLink, :lkdLink, 1, 1, :registerDate, :activationURL, :active, :privilege, :userStatus)");
 			$stmtUser->execute(array('username'=>$userName, 'email'=>$email, 'password'=>$password, 'firstName'=>$firstName, 'lastName'=>$lastName, 'gender'=>$gender, 'addressID'=>$address_id, 'phone'=>$phoneNumber, 'identityID'=>$identity_id, 'fbLink'=>$fbLink, 'twLink'=>$twLink, 'lkdLink'=>$lkdLink, 'registerDate'=>$registrationDate, 'activationURL'=>$code, 'active'=>0, 'privilege'=>0, 'userStatus'=>$userStatus));
 			$user_id = $con->lastInsertID();
 
@@ -121,7 +131,7 @@ if (isset($_POST['enter'])) {
 			}
 
 	        $subject = "Registration Activation"; //set email subject
-	        $body = 'Please click the url to activate your account. http://corsair.cs.iupui.edu:23151/BaciProjectAlt/activate.php?code='.$code.'&userID='.$user_id; //set email body
+	        $body = 'Please click the url to activate your account. http://corsair.cs.iupui.edu:23041/CourseProject/BaciProjectAlt/activate.php?code='.$code.'&userID='.$user_id; //set email body
 	        $mailer = new Mail();
 	        if(($mailer->sendMail($email, $firstName, $subject, $body))){ //send email
 	        	$msg = "Email Sent";
@@ -135,7 +145,7 @@ if (isset($_POST['enter'])) {
 
 <div class="container" id="registration">
 	<section id="registrationHeader">
-		<h2>Registeration</h2>
+		<h2>Registration</h2>
 	</section>
 	
 	<?php echo $msg; ?>
@@ -143,27 +153,27 @@ if (isset($_POST['enter'])) {
 		<div class="form-row">
 			<div class="form-group col-md-6 col-sm-12">
 				<label for="userName">User Name <?php echo $userNameReq; ?></label>
-				<input type="text" class="form-control" id="userName" name="userName" required>
+				<input type="text" class="form-control" id="userName" value="<?php print $userName; ?>" name="userName" required>
 			</div>
 		</div>
 		<div class="form-row">
 			<div class="form-group col-md-6 col-sm-12">
 				<label for="firstName">First Name <?php echo $firstNameReq; ?></label>
-				<input type="text" class="form-control" id="firstName" required name="firstName">
+				<input type="text" class="form-control" id="firstName" value="<?php print $firstName; ?>" required name="firstName">
 			</div>
 			<div class="form-group col-md-6 col-sm-12">
 				<label for="lastName">Last Name <?php echo $lastNameReq; ?></label>
-				<input type="text" class="form-control" id="lastName" required name="lastName">
+				<input type="text" class="form-control" id="lastName" value="<?php print $lastName; ?>" required name="lastName">
 			</div>
 		</div>
 		<div class="form-row">
 			<div class="form-group col-md-6 col-sm-12">
 				<label for="email">Email <?php echo $emailReq; ?></label>
-				<input type="email" class="form-control" id="email" required name="email">
+				<input type="email" class="form-control" id="email" value="<?php print $email; ?>" required name="email">
 			</div>
 			<div class="form-group col-md-6 col-sm-12">
 				<label for="confirmEmail">Confirm Email <?php echo $confirmEmailReq; ?></label>
-				<input type="email" class="form-control" id="confirmEmail" required name="confirmEmail">
+				<input type="email" class="form-control" id="confirmEmail" value="<?php print $confirmEmail; ?>" required name="confirmEmail">
 			</div>
 		</div>
 		<div class="form-row">
@@ -179,7 +189,7 @@ if (isset($_POST['enter'])) {
 		<div class="form-row">
 			<div class="form-group col-md-6 col-sm-12">
 				<label for="phoneNumber">Phone Number</label>
-				<input type="text" class="form-control" id="phoneNumber" name="phoneNumber">
+				<input type="number" class="form-control" id="phoneNumber" value="<?php print $phoneNumber; ?>" name="phoneNumber">
 			</div>
 			<div class="form-group col-md-3 col-sm-6">
 				<label for="gender">Gender</label>
@@ -201,40 +211,40 @@ if (isset($_POST['enter'])) {
 		<div class="form-row">
 			<div class="form-group col-md-6 col-sm-12">
 				<label for="address1">Address</label>
-				<input type="text" class="form-control" id="address1" name="address1">
+				<input type="text" class="form-control" id="address1" value="<?php print $address1; ?>" name="address1">
 			</div>
 			<div class="form-group col-md-6 col-sm-12">
 				<label for="address2">Address 2</label>
-				<input type="text" class="form-control" id="address2" name="address2">
+				<input type="text" class="form-control" id="address2" value="<?php print $address2; ?>" name="address2">
 			</div>
 		</div>
 		<div class="form-row">
 			<div class="form-group col-md-4 col-sm-8">
 			<label for="city">City</label>
-			<input type="text" class="form-control" id="city" name="city">
+			<input type="text" class="form-control" id="city" value="<?php print $city; ?>" name="city">
 			</div>
 			<div class="form-group col-md-3 col-sm-6">
 				<label for="state">State</label>
 				<?php 
-				$result = $con->query("select * from state_tbl");
+				$resultState = $con->query("select * from state_tbl ORDER BY name ASC");
 				echo '<select id="state" class="form-control" name="state">';
-				while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-					echo "<option value='" . $row['ID'] ."'>" . $row['stateName'] ."</option>";
+				while($rowState = $resultState->fetch(PDO::FETCH_ASSOC)) {
+					echo "<option value='" . $rowState['ID'] ."'>" . $rowState['name'] ."</option>";
 				}
 				echo "</select>";
 				?>
 			</div>
 			<div class="form-group col-md-2 col-sm-4">
 				<label for="zip">Zip Code</label>
-				<input type="text" class="form-control" id="zip" name="zip">
+				<input type="text" class="form-control" id="zip" value="<?php print $zip; ?>" name="zip">
 			</div>
 			<div class="form-group col-md-3 col-sm-6">
 				<label for="country">Country</label>
 				<?php 
-				$result = $con->query("select * from country_tbl");
+				$resultCountry = $con->query("select * from country_tbl ORDER BY name ASC");
 				echo '<select id="country" class="form-control" name="country">';
-				while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-					echo "<option value='" . $row['ID'] ."'>" . $row['name'] ."</option>";
+				while($rowCountry = $resultCountry->fetch(PDO::FETCH_ASSOC)) {
+					echo "<option value='" . $rowCountry['ID'] ."'>" . $rowCountry['name'] ."</option>";
 				}
 				echo "</select>";
 				?>
@@ -269,16 +279,19 @@ if (isset($_POST['enter'])) {
 		<div class="form-row">
 			<div class="form-group col-sm-6 col-md-4 ">
 				<label for="fbLink">Facebook Link</label>
-				<input type="text" class="form-control" id="fbLink" name="fbLink">
+				<input type="text" class="form-control" id="fbLink" value="<?php print $fbLink; ?>"  name="fbLink">
 			</div>
 			<div class="form-group col-sm-6 col-md-4 ">
 				<label for="twLink">Twitter Link</label>
-				<input type="text" class="form-control" id="twLink" name="twLink">
+				<input type="text" class="form-control" id="twLink" value="<?php print $twLink; ?>" name="twLink">
 			</div>
 			<div class="form-group col-sm-6 col-md-4 ">
 				<label for="lkdLink">LinkedIn Link</label>
-				<input type="text" class="form-control" id="lkdLink" name="lkdLink">
+				<input type="text" class="form-control" id="lkdLink" value="<?php print $lkdLink; ?>" name="lkdLink">
 			</div>
+		</div>
+		<div>
+			<input type="checkbox" name="tos"> <?php print $tosre; ?> By clicking Register, you agree to our Terms, Data Policy and Cookies Policy.</br></br>
 		</div>
 		<button type="submit" class="btn btn-primary" name="enter">Register</button>
 	</form>

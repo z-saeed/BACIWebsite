@@ -109,10 +109,6 @@ if (isset($_POST['enter'])) {
 		$field = trim($_POST['field']);
 		$employer = trim($_POST['employer']);
 
-		$fbLink = trim($_POST['fbLink']);
-		$twLink = trim($_POST['twLink']);
-		$lkdLink = trim($_POST['lkdLink']);
-
 		$registrationDate = date("Y/m/d");
 
 		if ($confirmEmailReq != "*"|| $confirmPasswordReq != "*" || $userNameReq != "*") {
@@ -126,8 +122,8 @@ if (isset($_POST['enter'])) {
         	$stmtID->execute(array('employment'=>$employment, 'field'=>$field, 'employer'=>$employer));
         	$identity_id = $con->lastInsertId();
 
-			$stmtUser = $con->prepare("INSERT INTO user_tbl (username, email, password, firstName, lastName, gender, addressID, phone, identityID, fbLink, twLink, lkdLink, registerDate, activationURL, active, privilege, userStatus) VALUES ( :username, :email, :password, :firstName, :lastName, :gender, :addressID, :phone, :identityID, :fbLink, :twLink, :lkdLink, :registerDate, :activationURL, :active, :privilege, :userStatus)");
-			$stmtUser->execute(array('username'=>$userName, 'email'=>$email, 'password'=>$password, 'firstName'=>$firstName, 'lastName'=>$lastName, 'gender'=>$gender, 'addressID'=>$address_id, 'phone'=>$phoneNumber, 'identityID'=>$identity_id, 'fbLink'=>$fbLink, 'twLink'=>$twLink, 'lkdLink'=>$lkdLink, 'registerDate'=>$registrationDate, 'activationURL'=>'Admin Added', 'active'=>1, 'privilege'=>$userType, 'userStatus'=>$userStatus));
+			$stmtUser = $con->prepare("INSERT INTO user_tbl (`ID`, `username`, `email`, `password`, `firstName`, `lastName`, `gender`, `addressID`, `phone`, `identityID`, `fbLink`, `twLink`, `lkdLink`, `resumeID`, `pictureID`, `registerDate`, `activationURL`, `active`, `privilege`, `userStatus`) VALUES (NULL, :username, :email, :password, :firstName, :lastName, :gender, :addressID, :phone, :identityID, :fbLink, :twLink, :lkdLink, 1, 1, :registerDate, :activationURL, :active, :privilege, :userStatus)");
+			$stmtUser->execute(array('username'=>$userName, 'email'=>$email, 'password'=>$password, 'firstName'=>$firstName, 'lastName'=>$lastName, 'gender'=>$gender, 'addressID'=>$address_id, 'phone'=>$phoneNumber, 'identityID'=>$identity_id, 'fbLink'=>"", 'twLink'=>"", 'lkdLink'=>"", 'registerDate'=>$registrationDate, 'activationURL'=>"adminAdded", 'active'=>1, 'privilege'=>$userType, 'userStatus'=>$userStatus));
 			$user_id = $con->lastInsertID();
 
 			$stmtEdu = $con->prepare("INSERT INTO education_tbl (degreeType, major, schoolName, completionYear, userID) VALUES (:degree, :major, :school, :yearCompleted, :userID)");
@@ -234,10 +230,10 @@ if (isset($_POST['enter'])) {
 			<div class="form-group col-md-3 col-sm-6">
 				<label for="state">State</label>
 				<?php 
-				$result = $con->query("select * from state_tbl");
+				$result = $con->query("select * from state_tbl ORDER BY name ASC");
 				echo '<select id="state" class="form-control" name="state">';
 				while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-					echo "<option value='" . $row['ID'] ."'>" . $row['stateName'] ."</option>";
+					echo "<option value='" . $row['ID'] ."'>" . $row['name'] ."</option>";
 				}
 				echo "</select>";
 				?>
@@ -249,7 +245,7 @@ if (isset($_POST['enter'])) {
 			<div class="form-group col-md-3 col-sm-6">
 				<label for="country">Country</label>
 				<?php 
-				$result = $con->query("select * from country_tbl");
+				$result = $con->query("select * from country_tbl ORDER BY name ASC");
 				echo '<select id="country" class="form-control" name="country">';
 				while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 					echo "<option value='" . $row['ID'] ."'>" . $row['name'] ."</option>";
