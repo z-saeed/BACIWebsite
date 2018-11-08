@@ -22,30 +22,24 @@ if (isset($_POST['submit'])){
 
 ?>
 
-<article id="main">
-	<header>
-		<h2>Reset Password</h2>
-	</header>
-	<section class="wrapper style5">
-		<div class="inner">
-			<form method="post">
-			
-				<?php
-					print $msg;
-				?></br>
-				
-				<div class="row gtr-uniform">
-					<div class="col-6 col-12-xsmall">
-					New Password: 
-						<input type="text" maxlength = "50" value="" name="password" id="password"   />  <br />	
+<section id="loginPage">
+
+	<div id="login">
+		<div id="loginForm">
+			<h3><?php echo $msg; ?></h3>
+			<form action="resetPassword.php" method="post">
+				<div class="form-row">
+					<div class="form-group col-md-4 col-sm-8 offset-md-4 offset-sm-2">
+						<input type="password" class="form-control" id="password" name="password" placeholder="New Password" required>
 					</div>
 				</div>
-				
-				<input name="submit" class="btn" type="submit" value="Reset" />
-  
+				<div class="form-row">
+					<div class="form-group col-md-4 col-sm-8 offset-md-4 offset-sm-2">
+						<button type="submit" class="btn btn-light btn-sm" name="submit">Update <i class="fas fa-cloud-upload-alt"></i></button>
+					</div>
+				</div>
 			</form>
 		</div>
-	</section>
-</article>
+	</div>
 
-<?php include "footer.php"; ?>
+</section>

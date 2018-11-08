@@ -13,7 +13,7 @@ $un = ""; //username
 
 $code = randomCodeGenerator(50);
 	
-$msg = "Enter your username to recieve an email to reset your password"; //message to user
+$msg = "Enter your username to recieve <br>an email to reset your password"; //message to user
 
 if (isset($_POST['reset'])){
 	
@@ -26,7 +26,7 @@ if (isset($_POST['reset'])){
 	$stmtEmail = $con->prepare("SELECT email FROM user_tbl WHERE username = :un");
 	$stmtEmail -> execute(array('un' => $un));
 	$row = $stmtEmail->fetch(PDO::FETCH_OBJ);
-	$body = "Please follow this link to reset your BACI password: http://corsair.cs.iupui.edu:23191/courseProject/BaciProjectAlt-master/resetPassword.php?code=".$code;
+	$body = "Please follow this link to reset your BACI password: http://corsair.cs.iupui.edu:23041/courseProject/BaciProjectAlt/resetPassword.php?code=".$code;
 	
 	$mailer = new Mail();
 	if(($mailer->sendMail($row->email, "User", "BACI email reset", $body))){
@@ -36,30 +36,24 @@ if (isset($_POST['reset'])){
 }
 
 ?>
-			<!-- Main -->
-			<article id="main">
-				<header>
-					<h2>Forgot Password</h2>
-				</header>
-				<section class="wrapper style5">
-					<div class="inner">
-						<form method="post">
-						
-							<?php
-								print $msg;
-							?></br>
-							
-							<div class="row gtr-uniform">
-								<div class="col-6 col-12-xsmall">
-									Username:
-										<input type="text" maxlength = "50" value="" name="username" id="username"   />  <br />	
-								</div>
-							</div>
-							
-							<input name="reset" class="btn" type="submit" value="Reset" />
-			  
-						</form>
+
+<section id="loginPage">
+
+	<div id="login">
+		<div id="loginForm">
+			<h3><?php echo $msg; ?></h3>
+			<form action="forgotPassword.php" method="post">
+				<div class="form-row">
+					<div class="form-group col-md-4 col-sm-8 offset-md-4 offset-sm-2">
+						<input type="text" class="form-control" id="username" name="username" placeholder="User Name" required>
 					</div>
-				</section>
-			</article>
-<?php include "footer.php"; ?>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-4 col-sm-8 offset-md-4 offset-sm-2">
+						<button type="submit" class="btn btn-danger btn-sm" name="reset">Reset <i class="fas fa-sync"></i></button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</section>

@@ -1,3 +1,11 @@
+$(document).ready(function() {
+    $('#example').DataTable( {
+        "processing": true,
+        "serverSide": true,
+        "ajax": "../serverSide.php"
+    } );
+} );
+
 $(function() {
 
 	// We can attach the `fileselect` event to all file inputs on the page
