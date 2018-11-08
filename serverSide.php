@@ -18,7 +18,7 @@
  * Easy set variables
  */
  
- echo "HELLO";
+ //echo "HELLO";
 
 // DB table to use
 $table = 'user_tbl';
