@@ -14,8 +14,10 @@ class User
 	private $userStatus;
 	private $addressID;
 	private $userPrivilege;
+    private $imagePath;
+    private $resumePath;
 
-	function __construct($ID = 0, $userName = "", $password = "", $email = "", $firstName = "", $lastName = "", $phoneNumber = "", $gender = "", $registerDate = "", $userStatus = "", $addressID = 0, $userPrivilege = 0)
+	function __construct($ID = 0, $userName = "", $password = "", $email = "", $firstName = "", $lastName = "", $phoneNumber = "", $gender = "", $registerDate = "", $userStatus = "", $addressID = 0, $userPrivilege = 0, $imagePath= "", $resumePath = "")
 	{
 		$this->ID = $ID;
 		$this->userName = $userName;
@@ -29,6 +31,8 @@ class User
 		$this->userStatus = $userStatus;
 		$this->addressID = $addressID;
 		$this->userPrivilege = $userPrivilege;
+        $this->imagePath = $imagePath;
+        $this->resumePath = $resumePath;
 	}
 
     public function getID()
@@ -157,5 +161,25 @@ class User
     public function setUserPrivilege($userPrivilege)
     {
         $this->userPrivilege = $userPrivilege;
+    }
+
+    public function getImagePath()
+    {
+        return $this->imagePath;
+    }
+
+    public function setImagePath($imagePath)
+    {
+        $this->imagePath = $imagePath;
+    }
+
+    public function getResumePath()
+    {
+        return $this->resumePath;
+    }
+
+    public function setResumePath($resumePath)
+    {
+        $this->resumePath = $resumePath;
     }
 }

@@ -33,7 +33,7 @@ if (isset($_POST['login'])) {
 			$user->setEmail($row->email);
 			$user->setFirstName($row->firstName);
 			$user->setLastName($row->lastName);
-			$user->setPhoneNumber($row->phoneNumber);
+			$user->setPhoneNumber($row->phone);
 			$user->setGender($row->gender);
 			$user->setUserStatus($row->userStatus);
 			$user->setAddressID($row->addressID);
@@ -56,7 +56,7 @@ if (isset($_POST['login'])) {
 			$address->setStreet1($addressRow->street1);
 			$address->setStreet2($addressRow->street2);
 			$address->setCity($addressRow->city);
-			$address->setState($stateRow->stateName);
+			$address->setState($stateRow->name);
 			$address->setStateID($addressRow->stateID);
 			$address->setZipCode($addressRow->zipCode);
 			$address->setCountry($countryRow->name);

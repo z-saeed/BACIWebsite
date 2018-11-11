@@ -56,7 +56,7 @@ function passwordToDots($password) {
 					<div class="card-body">
 						<h5 class="card-title">User List</h5>
 						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-						<a href="#" class="btn btn-warning">User List</a>
+						<a href="listUsers.php" class="btn btn-warning">User List</a>
 					</div>
 				</div>
 			</div>

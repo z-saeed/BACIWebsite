@@ -1,12 +1,76 @@
 <?php 
 include 'header.php';
+require_once 'db_connect.php';
 
 if($_SESSION['loggedin'] == false) {
 	header('Location: login.php'); 
 }
 
-$user = $_SESSION['user'];
-$address = $_SESSION['address'];
+$user = new User();
+$address = new Address();
+
+$boolUser = false;
+
+if (isset($_REQUEST["userID"])) {
+	$boolUser = true;
+	$userID = $_REQUEST["userID"];
+	$profileStmt = $con->prepare('SELECT * FROM user_tbl WHERE ID = :ID');
+	$profileStmt->execute(array('ID'=>$userID));
+	$row = $profileStmt->fetch(PDO::FETCH_OBJ);
+
+	if($profileStmt->rowCount() != 1) {
+		$msg = "Profile Not Found";
+	} else {
+		$user->setID($row->ID);
+		$user->setUserName($row->username);
+		$user->setPassword($row->password);
+		$user->setEmail($row->email);
+		$user->setFirstName($row->firstName);
+		$user->setLastName($row->lastName);
+		$user->setPhoneNumber($row->phone);
+		$user->setGender($row->gender);
+		$user->setUserStatus($row->userStatus);
+		$user->setAddressID($row->addressID);
+		$user->setUserPrivilege($row->privilege);
+
+		$imageSTMT = $con->prepare('SELECT * FROM picture_tbl WHERE ID = :ID');
+		$imageSTMT->execute(array('ID'=>$row->pictureID));
+		$imageRow = $imageSTMT->fetch(PDO::FETCH_OBJ);
+
+		$user->setImagePath($imageRow->location);
+
+		$resumeSTMT = $con->prepare('SELECT * FROM resume_tbl WHERE ID = :ID');
+		$resumeSTMT->execute(array('ID'=>$row->resumeID));
+		$resumeRow = $resumeSTMT->fetch(PDO::FETCH_OBJ);
+
+		$user->setResumePath($resumeRow->location);
+
+		$addressSTMT = $con->prepare('SELECT * FROM address_tbl WHERE ID = :ID');
+		$addressSTMT->execute(array('ID'=>$user->getAddressID()));
+		$addressRow = $addressSTMT->fetch(PDO::FETCH_OBJ);
+
+		$stateSTMT = $con->prepare('SELECT * FROM state_tbl WHERE ID = :ID');
+		$stateSTMT->execute(array('ID'=>$addressRow->stateID));
+		$stateRow = $stateSTMT->fetch(PDO::FETCH_OBJ);
+
+		$countrySTMT = $con->prepare('SELECT * FROM country_tbl WHERE ID = :ID');
+		$countrySTMT->execute(array('ID'=>$stateRow->countryID));
+		$countryRow = $countrySTMT->fetch(PDO::FETCH_OBJ);
+
+		$address->setID($addressRow->ID);
+		$address->setStreet1($addressRow->street1);
+		$address->setStreet2($addressRow->street2);
+		$address->setCity($addressRow->city);
+		$address->setState($stateRow->name);
+		$address->setStateID($addressRow->stateID);
+		$address->setZipCode($addressRow->zipCode);
+		$address->setCountry($countryRow->name);
+		$address->setCountryID($stateRow->countryID);
+	}
+} else {
+	$user = $_SESSION['user'];
+	$address = $_SESSION['address'];
+}
 
 $firstName = $user->getFirstName();
 $userPriv = $user->getUserPrivilege();
@@ -24,18 +88,24 @@ function passwordToDots($password) {
 	<div class="container">
 		<a href="dashboard.php" class="btn btn-primary btn-sm">Back to Dashboard <i class="fas fa-undo-alt"></i></a>
 		<div class="row mt-4">
-			<div class="col-md-2 col-sm-4" style="padding-right:20px; border-right: 1px solid #ccc;">
+			<div class="col-md-4 col-sm-4" style="padding-right:20px; border-right: 1px solid #ccc;">
 				<h3>User Profile</h3>
+				<div class="row">
+					<img src="<?php echo($user->getResumePath());?>" alt="profile_pic" class="rounded-circle">
+				</div>
 			</div>
-			<div class="col-md-10 col-sm-12">
+			<div class="col-md-8 col-sm-12">
 				<div class="row">
 					<div class="col-md-4 col-sm-8">
 						<h4>User Information</h4>
 					</div>
+					<?php if ($boolUser == false) { ?>
 					<div class="col-md-8 col-sm-12">
 						<p class="lead"><a href="editUserInformation.php">Edit User Information</a></p>
 					</div>
+					<?php } ?>
 				</div>
+				<?php if($boolUser == false) {?>
 				<div class="row">
 					<div class="col-md-4 col-sm-8">
 						<p class="lead">UserName:</p>
@@ -44,6 +114,7 @@ function passwordToDots($password) {
 						<p class="lead"><?php echo($user->getUserName()); ?></p>
 					</div>
 				</div>
+				
 				<div class="row">
 					<div class="col-md-4 col-sm-8">
 						<p class="lead">Password:</p>
@@ -52,6 +123,7 @@ function passwordToDots($password) {
 						<p class="lead"><?php echo(passwordToDots($user->getPassword())); ?> <a href="changePassword.php">Change Password</a></p>
 					</div>
 				</div>
+				<?php } ?>
 				<div class="row">
 					<div class="col-md-4 col-sm-8">
 						<p class="lead">Email:</p>
@@ -105,9 +177,11 @@ function passwordToDots($password) {
 					<div class="col-md-4 col-sm-8">
 						<h4>Address Information</h4>
 					</div>
+					<?php if ($boolUser == false) { ?>
 					<div class="col-md-8 col-sm-12">
 						<p class="lead"><a href="">Edit Address Information</a></p>
 					</div>
+					<?php } ?>
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-sm-8">

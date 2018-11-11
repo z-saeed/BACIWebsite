@@ -1,26 +1,12 @@
 <?php include 'header.php'; ?>
 
-
-<div class="container">
-	<table id="example" class="display" style="width:100%">
-		<thead>
-			<tr>
-				<th>First name</th>
-				<th>Last name</th>
-				<th>Gender</th>
-				<th>UserStatus</th>
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<th>First name</th>
-				<th>Last name</th>
-				<th>Gender</th>
-				<th>UserStatus</th>
-			</tr>
-		</tfoot>
-	</table>
-</div>
-
+<section id="listUsers">
+	<div class="container mt-2">
+		<a href="dashboard.php" class="btn btn-secondary btn-sm">Back to Dashboard <i class="fas fa-undo-alt"></i></a>
+	</div>
+	<div class="container mt-3">
+		<div id="table" class="table-responsive"></div>
+	</div>
+</section>
 
 <?php include 'footer.php'; ?>
