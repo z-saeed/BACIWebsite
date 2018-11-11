@@ -10,6 +10,7 @@ $address = $_SESSION['address'];
 
 $firstName = $user->getFirstName();
 $userPriv = $user->getUserPrivilege();
+$userStatus = $user->getUserStatus();
 
 function passwordToDots($password) {
     $len = strlen($password);
@@ -185,7 +186,29 @@ function passwordToDots($password) {
 					</div>
 				</div>
 			</div>
+			<?php if ($userStatus != "Mentor") {?>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">View Mentors</h5>
+						<p class="card-text">View registered mentors</p>
+						<a href="mentors.php" class="btn btn-success">View Mentors</a>
+					</div>
+				</div>
+			</div>
+		<?php } if ($userStatus != "Mentee"){ ?>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">View Mentees</h5>
+						<p class="card-text">View registered mentees</p>
+						<a href="mentees.php" class="btn btn-success">View Mentees</a>
+					</div>
+				</div>
+			</div>
+		<?php } ?>
 		</div>
+
 
 	</div>
 </section>
