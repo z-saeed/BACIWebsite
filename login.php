@@ -38,6 +38,23 @@ if (isset($_POST['login'])) {
 			$user->setUserStatus($row->userStatus);
 			$user->setAddressID($row->addressID);
 			$user->setUserPrivilege($row->privilege);
+			$user->setIdentityID($row->identityID);
+			$user->setFbLink($row->fbLink);
+			$user->setTwLink($row->twLink);
+			$user->setLkLink($row->lkdLink);
+
+			$imageSTMT = $con->prepare('SELECT * FROM picture_tbl WHERE ID = :ID');
+			$imageSTMT->execute(array('ID'=>$row->pictureID));
+			$imageRow = $imageSTMT->fetch(PDO::FETCH_OBJ);
+
+			$user->setImagePath($imageRow->location);
+
+			$resumeSTMT = $con->prepare('SELECT * FROM resume_tbl WHERE ID = :ID');
+			$resumeSTMT->execute(array('ID'=>$row->resumeID));
+			$resumeRow = $resumeSTMT->fetch(PDO::FETCH_OBJ);
+
+			$user->setResumePath($resumeRow->location);
+
 			$_SESSION['user'] = $user;
 
 			$addressSTMT = $con->prepare('SELECT * FROM address_tbl WHERE ID = :ID');

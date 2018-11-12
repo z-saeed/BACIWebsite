@@ -119,8 +119,8 @@ function passwordToDots($password) {
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">User List</h5>
-						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-						<a href="#" class="btn btn-primary">User List</a>
+						<p class="card-text">List of all the registered users in the database.</p>
+						<a href="listUsers.php" class="btn btn-primary">User List</a>
 					</div>
 				</div>
 			</div>
@@ -128,8 +128,8 @@ function passwordToDots($password) {
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Mentor List</h5>
-						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-						<a href="#" class="btn btn-primary">Mentor List</a>
+						<p class="card-text">List of all the registered mentors in the database.</p>
+						<a href="listMentors.php" class="btn btn-primary">Mentor List</a>
 					</div>
 				</div>
 			</div>
@@ -137,8 +137,8 @@ function passwordToDots($password) {
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Mentee List</h5>
-						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-						<a href="#" class="btn btn-primary">Mentor List</a>
+						<p class="card-text">List of all the registered mentees in the database.</p>
+						<a href="listMentees.php" class="btn btn-primary">Mentee List</a>
 					</div>
 				</div>
 			</div>
@@ -192,7 +192,7 @@ function passwordToDots($password) {
 					<div class="card-body">
 						<h5 class="card-title">View Mentors</h5>
 						<p class="card-text">View registered mentors</p>
-						<a href="mentors.php" class="btn btn-success">View Mentors</a>
+						<a href="listMentors.php" class="btn btn-success">View Mentors</a>
 					</div>
 				</div>
 			</div>
@@ -202,7 +202,7 @@ function passwordToDots($password) {
 					<div class="card-body">
 						<h5 class="card-title">View Mentees</h5>
 						<p class="card-text">View registered mentees</p>
-						<a href="mentees.php" class="btn btn-success">View Mentees</a>
+						<a href="listMentees.php" class="btn btn-success">View Mentees</a>
 					</div>
 				</div>
 			</div>

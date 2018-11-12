@@ -1,18 +1,48 @@
 $(document).ready(function() {
 	var xmlhttp;
-	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-	} else {// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange=function() {
-		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			$('#table').html(xmlhttp.responseText);
-			$('#userList').DataTable();
+	if (document.getElementById("table")) {
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		} else {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 		}
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+				$('#table').html(xmlhttp.responseText);
+				$('#userList').DataTable();
+			}
+		}
+		xmlhttp.open("GET","getUsers.php",true);
+		xmlhttp.send();
+	} else if (document.getElementById("tableMentor")) {
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		} else {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+				$('#tableMentor').html(xmlhttp.responseText);
+				$('#userList').DataTable();
+			}
+		}
+		xmlhttp.open("GET","getMentors.php",true);
+		xmlhttp.send();
+	} else if(document.getElementById("tableMentee")) {
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		} else {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+				$('#tableMentee').html(xmlhttp.responseText);
+				$('#userList').DataTable();
+			}
+		}
+		xmlhttp.open("GET","getMentees.php",true);
+		xmlhttp.send();
 	}
-	xmlhttp.open("GET","getUsers.php",true);
-	xmlhttp.send();
 	// $('#example').DataTable( {
     //     "processing": true,
     //     "serverSide": true,

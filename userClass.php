@@ -16,8 +16,12 @@ class User
 	private $userPrivilege;
     private $imagePath;
     private $resumePath;
+    private $identityID;
+    private $fbLink;
+    private $twLink;
+    private $lkLink;
 
-	function __construct($ID = 0, $userName = "", $password = "", $email = "", $firstName = "", $lastName = "", $phoneNumber = "", $gender = "", $registerDate = "", $userStatus = "", $addressID = 0, $userPrivilege = 0, $imagePath= "", $resumePath = "")
+	function __construct($ID = 0, $userName = "", $password = "", $email = "", $firstName = "", $lastName = "", $phoneNumber = "", $gender = "", $registerDate = "", $userStatus = "", $addressID = 0, $userPrivilege = 0, $imagePath= "", $resumePath = "", $identityID = "", $fbLink = "", $twLink = "", $lkLink = "")
 	{
 		$this->ID = $ID;
 		$this->userName = $userName;
@@ -33,6 +37,10 @@ class User
 		$this->userPrivilege = $userPrivilege;
         $this->imagePath = $imagePath;
         $this->resumePath = $resumePath;
+        $this->identityID = $identityID;
+        $this->fbLink = $fbLink;
+        $this->twLink = $twLink;
+        $this->lkLink = $lkLink;
 	}
 
     public function getID()
@@ -181,5 +189,45 @@ class User
     public function setResumePath($resumePath)
     {
         $this->resumePath = $resumePath;
+    }
+
+    public function getIdentityID()
+    {
+        return $this->identityID;
+    }
+
+    public function setIdentityID($identityID)
+    {
+        $this->identityID = $identityID;
+    }
+
+    public function getFbLink()
+    {
+        return $this->fbLink;
+    }
+
+    public function setFbLink($fbLink)
+    {
+        $this->fbLink = $fbLink;
+    }
+
+    public function getTwLink()
+    {
+        return $this->twLink;
+    }
+
+    public function setTwLink($twLink)
+    {
+        $this->twLink = $twLink;
+    }
+
+    public function getLkLink()
+    {
+        return $this->lkLink;
+    }
+
+    public function setLkLink($lkLink)
+    {
+        $this->lkLink = $lkLink;
     }
 }

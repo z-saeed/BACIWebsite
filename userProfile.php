@@ -32,6 +32,10 @@ if (isset($_REQUEST["userID"])) {
 		$user->setUserStatus($row->userStatus);
 		$user->setAddressID($row->addressID);
 		$user->setUserPrivilege($row->privilege);
+		$user->setIdentityID($row->identityID);
+		$user->setFbLink($row->fbLink);
+		$user->setTwLink($row->twLink);
+		$user->setLkLink($row->lkdLink);
 
 		$imageSTMT = $con->prepare('SELECT * FROM picture_tbl WHERE ID = :ID');
 		$imageSTMT->execute(array('ID'=>$row->pictureID));
@@ -72,6 +76,14 @@ if (isset($_REQUEST["userID"])) {
 	$address = $_SESSION['address'];
 }
 
+$mmSelect = "";
+if(isset($_REQUEST["mmSelect"])) {
+	if ($_REQUEST["mmSelect"] == 0)
+		$mmSelect = "Mentee";
+	else
+		$mmSelect = "Mentor";
+}
+
 $firstName = $user->getFirstName();
 $userPriv = $user->getUserPrivilege();
 
@@ -86,7 +98,16 @@ function passwordToDots($password) {
 ?>
 <section id="dashboard">
 	<div class="container">
-		<a href="dashboard.php" class="btn btn-primary btn-sm">Back to Dashboard <i class="fas fa-undo-alt"></i></a>
+		<div class="row mt-4">
+			<div class="col-md-4 col-sm-4">
+				<a href="dashboard.php" class="btn btn-primary btn-sm">Back to Dashboard <i class="fas fa-undo-alt"></i></a>
+			</div>
+			<?php if ($mmSelect != "") { ?>
+			<div class="col-md-4 col-sm-4">
+				<a href="" class="btn btn-success btn-sm">Select as <?php echo $mmSelect?></a> <!-- ADD THE LINK TO INSERT TO MMRELATION TABLE HERE -->
+			</div>
+			<?php } ?>
+		</div>
 		<div class="row mt-4">
 			<div class="col-md-4 col-sm-4" style="padding-right:20px; border-right: 1px solid #ccc;">
 				<h3>User Profile</h3>
@@ -231,6 +252,25 @@ function passwordToDots($password) {
 					</div>
 					<div class="col-md-8 col-sm-12">
 						<p class="lead"><?php echo($address->getCountry()); ?></p>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-md-4 col-sm-8">
+						<h4>Additional Information</h4>
+					</div>
+					<?php if ($boolUser == false) { ?>
+					<div class="col-md-8 col-sm-12">
+						<p class="lead"><a href="">Edit Additional Information</a></p>
+					</div>
+					<?php } ?>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-sm-8">
+						<p class="lead">Facebook Link</p>
+					</div>
+					<div class="col-md-8 col-sm-12">
+						<p class="lead"><a href="https://www.<?php echo($user->getFbLink()); ?>"><?php echo($user->getFbLink()); ?></a></p>
 					</div>
 				</div>
 			</div>
