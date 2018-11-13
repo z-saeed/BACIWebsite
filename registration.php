@@ -252,8 +252,11 @@ if (isset($_POST['enter'])) {
 		</div>
 		<hr>
 		<div class="form-row">
-			<div class="form-group col-md-3 col-sm-8">
-				<a href="#" class="btn btn-success" onclick="addEducation()">Add Education</a>
+			<div class="form-group col-md-3 col-sm-6">
+				<button type="button" class="btn btn-success" id="addEducation">Add Education</button>
+			</div>
+			<div class="form-group col-md-3 col-sm-6">
+				<button type="button" class="btn btn-danger" id="removeEducation">Remove Education</button>
 			</div>
 		</div>
 		<div id="dynamicEducation"></div>

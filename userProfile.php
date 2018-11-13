@@ -256,6 +256,68 @@ function passwordToDots($password) {
 				</div>
 				<hr>
 				<div class="row">
+					<?php if ($boolUser == false) { ?>
+					<div class="col-md-4 col-sm-12">
+						<p class="lead"><a href="" class="btn btn-outline-primary btn-sm">Add Education</a></p>
+					</div>
+					<?php } ?>
+				</div>
+				<?php 
+
+				$eduSTMT = $con->prepare('SELECT * FROM education_tbl WHERE userID = :ID');
+				$eduSTMT->execute(array('ID'=>$user->getID()));
+				$count = 1;
+				while($eduRow = $eduSTMT->fetch(PDO::FETCH_OBJ)) {
+
+					$degreeSTMT = $con->prepare('SELECT * FROM degree_tbl WHERE ID = :ID AND active = 1');
+					$degreeSTMT->execute(array('ID'=>$eduRow->degreeType));
+					$degreeRow = $degreeSTMT->fetch(PDO::FETCH_OBJ);
+				?>
+				<div class="row">
+					<div class="col-md-4 col-sm-8">
+						<h4>Education <?php echo $count; ?></h4>
+					</div>
+					<div class="col-md-8 col-sm-12">
+						<p class="lead"><a href="">Edit Education <?php echo $count; ?></a></p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-sm-8">
+						<p class="lead">Degree Type:</p>
+					</div>
+					<div class="col-md-8 col-sm-12">
+						<p class="lead"><?php echo $degreeRow->type; ?></p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-sm-8">
+						<p class="lead">Major:</p>
+					</div>
+					<div class="col-md-8 col-sm-12">
+						<p class="lead"><?php echo $eduRow->major; ?></p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-sm-8">
+						<p class="lead">School Name:</p>
+					</div>
+					<div class="col-md-8 col-sm-12">
+						<p class="lead"><?php echo $eduRow->schoolName; ?></p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-sm-8">
+						<p class="lead">Completion Year:</p>
+					</div>
+					<div class="col-md-8 col-sm-12">
+						<p class="lead"><?php echo $eduRow->completionYear; ?></p>
+					</div>
+				</div>
+				<?php 
+				$count++;
+				} ?>
+				<hr>
+				<div class="row">
 					<div class="col-md-4 col-sm-8">
 						<h4>Additional Information</h4>
 					</div>
@@ -265,6 +327,7 @@ function passwordToDots($password) {
 					</div>
 					<?php } ?>
 				</div>
+				<?php if ($user->getFbLink() != "") {?>
 				<div class="row">
 					<div class="col-md-4 col-sm-8">
 						<p class="lead">Facebook Link</p>
@@ -273,6 +336,27 @@ function passwordToDots($password) {
 						<p class="lead"><a href="https://www.<?php echo($user->getFbLink()); ?>"><?php echo($user->getFbLink()); ?></a></p>
 					</div>
 				</div>
+				<?php }
+				if ($user->getTwLink() != "") { ?>
+				<div class="row">
+					<div class="col-md-4 col-sm-8">
+						<p class="lead">Twitter Link</p>
+					</div>
+					<div class="col-md-8 col-sm-12">
+						<p class="lead"><a href="https://www.<?php echo($user->getTwLink()); ?>"><?php echo($user->getTwLink()); ?></a></p>
+					</div>
+				</div>
+				<?php }
+				if ($user->getLkLink() != "") { ?>
+				<div class="row">
+					<div class="col-md-4 col-sm-8">
+						<p class="lead">LinkedIn Link</p>
+					</div>
+					<div class="col-md-8 col-sm-12">
+						<p class="lead"><a href="https://www.<?php echo($user->getLkLink()); ?>"><?php echo($user->getLkLink()); ?></a></p>
+					</div>
+				</div>
+				<?php } ?>
 			</div>
 		</div>
 	</div>
