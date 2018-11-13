@@ -1,6 +1,7 @@
 <?php
 include 'userClass.php';
 include 'addressClass.php';
+include 'pairClass.php';
 session_start();
 require_once 'inc/util.php';
 require_once 'mail/mail.class.php';

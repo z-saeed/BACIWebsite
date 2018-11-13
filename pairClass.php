@@ -21,7 +21,7 @@ class Pair
 
     public function setMenteeID($menteeID)
     {
-        $this->ID = $menteeID;
+        $this->menteeID = $menteeID;
     }
 
 	public function getMentorID()
@@ -31,7 +31,7 @@ class Pair
 
     public function setMentorID($mentorID)
     {
-        $this->ID = $mentorID;
+        $this->mentorID = $mentorID;
     }
 	
 	public function getRequester()
@@ -41,7 +41,7 @@ class Pair
 
     public function setRequester($requester)
     {
-        $this->ID = $requester;
+        $this->requester = $requester;
     }
 	
 }

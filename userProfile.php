@@ -6,6 +6,9 @@ if($_SESSION['loggedin'] == false) {
 	header('Location: login.php'); 
 }
 
+$user = $_SESSION['user'];
+$pairID = $user->getID();
+
 $user = new User();
 $address = new Address();
 
@@ -70,6 +73,10 @@ if (isset($_REQUEST["userID"])) {
 		$address->setZipCode($addressRow->zipCode);
 		$address->setCountry($countryRow->name);
 		$address->setCountryID($stateRow->countryID);
+		
+		//set PairClass
+		$mmPair = new Pair();
+		
 	}
 } else {
 	$user = $_SESSION['user'];
@@ -78,10 +85,19 @@ if (isset($_REQUEST["userID"])) {
 
 $mmSelect = "";
 if(isset($_REQUEST["mmSelect"])) {
-	if ($_REQUEST["mmSelect"] == 0)
+	if ($_REQUEST["mmSelect"] == 0){
+		$mmPair->setMenteeID($userID);
+		$mmPair->setMentorID($pairID);
+		$mmPair->setRequester(1);
+		$_SESSION['mmPair'] = $mmPair;
 		$mmSelect = "Mentee";
-	else
+	}else if($_REQUEST["mmSelect"] == 1){
+		$mmPair->setMenteeID($pairID);
+		$mmPair->setMentorID($userID);
+		$mmPair->setRequester(0);
+		$_SESSION['mmPair'] = $mmPair;
 		$mmSelect = "Mentor";
+	}
 }
 
 $firstName = $user->getFirstName();
@@ -104,7 +120,7 @@ function passwordToDots($password) {
 			</div>
 			<?php if ($mmSelect != "") { ?>
 			<div class="col-md-4 col-sm-4">
-				<a href="" class="btn btn-success btn-sm">Select as <?php echo $mmSelect?></a> <!-- ADD THE LINK TO INSERT TO MMRELATION TABLE HERE -->
+				<a href="pairRequest.php" class="btn btn-success btn-sm">Select as <?php echo $mmSelect?></a> <!-- ADD THE LINK TO INSERT TO MMRELATION TABLE HERE -->
 			</div>
 			<?php } ?>
 		</div>
