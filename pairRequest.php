@@ -9,7 +9,7 @@ if($_SESSION['loggedin'] == false) {
 $mmPair = $_SESSION['mmPair'];
 $requestDate = date("Y/m/d");
 
-$mmRelationship = $con->prepare("INSERT INTO mmRelationship_tbl (`ID`, `mentorID`, `menteeID`, `requester`, `requestDate`, `rejectDate`, `startDate`, `endDate`, `status`) VALUES (NULL, :mentorID, :menteeID, :requester, :requestDate, '', '', '', '0')");
+$mmRelationship = $con->prepare("INSERT INTO mmRelationship_tbl (`ID`, `mentorID`, `menteeID`, `requester`, `requestDate`, `rejectDate`, `startDate`, `endDate`) VALUES (NULL, :mentorID, :menteeID, :requester, :requestDate, '', '', '')");
 $mmRelationship->execute(array('mentorID'=>$mmPair->getMentorID(), 'menteeID'=>$mmPair->getMenteeID(), 'requester'=>$mmPair->getRequester(), 'requestDate'=>$requestDate));
 
 ?>
