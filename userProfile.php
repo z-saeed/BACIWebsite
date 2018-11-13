@@ -127,8 +127,11 @@ function passwordToDots($password) {
 		<div class="row mt-4">
 			<div class="col-md-4 col-sm-4" style="padding-right:20px; border-right: 1px solid #ccc;">
 				<h3>User Profile</h3>
-				<div class="row">
-					<img src="<?php echo($user->getResumePath());?>" alt="profile_pic" class="rounded-circle">
+				<div class="row mt-4">
+					<img src="<?php echo($user->getImagePath());?>" alt="profile_pic" class="rounded-circle" width="75%" height="75%">
+				</div>
+				<div class="row mt-4">
+						<p class="lead"><a href="">Edit Profile Picture</a></p>
 				</div>
 			</div>
 			<div class="col-md-8 col-sm-12">
