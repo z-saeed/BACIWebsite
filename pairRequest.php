@@ -7,6 +7,10 @@ if($_SESSION['loggedin'] == false) {
 }
 
 $mmPair = $_SESSION['mmPair'];
+$requestDate = date("Y/m/d");
+
+$mmRelationship = $con->prepare("INSERT INTO mmRelationship_tbl (`ID`, `mentorID`, `menteeID`, `requester`, `requestDate`, `rejectDate`, `startDate`, `endDate`, `status`) VALUES (NULL, :mentorID, :menteeID, :requester, :requestDate, '', '', '', '0')");
+$mmRelationship->execute(array('mentorID'=>$mmPair->getMentorID(), 'menteeID'=>$mmPair->getMenteeID(), 'requester'=>$mmPair->getRequester(), 'requestDate'=>$requestDate));
 
 ?>
 
@@ -25,6 +29,9 @@ $mmPair = $_SESSION['mmPair'];
 	if($mmPair->getRequester()==1)
 		echo "Mentor";
 	?>
+	</br></br>
+	Today's Date: <?php echo $requestDate?>
+	
 </div>
 
 <?php include 'footer.php'; ?>
