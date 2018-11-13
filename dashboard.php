@@ -212,3 +212,4 @@ function passwordToDots($password) {
 
 	</div>
 </section>
+<?php include 'footer.php'; ?>
