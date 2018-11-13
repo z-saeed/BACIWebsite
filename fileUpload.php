@@ -11,8 +11,12 @@ $user = $_SESSION['user'];
 $userID = $user->getID();
 
 $currentDir = getcwd();
-$uploadPictureDirectory = "/pics/";
-$uploadResumeDirectory = "/resume/";
+$pictureDir = "/pics/";
+$resumeDir = "/resume/";
+
+$uploadPath = "";
+$savePath = "";
+
 
 $errors = array();
 
@@ -35,7 +39,7 @@ if (isset($_FILES["picture"]["name"])) {
 		$picType = $_FILES['picture']['type'];
 		$picExtension = strtolower(end(explode('.',$picName)));
 
-		$uploadPath = $currentDir . $uploadPictureDirectory . basename($picName); 
+		$uploadPath = $currentDir . $pictureDir . basename($picName); 
 		if (isset($_POST['submit'])) {
 
 			if (! in_array($picExtension,$picExtensions)) {
@@ -50,9 +54,10 @@ if (isset($_FILES["picture"]["name"])) {
 				$didUpload = move_uploaded_file($picTmpName, $uploadPath);
 
 				if ($didUpload) {
+					$savePath = $pictureDir . basename($picName);
 					$msg = $msg."The picture " . basename($picName) . " has been uploaded\n";
 					$stmt = $con->prepare('INSERT INTO picture_tbl (location) VALUES (:location)');
-		        	$stmt->execute(array('location'=>$uploadPath));
+		        	$stmt->execute(array('location'=>$savePath));
 		        	$picture_id = $con->lastInsertId();
 					$updateUserInfo = $con->prepare("UPDATE user_tbl SET pictureID = '$picture_id' WHERE ID = '$userID'");
 					$updateUserInfo->execute(array());
@@ -76,7 +81,7 @@ if (isset($_FILES["resume"]["name"])) {
 		$resumeType = $_FILES['resume']['type'];
 		$resumeExtension = strtolower(end(explode('.',$resumeName)));
 
-		$uploadPath = $currentDir . $uploadResumeDirectory . basename($resumeName); 
+		$uploadPath = $currentDir . $resumeDir . basename($resumeName); 
 		if (isset($_POST['submit'])) {
 
 			if (! in_array($resumeExtension,$resumeExtensions)) {

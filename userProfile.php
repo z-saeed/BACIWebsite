@@ -131,7 +131,7 @@ function passwordToDots($password) {
 					<img src="<?php echo($user->getImagePath());?>" alt="profile_pic" class="rounded-circle" width="75%" height="75%">
 				</div>
 				<div class="row mt-4">
-						<p class="lead"><a href="">Edit Profile Picture</a></p>
+						<p class="lead"><a href="fileUpload.php">Edit Profile Picture</a></p>
 				</div>
 			</div>
 			<div class="col-md-8 col-sm-12">
