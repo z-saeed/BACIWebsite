@@ -2,7 +2,7 @@
 
 require_once "db_connect.php";
 
-$stmt = $con->prepare("SELECT * FROM mmRelationship WHERE status = 0");
+$stmt = $con->prepare("SELECT * FROM mmRelationship_tbl WHERE rejectDate IS NULL AND  startDate IS NULL");
 $stmt->execute(array());
 
 $string = <<<EOT

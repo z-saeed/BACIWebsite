@@ -187,7 +187,7 @@ if (isset($_POST['enter'])) {
 			</div>
 		</div>
 		<div class="form-row">
-			<div class="form-group col-md-6 col-sm-12">
+			<div class="form-group col-md-3 col-sm-6">
 				<label for="phoneNumber">Phone Number</label>
 				<input type="number" class="form-control" id="phoneNumber" value="<?php print $phoneNumber; ?>" name="phoneNumber">
 			</div>
@@ -197,6 +197,10 @@ if (isset($_POST['enter'])) {
 					<option value="0" selected>Male</option>
 					<option value="1">Female</option>				
 				</select>
+			</div>
+			<div class="form-group col-md-3 col-sm-6">
+				<label for="birthYear">Birth Year</label>
+				<select name="birthYear" id="birthYear" class="form-control"></select>
 			</div>
 			<div class="form-group col-md-3 col-sm-6">
 				<label for="userType">User Status</label>

@@ -71,12 +71,11 @@ $(document).ready(function() {
 	##################################
 	*/
 
-	var num = 0;
+	var num = 1;
 	$("#removeEducation").hide();
 
 	function addEducation() {
 		$("#removeEducation").show();
-		num++;
 		var field = document.getElementById('dynamicEducation');
 		var div = document.createElement("div");
 		div.setAttribute("id", "removeDiv" + num);
@@ -84,10 +83,7 @@ $(document).ready(function() {
 		<div class="form-row">
 			<div class="form-group col-md-3 col-sm-6">
 				<label for="degree${num}">Degree</label>
-				<select id="degree${num}" class="form-control" name="degree${num}" required>
-					<option value="ID" selected>Degree from Database</option>
-					<option value="ID">Degree from Database</option>				
-				</select>
+				<div class="degree"></div>
 			</div>
 			<div class="form-group col-md-3 col-sm-6">
 				<label for="major">Major</label>
@@ -106,7 +102,22 @@ $(document).ready(function() {
 			</div>
 		</div>
 		`;
+		num++;
 		field.appendChild(div);
+		if(document.getElementsByClassName("degree")) {
+			if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp=new XMLHttpRequest();
+			} else {// code for IE6, IE5
+				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			xmlhttp.onreadystatechange=function() {
+				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+					$('.degree').html(xmlhttp.responseText);
+				}
+			}
+			xmlhttp.open("GET","getDegree.php?num=" + num,true);
+			xmlhttp.send();
+		}
 	}
 
 	function removeEducation() {
@@ -118,6 +129,24 @@ $(document).ready(function() {
 
 	$('#addEducation').click(addEducation);
 	$('#removeEducation').click(removeEducation);
+
+	/*
+	##################################
+	###### BIRTH YEAR SELECTION ######
+	##################################
+	*/
+
+	$('#birthYear').each(function() {
+		var year = (new Date()).getFullYear();
+		var current = year;
+		for (var i = 0; i < 90; i++) {
+			if ((year+i) == current)
+				$(this).append('<option selected value="' + (year - i) + '">' + (year - i) + '</option>');
+			else
+				$(this).append('<option value="' + (year - i) + '">' + (year - i) + '</option>');
+		}
+
+	});
 
 	/*
 	################################
@@ -162,17 +191,3 @@ $(function() {
 		});
 	});
 });
-
-$(document).ready(function() {
-	$('#employment').change(function() {
-    	var value = $(this).val();
-    	if (value == "student") {
-    		$(".workingProfessional").hide();
-    	} else {
-    		$(".workingProfessional").show();
-    	}
-	});
-});
-
-
-
