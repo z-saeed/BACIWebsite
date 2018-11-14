@@ -158,7 +158,7 @@ function passwordToDots($password) {
 					<div class="card-body">
 						<h5 class="card-title">Current Pairings</h5>
 						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-						<a href="#" class="btn btn-primary">Current Pairings</a>
+						<a href="listCurrent.php" class="btn btn-primary">Current Pairings</a>
 					</div>
 				</div>
 			</div>
