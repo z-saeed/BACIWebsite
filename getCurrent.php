@@ -6,7 +6,7 @@ $stmt = $con->prepare("SELECT * FROM mmRelationship_tbl WHERE startDate IS NOT N
 $stmt->execute(array());
 
 $string = <<<EOT
-<table  id="userList" class="display table" cellspacing="0" width="100%">
+<table  id="currentList" class="display table" cellspacing="0" width="100%">
 <thead>
 <tr>
 <th>Mentor Full Name</th>

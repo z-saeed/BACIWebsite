@@ -31,7 +31,7 @@ $(document).ready(function() {
 		xmlhttp.onreadystatechange=function() {
 			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 				$('#tableMentor').html(xmlhttp.responseText);
-				$('#userList').DataTable();
+				$('#mentorList').DataTable();
 			}
 		}
 		xmlhttp.open("GET","getMentors.php",true);
@@ -76,7 +76,7 @@ $(document).ready(function() {
 		xmlhttp.onreadystatechange=function() {
 			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 				$('#tableCurrent').html(xmlhttp.responseText);
-				$('#userList').DataTable();
+				$('#currentList').DataTable();
 			}
 		}
 		xmlhttp.open("GET","getCurrent.php",true);

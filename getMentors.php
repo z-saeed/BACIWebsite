@@ -6,7 +6,7 @@ $stmt = $con->prepare("SELECT * FROM user_tbl WHERE userStatus = 1");
 $stmt->execute(array());
 
 $string = <<<EOT
-<table  id="userList" class="display table" cellspacing="0" width="100%">
+<table  id="mentorList" class="display table" cellspacing="0" width="100%">
 <thead>
 <tr>
 <th>First Name</th>
