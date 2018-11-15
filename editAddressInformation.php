@@ -27,14 +27,14 @@ if (isset($_POST['update'])) {
 	$city = trim($_POST['city']);
 	$zipCode = trim($_POST['zipCode']);
 	
-	$updateAddressInfo = $con->prepare("UPDATE address_tbl SET street1 = '$street1', street2 = '$street2', city = '$city', stateID = '$s', zipCode = '$zipCode' WHERE ID = '$addressID'");
+	$updateAddressInfo = $con->prepare("UPDATE address_tbl SET street1 = '$street1', street2 = '$street2', city = '$city', stateID = '$state', zipCode = '$zipCode' WHERE ID = '$addressID'");
 	$updateAddressInfo->execute(array());
-	$address->setStreet1($addressRow->street1);
-	$address->setStreet2($addressRow->street2);
-	$address->setCity($addressRow->city);
-	$address->setState($stateRow->name);
-	$address->setZipCode($addressRow->zipCode);
-	$address->setCountry($countryRow->name);
+	$address->setStreet1($street1);
+	$address->setStreet2($street2);
+	$address->setCity($city);
+	$address->setState($state);
+	$address->setZipCode($zipCode);
+	$address->setCountry($country);
 
 	$success = "Update Successful";
 
