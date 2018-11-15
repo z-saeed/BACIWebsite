@@ -208,6 +208,17 @@ function passwordToDots($password) {
 			</div>
 		<?php } ?>
 		</div>
+		<div class="row mt-1">
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">User Pairing</h5>
+						<p class="card-text">View Current Pairing Details.</p>
+						<a href="userPairing.php" class="btn btn-success">User Pairing</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
 
 	</div>
