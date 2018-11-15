@@ -82,13 +82,13 @@ if (isset($_REQUEST["userID"]) && ($_REQUEST["mmSelect"] == 1 || $_REQUEST["mmSe
 		$mmPair->setMentorID($user2->getID());
 		$mmPair->setRequester(0);
 		$_SESSION['mmPair'] = $mmPair;
-		$mmSelect = "Mentee";
+		$mmSelect = "Mentor";
 		}else if($_REQUEST["mmSelect"] == 1){
 			$mmPair->setMenteeID($user2->getID());
 			$mmPair->setMentorID($user->getID());
 			$mmPair->setRequester(1);
 			$_SESSION['mmPair'] = $mmPair;
-			$mmSelect = "Mentor";
+			$mmSelect = "Mentee";
 		}
 		$firstName = $user->getFirstName();
 		$userPriv = $user->getUserPrivilege();
