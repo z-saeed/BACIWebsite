@@ -120,6 +120,11 @@ if (isset($_FILES["resume"]["name"])) {
 <section id="editUserInfo">
 	<div id="userInfoCell">
 		<div class="container">
+			<div class="row mt-4">
+				<div class="col-md-4 col-sm-4">
+					<a href="dashboard.php" class="btn btn-secondary btn-sm">Back to Dashboard <i class="fas fa-undo-alt"></i></a>
+				</div>
+			</div>
 			<div class="row">
 				<div class="col-12">
 					<h2>Upload Files</h2>
