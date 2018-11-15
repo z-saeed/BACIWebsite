@@ -162,7 +162,7 @@ function passwordToDots($password) {
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-4">
+			<!--<div class="col-sm-4">
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Create New Pair</h5>
@@ -171,6 +171,7 @@ function passwordToDots($password) {
 					</div>
 				</div>
 			</div>
+			-->
 		</div>
 		<hr>
 	<?php } ?>
