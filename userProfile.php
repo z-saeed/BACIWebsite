@@ -218,7 +218,7 @@ function passwordToDots($password) {
 					</div>
 					<?php if ($boolUser == false) { ?>
 					<div class="col-md-8 col-sm-12">
-						<p class="lead"><a href="">Edit Address Information</a></p>
+						<p class="lead"><a href="editAddressInformation.php">Edit Address Information</a></p>
 					</div>
 					<?php } ?>
 				</div>
@@ -250,18 +250,18 @@ function passwordToDots($password) {
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-sm-8">
-						<p class="lead">State:</p>
-					</div>
-					<div class="col-md-8 col-sm-12">
-						<p class="lead"><?php echo($address->getState()); ?></p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
 						<p class="lead">ZipCode:</p>
 					</div>
 					<div class="col-md-8 col-sm-12">
 						<p class="lead"><?php echo($address->getZipCode()); ?></p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-sm-8">
+						<p class="lead">State:</p>
+					</div>
+					<div class="col-md-8 col-sm-12">
+						<p class="lead"><?php echo($address->getState()); ?></p>
 					</div>
 				</div>
 				<div class="row">
