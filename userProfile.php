@@ -119,7 +119,7 @@ function passwordToDots($password) {
 			</div>
 			<?php if ($mmSelect != "") { ?>
 			<div class="col-md-4 col-sm-4">
-				<a href="pairRequest.php" class="btn btn-success btn-sm">Select as <?php echo $mmSelect?></a> <!-- ADD THE LINK TO INSERT TO MMRELATION TABLE HERE -->
+				<a href="pairRequest.php?id=<?php echo $user->getID(); ?>" class="btn btn-success btn-sm">Select as <?php echo $mmSelect?></a> <!-- ADD THE LINK TO INSERT TO MMRELATION TABLE HERE -->
 			</div>
 			<?php } ?>
 		</div>

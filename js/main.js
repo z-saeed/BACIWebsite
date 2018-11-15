@@ -21,7 +21,8 @@ $(document).ready(function() {
 		}
 		xmlhttp.open("GET","getUsers.php",true);
 		xmlhttp.send();
-	} else if (document.getElementById("tableMentor")) {
+	}
+	if (document.getElementById("tableMentor")) {
 		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 			xmlhttp=new XMLHttpRequest();
 		} else {// code for IE6, IE5
@@ -35,7 +36,8 @@ $(document).ready(function() {
 		}
 		xmlhttp.open("GET","getMentors.php",true);
 		xmlhttp.send();
-	} else if(document.getElementById("tableMentee")) {
+	} 
+	if(document.getElementById("tableMentee")) {
 		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 			xmlhttp=new XMLHttpRequest();
 		} else {// code for IE6, IE5
@@ -49,7 +51,8 @@ $(document).ready(function() {
 		}
 		xmlhttp.open("GET","getMentees.php",true);
 		xmlhttp.send();
-	} else if(document.getElementById("tablePending")) {
+	}
+	if(document.getElementById("tablePending")) {
 		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 			xmlhttp=new XMLHttpRequest();
 		} else {// code for IE6, IE5
@@ -63,7 +66,8 @@ $(document).ready(function() {
 		}
 		xmlhttp.open("GET","getPending.php",true);
 		xmlhttp.send();
-	} else if(document.getElementById("tableCurrent")) {
+	}
+	if(document.getElementById("tableCurrent")) {
 		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 			xmlhttp=new XMLHttpRequest();
 		} else {// code for IE6, IE5
