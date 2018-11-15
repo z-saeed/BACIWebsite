@@ -6,9 +6,6 @@ if($_SESSION['loggedin'] == false) {
 	header('Location: login.php'); 
 }
 
-$user = $_SESSION['user'];
-$pairID = $user->getID();
-
 $user = new User();
 $address = new Address();
 
@@ -82,6 +79,8 @@ if (isset($_REQUEST["userID"])) {
 	$user = $_SESSION['user'];
 	$address = $_SESSION['address'];
 }
+
+$pairID = $user->getID();
 
 $mmSelect = "";
 if(isset($_REQUEST["mmSelect"])) {
