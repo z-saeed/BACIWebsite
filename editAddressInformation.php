@@ -90,15 +90,14 @@ if (isset($_POST['update'])) {
 						<p class="lead">State:</p>
 					</div>
 					<div class="form-group col-md-8 col-sm-12">
-						<select id="state" class="form-control" name="state">
-							<?php 
-							$result = $con->query("select * from state_tbl ORDER BY name ASC");
-							echo '<select id="state" class="form-control" name="state">';
-							while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-								echo "<option value='" . $row['ID'] ."'>" . $row['name'] ."</option>";
-							}
-							echo "</select>";
-							?>
+						<?php 
+						$result = $con->query("select * from state_tbl ORDER BY name ASC");
+						echo '<select id="state" class="form-control" name="state">';
+						while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+							echo "<option value='" . $row['ID'] ."'>" . $row['name'] ."</option>";
+						}
+						echo "</select>";
+						?>
 					</div>
 				</div>
 				<div class="form-row">
@@ -106,15 +105,14 @@ if (isset($_POST['update'])) {
 						<p class="lead">Country:</p>
 					</div>
 					<div class="form-group col-md-8 col-sm-12">
-						<select id="country" class="form-control" name="country">
-							<?php 
-							$result = $con->query("select * from country_tbl ORDER BY name ASC");
-							echo '<select id="country" class="form-control" name="country">';
-							while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-								echo "<option value='" . $row['ID'] ."'>" . $row['name'] ."</option>";
-							}
-							echo "</select>";
-							?>
+						<?php 
+						$result = $con->query("select * from country_tbl ORDER BY name ASC");
+						echo '<select id="country" class="form-control" name="country">';
+						while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+							echo "<option value='" . $row['ID'] ."'>" . $row['name'] ."</option>";
+						}
+						echo "</select>";
+						?>
 					</div>
 				</div>
 				<div class="form-row">
