@@ -118,7 +118,7 @@ if (isset($_REQUEST["userID"]) && ($_REQUEST["mmSelect"] == 1 || $_REQUEST["mmSe
 <section id="dashboard">
 	<div class="container">
 		<?php if($user2 == false){ ?>
-					<div class="row mt-4">
+			<div class="row mt-4">
 				<div class="col-md-4 col-sm-4">
 					<a href="dashboard.php" class="btn btn-primary btn-sm">Back to Dashboard <i class="fas fa-undo-alt"></i></a>
 				</div>
@@ -292,7 +292,7 @@ if (isset($_REQUEST["userID"]) && ($_REQUEST["mmSelect"] == 1 || $_REQUEST["mmSe
 					$count = 1;
 					while($eduRow = $eduSTMT->fetch(PDO::FETCH_OBJ)) {
 
-						$degreeSTMT = $con->prepare('SELECT * FROM degree_tbl WHERE ID = :ID AND active = 1');
+						$degreeSTMT = $con->prepare('SELECT * FROM degree_tbl WHERE ID = :ID');
 						$degreeSTMT->execute(array('ID'=>$eduRow->degreeType));
 						$degreeRow = $degreeSTMT->fetch(PDO::FETCH_OBJ);
 					?>
@@ -383,7 +383,7 @@ if (isset($_REQUEST["userID"]) && ($_REQUEST["mmSelect"] == 1 || $_REQUEST["mmSe
 				</div>
 			</div>
 		<?php }else{?>
-						<div class="row mt-4">
+				<div class="row mt-4">
 					<div class="col-md-4 col-sm-4">
 						<a href="dashboard.php" class="btn btn-primary btn-sm">Back to Dashboard <i class="fas fa-undo-alt"></i></a>
 					</div>
@@ -557,7 +557,7 @@ if (isset($_REQUEST["userID"]) && ($_REQUEST["mmSelect"] == 1 || $_REQUEST["mmSe
 						$count = 1;
 						while($eduRow = $eduSTMT->fetch(PDO::FETCH_OBJ)) {
 
-							$degreeSTMT = $con->prepare('SELECT * FROM degree_tbl WHERE ID = :ID AND active = 1');
+							$degreeSTMT = $con->prepare('SELECT * FROM degree_tbl WHERE ID = :ID');
 							$degreeSTMT->execute(array('ID'=>$eduRow->degreeType));
 							$degreeRow = $degreeSTMT->fetch(PDO::FETCH_OBJ);
 						?>

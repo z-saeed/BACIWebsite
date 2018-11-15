@@ -36,7 +36,9 @@ $mentor = false;
 						<?php } ?>
 					</div>
 				</div>
-				<?php while($row = $pairStatus->fetch(PDO::FETCH_ASSOC)) { 
+				<?php 
+				$header = true;
+				while($row = $pairStatus->fetch(PDO::FETCH_ASSOC)) { 
 					if ($row['mentorID'] == $user->getID()) {
 						$mentor = true;
 
@@ -66,7 +68,11 @@ $mentor = false;
 					} else if (is_null($row['endDate']) != true) {
 						$status = 'Ended';
 					}
+
+					if ($header) {
+						$header == false;
 					?>
+
 				<div class="row">
 					<div class="col-md-12 col-sm-12">
 						<table class="table">
@@ -75,20 +81,24 @@ $mentor = false;
 									<th scope="col">Mentor Name</th>
 									<th scope="col">Mentee Name</th>
 									<th scope="col">Requester</th>
-									<th scope="col">Status</th>
 									<?php if ($status == 'Current') { ?>
+									<th scope="col">Status</th>
 									<th scope="col">Start Date</th>
 									<?php } else if ($status == 'Pending') { ?>
+									<th scope="col">Status</th>
 									<th scope="col">Request Date</th>
 									<?php } else if ($status == 'Rejected') {?>
+									<th scope="col">Status</th>
 									<th scope="col">Reject Date</th>
 									<?php } else if ($status == 'Ended') {?>
+									<th scope="col">Status</th>
 									<th scope="col">End Date</th>
 									<?php } ?>
 									<th scope="col">Actions</th>
 									<th scope="col"></th>
 								</tr>
 							</thead>
+						<?php } ?>
 							<tbody>
 								<tr>
 									<?php if ($mentor) { ?>
@@ -116,7 +126,7 @@ $mentor = false;
 									<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>&change=3" class="btn btn-outline-danger">End</a></th>
 									<?php } else if ($status == 'Pending') { ?>
 									<th scope="row"><?php echo $row["requestDate"]; ?></th>
-									<?php if($requester = $user->getUserStatusNum()){?>
+									<?php if($requester != $user->getUserStatus()){?>
 									<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>.'&change=5" class="btn btn-block btn-outline-success">Approve</a></th>
 									<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>.'&change=4" class="btn btn-outline-danger">Reject</a></th>
 									<?php } ?> 
