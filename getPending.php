@@ -56,7 +56,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	else
 		$requester = "Mentor";
 
-	$string = $string."<tr><td>".$mentorFullName."</td><td>".$row["mentorID"]."</td><td>".$menteeFullName."</td><td>".$row["menteeID"]."</td><td>".$requester."</td><td>".$row["requestDate"]."</td><td><a href='' class='btn btn-outline-success'>Approve Pairing</a></td><td><a href='' class='btn btn-outline-danger'>Deny Pairing</a></td></tr>";
+	$string = $string."<tr><td>".$mentorFullName."</td><td>".$row["mentorID"]."</td><td>".$menteeFullName."</td><td>".$row["menteeID"]."</td><td>".$requester."</td><td>".$row["requestDate"]."</td><td><a href='pairing.php?mentor=".$row["mentorID"]."&mentee=".$row["menteeID"]."&change=1' class='btn btn-outline-success'>Approve Pairing</a></td><td><a href='pairing.php?mentor=".$row["mentorID"]."&mentee=".$row["menteeID"]."&change=0' class='btn btn-outline-danger'>Deny Pairing</a></td></tr>";
 }
 
 print($string);
