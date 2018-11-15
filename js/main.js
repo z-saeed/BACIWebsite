@@ -82,6 +82,21 @@ $(document).ready(function() {
 		xmlhttp.open("GET","getCurrent.php",true);
 		xmlhttp.send();
 	}
+	if(document.getElementById("coordMentee")) {
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		} else {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+				$('#coordMentee').html(xmlhttp.responseText);
+				$('#userList').DataTable();
+			}
+		}
+		xmlhttp.open("GET","getMentees.php?coord=true",true);
+		xmlhttp.send();
+	}
 
 	/*
 	##################################

@@ -86,6 +86,7 @@ $mentor = false;
 									<th scope="col">End Date</th>
 									<?php } ?>
 									<th scope="col">Actions</th>
+									<th scope="col"></th>
 								</tr>
 							</thead>
 							<tbody>
