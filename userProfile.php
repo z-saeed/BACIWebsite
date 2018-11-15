@@ -276,7 +276,7 @@ function passwordToDots($password) {
 				<div class="row">
 					<?php if ($boolUser == false) { ?>
 					<div class="col-md-4 col-sm-12">
-						<p class="lead"><a href="" class="btn btn-outline-primary btn-sm">Add Education</a></p>
+						<p class="lead"><a href="addEducation.php" class="btn btn-outline-primary btn-sm">Add Education</a></p>
 					</div>
 					<?php } ?>
 				</div>
@@ -296,7 +296,7 @@ function passwordToDots($password) {
 						<h4>Education <?php echo $count; ?></h4>
 					</div>
 					<div class="col-md-8 col-sm-12">
-						<p class="lead"><a href="">Edit Education <?php echo $count; ?></a></p>
+						<p class="lead"><a href="editEducation.php?num=<?php echo $degreeRow->ID; ?>">Edit Education <?php echo $count; ?></a></p>
 					</div>
 				</div>
 				<div class="row">

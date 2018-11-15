@@ -69,6 +69,10 @@ h4 {
 	margin: 25px 0;
 }
 
+#registration {
+	min-height: 90vh;
+}
+
 /* CONFIRMATION */
 #confimationTable {
 	position: absolute;

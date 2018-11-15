@@ -116,7 +116,6 @@ $(document).ready(function() {
 			</div>
 		</div>
 		`;
-		num++;
 		field.appendChild(div);
 		if(document.getElementsByClassName("degree")) {
 			if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -132,6 +131,7 @@ $(document).ready(function() {
 			xmlhttp.open("GET","getDegree.php?num=" + num,true);
 			xmlhttp.send();
 		}
+		num++;
 	}
 
 	function removeEducation() {
