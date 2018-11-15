@@ -80,7 +80,7 @@ if(($mailer->sendMail($menteeRow->email, "User", $subject, $body))){
 			<form action="listPending.php" method="post">
 				<div class="form-row">
 					<div class="form-group col-md-4 col-sm-8 offset-md-4 offset-sm-2">
-						<button type="submit" class="btn btn-light btn-sm" name="resend">Return to Pending<i class="fas fa-lock"></i></button>
+						<button type="submit" class="btn btn-light btn-sm"><a href="dashboard.php">Return to Dashboard</a></button>
 					</div>
 				</div>
 			</form>

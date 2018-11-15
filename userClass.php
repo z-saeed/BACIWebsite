@@ -145,6 +145,11 @@ class User
         else
             return 'Other';
     }
+	
+	public function getUserStatusNum()
+    {   
+		return $this->userStatus;
+    }
 
     public function setUserStatus($userStatus)
     {

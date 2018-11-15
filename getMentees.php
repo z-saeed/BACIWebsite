@@ -47,7 +47,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	else
 		$identity = "Working Professional";
 
-	$string = $string."<tr><td>".$row["firstName"]."</td><td>".$row["lastName"]."</td><td>".$row["email"]."</td><td>".$gender."</td><td>".$row["phone"]."</td><td>".$identity."</td><td><a href='userProfile.php?userID=".$row["ID"]."&mmSelect=0' class='btn btn-outline-info'>Mentee Profile</a></td></tr>";
+	$string = $string."<tr><td>".$row["firstName"]."</td><td>".$row["lastName"]."</td><td>".$row["email"]."</td><td>".$gender."</td><td>".$row["phone"]."</td><td>".$identity."</td><td><a href='userProfile.php?userID=".$row["ID"]."&mmSelect=1' class='btn btn-outline-info'>Mentee Profile</a></td></tr>";
 }
 
 print($string);
