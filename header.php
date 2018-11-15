@@ -33,7 +33,7 @@ require_once 'mail/mail.class.php';
 	?>
 	<nav class="navbar navbar-expand-lg navbar-dark <?php echo($navBackground); ?>">
 		<div class="container">
-			<a href="#" class="navbar-brand">Baci Project</a>
+			<a href="index.php" class="navbar-brand">Baci Project</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
