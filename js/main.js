@@ -152,9 +152,9 @@ $(document).ready(function() {
 	}
 
 	function removeEducation() {
-		$('#removeDiv'+num).remove();
+		$('#removeDiv'+ (num - 1)).remove();
 		num--;
-		if (num == 0)
+		if (num <= 1)
 			$("#removeEducation").hide();
 	}
 
