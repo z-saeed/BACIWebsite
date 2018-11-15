@@ -31,7 +31,7 @@ function passwordToDots($password) {
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Add Super Admin</h5>
-						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<p class="card-text">Add a new Super Admin.</p>
 						<a href="#" class="btn btn-danger">Add Super Admin</a>
 					</div>
 				</div>
@@ -56,7 +56,7 @@ function passwordToDots($password) {
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">User List</h5>
-						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<p class="card-text">View all users.</p>
 						<a href="listUsers.php" class="btn btn-warning">User List</a>
 					</div>
 				</div>
@@ -148,7 +148,7 @@ function passwordToDots($password) {
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Pending Pairings</h5>
-						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<p class="card-text">View pending mentor/mentee pairs.</p>
 						<a href="listPending.php" class="btn btn-primary">Pending Pairings</a>
 					</div>
 				</div>
@@ -157,8 +157,17 @@ function passwordToDots($password) {
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Current Pairings</h5>
-						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<p class="card-text">View current mentor/mentee pairs.</p>
 						<a href="listCurrent.php" class="btn btn-primary">Current Pairings</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Create New Pair</h5>
+						<p class="card-text">Add a new mentor/mentee pair.</p>
+						<a href="adminPair.php" class="btn btn-primary">Current Pairings</a>
 					</div>
 				</div>
 			</div>
