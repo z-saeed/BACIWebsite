@@ -250,18 +250,18 @@ function passwordToDots($password) {
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-sm-8">
-						<p class="lead">ZipCode:</p>
-					</div>
-					<div class="col-md-8 col-sm-12">
-						<p class="lead"><?php echo($address->getZipCode()); ?></p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 col-sm-8">
 						<p class="lead">State:</p>
 					</div>
 					<div class="col-md-8 col-sm-12">
 						<p class="lead"><?php echo($address->getState()); ?></p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-sm-8">
+						<p class="lead">ZipCode:</p>
+					</div>
+					<div class="col-md-8 col-sm-12">
+						<p class="lead"><?php echo($address->getZipCode()); ?></p>
 					</div>
 				</div>
 				<div class="row">
@@ -296,7 +296,7 @@ function passwordToDots($password) {
 						<h4>Education <?php echo $count; ?></h4>
 					</div>
 					<div class="col-md-8 col-sm-12">
-						<p class="lead"><a href="editEducation.php?num=<?php echo $degreeRow->ID; ?>">Edit Education <?php echo $count; ?></a></p>
+						<p class="lead"><a href="editEducation.php?num=<?php echo $eduRow->ID; ?>">Edit Education <?php echo $count; ?></a></p>
 					</div>
 				</div>
 				<div class="row">

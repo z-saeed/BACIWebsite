@@ -26,15 +26,26 @@ if (isset($_POST['update'])) {
 	$street2 = trim($_POST['street2']);
 	$city = trim($_POST['city']);
 	$zipCode = trim($_POST['zipCode']);
+	$state = trim($_POST['state']);
+	$country = trim($_POST['country']);
 	
 	$updateAddressInfo = $con->prepare("UPDATE address_tbl SET street1 = '$street1', street2 = '$street2', city = '$city', stateID = '$state', zipCode = '$zipCode' WHERE ID = '$addressID'");
 	$updateAddressInfo->execute(array());
 	$address->setStreet1($street1);
 	$address->setStreet2($street2);
 	$address->setCity($city);
-	$address->setState($state);
+
+	$stateSTMT = $con->prepare('SELECT * FROM state_tbl WHERE ID = :ID');
+	$stateSTMT->execute(array('ID'=>$state));
+	$stateRow = $stateSTMT->fetch(PDO::FETCH_OBJ);
+	$address->setState($stateRow->name);
+
 	$address->setZipCode($zipCode);
-	$address->setCountry($country);
+
+	$countrySTMT = $con->prepare('SELECT * FROM country_tbl WHERE ID = :ID');
+	$countrySTMT->execute(array('ID'=>$country));
+	$countryRow = $countrySTMT->fetch(PDO::FETCH_OBJ);
+	$address->setCountry($countryRow->name);
 
 	$success = "Update Successful";
 
@@ -94,7 +105,10 @@ if (isset($_POST['update'])) {
 						$result = $con->query("select * from state_tbl ORDER BY name ASC");
 						echo '<select id="state" class="form-control" name="state">';
 						while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-							echo "<option value='" . $row['ID'] ."'>" . $row['name'] ."</option>";
+							if ($row['name'] == $address->getState())
+								echo "<option value='" . $row['ID'] ."' selected>" . $row['name'] ."</option>";
+							else
+								echo "<option value='" . $row['ID'] ."'>" . $row['name'] ."</option>";
 						}
 						echo "</select>";
 						?>
@@ -109,7 +123,10 @@ if (isset($_POST['update'])) {
 						$result = $con->query("select * from country_tbl ORDER BY name ASC");
 						echo '<select id="country" class="form-control" name="country">';
 						while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-							echo "<option value='" . $row['ID'] ."'>" . $row['name'] ."</option>";
+							if ($row['name'] == $address->getCountry())
+								echo "<option value='" . $row['ID'] ."' selected>" . $row['name'] ."</option>";
+							else
+								echo "<option value='" . $row['ID'] ."'>" . $row['name'] ."</option>";
 						}
 						echo "</select>";
 						?>

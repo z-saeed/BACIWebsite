@@ -109,9 +109,7 @@ $(document).ready(function() {
 			</div>
 			<div class="form-group col-md-3 col-sm-6">
 				<label for="yearCompleted${num}">Year Completed</label>
-				<select id="yearCompleted${num}" class="form-control" name="yearCompleted${num}" required> 
-					<option value="2018" selected>2018</option>
-					<option value="2017">2017</option>				
+				<select id="yearCompleted${num}" class="form-control yearDropdown" name="yearCompleted${num}" required>			
 				</select>
 			</div>
 		</div>
@@ -159,6 +157,26 @@ $(document).ready(function() {
 			else
 				$(this).append('<option value="' + (year - i) + '">' + (year - i) + '</option>');
 		}
+
+	});
+
+	$('.yearDropdown').each(function() {
+	
+		var time = new Date();
+		var year = time.getYear();
+		if (year < 1900) {
+			year = year + 1900;
+		}
+		var date = year - 40;
+		var future = year + 10;
+		do {
+			future--;
+			if (future == (new Date()).getFullYear())
+				$(this).append("<option value=\"" +future+"\" selected>" +future+ "</option>");
+			else
+				$(this).append("<option value=\"" +future+"\">" +future+ "</option>");
+		}
+		while (future > date)
 
 	});
 

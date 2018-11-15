@@ -12,25 +12,22 @@ $eduSTMT = $con->prepare('SELECT * FROM education_tbl WHERE ID = :ID');
 $eduSTMT->execute(array('ID'=>$eduID));
 $eduRow = $eduSTMT->fetch(PDO::FETCH_OBJ);
 
-$degree = $eduRow['degreeType'];
-$major = $eduRow['major'];
-$schoolName = $eduRow['schoolName'];
-$completionYear = $eduRow['completionYear'];
+$degree = $eduRow->degreeType;
+$major = $eduRow->major;
+$schoolName = $eduRow->schoolName;
+$completionYear = $eduRow->completionYear;
+
+$success = "";
 
 if (isset($_POST['update'])) {
-	// if(!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL))
-	// 	$emailReq = '<span style="color:red">Please Enter a Valid Email</span>';
-	// else 
-	// 	$email = trim($_POST['email']);
-
-	// $firstName = trim($_POST['firstName']);
-	// $lastName = trim($_POST['lastName']);
-	// $phoneNumber = trim($_POST['phoneNumber']);
-	// $gender = trim($_POST['gender']);
-	// $userStatus = trim($_POST['userStatus']);
 	
-	// $updateUserInfo = $con->prepare("UPDATE user_tbl SET email = '$email', firstName = '$firstName', lastName = '$lastName', gender = '$gender', userStatus = '$userStatus' WHERE ID = '$userID'");
-	// $updateUserInfo->execute(array());
+	$degree = trim($_POST["degree"]);
+	$major = trim($_POST["major"]);
+	$schoolName = trim($_POST["school"]);
+	$completionYear = trim($_POST["yearCompleted"]);
+	
+	$updateEduInfo = $con->prepare("UPDATE education_tbl SET degreeType = '$degree', major = '$major', schoolName = '$schoolName', completionYear = '$completionYear' WHERE ID = '$eduID'");
+	$updateEduInfo->execute(array());
 	// $user->setFirstName($firstName);
 	// $user->setLastName($lastName);
 	// $user->setEmail($email);
@@ -38,7 +35,7 @@ if (isset($_POST['update'])) {
 	// $user->setPhoneNumber($phoneNumber);
 	// $user->setUserStatus($userStatus);
 
-	// $success = "Update Successful";
+	$success = "Update Successful";
 
 }
 ?>
@@ -54,37 +51,60 @@ if (isset($_POST['update'])) {
 					<p class="lead">Click the information you wish to edit</p>
 				</div>
 			</div>
-			<form action="editUserInformation.php" method="post">
+			<form action="editEducation.php?num=<?php echo($eduID) ?>" method="post">
 				<div class="form-row">
 					<div class="col-md-4 col-sm-8">
-						<p class="lead">Email: <?php echo $emailReq; ?></p>
+						<p class="lead">Degree Type</p>
 					</div>
 					<div class="col-md-8 col-sm-12">
-						<input type="text" class="form-control editUser" id="email" name="email" value="<?php echo($user->getEmail()); ?>">
+						<?php 
+						$stmt = $con->prepare("SELECT * FROM degree_tbl WHERE active = 1");
+						$stmt->execute(array());
+
+						print "<select id='degree'class='form-control' name='degree' required>";
+						while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+							if ($row['ID'] == $degree)
+								print "<option value='" . $row['ID'] ."' selected>" . $row['type'] ."</option>";
+							else
+								print "<option value='" . $row['ID'] ."'>" . $row['type'] ."</option>";
+						}
+						print("</select>");
+
+						?>
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="col-md-4 col-sm-8">
-						<p class="lead">First Name:</p>
+						<p class="lead">Major</p>
 					</div>
 					<div class="form-group col-md-8 col-sm-12">
-						<input type="text" class="form-control editUser" id="firstName" name="firstName" value="<?php echo($user->getFirstName()); ?>">
+						<input type="text" class="form-control editUser" id="major" name="major" value="<?php echo $major; ?>">
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="col-md-4 col-sm-8">
-						<p class="lead">Last Name:</p>
+						<p class="lead">School Name</p>
 					</div>
 					<div class="form-group col-md-8 col-sm-12">
-						<input type="text" class="form-control editUser" id="lastName" name="lastName" value="<?php echo($user->getLastName()); ?>">
+						<input type="text" class="form-control editUser" id="school" name="school" value="<?php echo($schoolName); ?>">
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="col-md-4 col-sm-8">
-						<p class="lead">Phone Number:</p>
+						<p class="lead">Completion Year</p>
 					</div>
 					<div class="form-group col-md-8 col-sm-12">
-						<input type="text" class="form-control editUser" id="phoneNumber" name="phoneNumber" value="<?php echo($user->getPhoneNumber()); ?>">
+						<select id="yearCompleted" class="form-control yearDropdown" name="yearCompleted" required> 			
+						</select>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-md-4 col-sm-8">
+						<a href="userProfile.php" class="btn btn-secondary btn-sm">Back to User Profile <i class="fas fa-undo-alt"></i></a>
+					</div>
+					<div class="form-group col-sm-12 col-md-8">
+						<button type="submit" class="btn btn-dark btn-sm" name="update">Update <i class="fas fa-cloud-upload-alt"></i></button>
+						<?php echo $success; ?>
 					</div>
 				</div>
 			</form>
