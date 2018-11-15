@@ -18,11 +18,11 @@ $degree = "";
 //add to database
 if(isset($_POST['add'])) {
 	$newDegree = trim($_POST['addDegree']);
-	$stmt = $con->prepare('INSERT INTO degree_tbl (ID, type) VALUES (Null, :degree)');
+	$stmt = $con->prepare('INSERT INTO degree_tbl (ID, type, active) VALUES (Null, :degree, 1)');
 	$stmt->execute(array('degree' => $newDegree));
 }
 
-//edit from database
+//edit in database
 if(isset($_POST['edit'])){
 		$degreeNum = trim($_POST['degreeNameEdit']);
 		$degree = trim($_POST['editDegree']);
@@ -30,13 +30,22 @@ if(isset($_POST['edit'])){
 		$stmt->execute(array('name' => $degree, 'num' => $degreeNum));
 	}	
 
-//delete from database
-if(isset($_POST['delete'])){
-		$stmt = $con->prepare('DELETE FROM degree_tbl WHERE ID = :degreeID');
-		$stmt->execute(array('degreeID' => $_POST['degreeNameRemove']));
+//activate in database
+if(isset($_POST['activate'])){
+		$degreeNum = trim($_POST['degreeNum']);
+		$stmt = $con->prepare('UPDATE degree_tbl SET active = 1 WHERE ID = :num');
+		$stmt->execute(array('num' => $degreeNum));
 	}		
 	
-$result = $con->query("select * from degree_tbl ORDER BY type ASC");	
+//deactivate in database
+if(isset($_POST['deactivate'])){
+		$degreeNum = trim($_POST['degreeNum']);
+		$stmt = $con->prepare('UPDATE degree_tbl SET active = 0 WHERE ID = :num');
+		$stmt->execute(array('num' => $degreeNum));
+	}				
+	
+$result = $con->query("select * from degree_tbl WHERE active = 1 ORDER BY type ASC");	
+$result2 = $con->query("select * from degree_tbl WHERE active = 0 ORDER BY type ASC");	
 ?>
 
 <div class="container" id="configureDegree">
@@ -49,13 +58,20 @@ $result = $con->query("select * from degree_tbl ORDER BY type ASC");
 		<div class="row mt-3">
 			<div class="col-sm-6 col-md-4" style="padding-right:20px; border-right: 1px solid #ccc;">
 				<!-- PRINT ALL Degrees-->
-				<h4>List of degrees in current database are:</h4>
+				<h4>List of active degrees in current database are:</h4>
 				<?php 
 				while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 					echo $row["type"] . "</br>";
 				} ?>
+				</br></br>
+				<h4>List of inactive degrees in current database are:</h4>
+				<?php 
+				while($row = $result2->fetch(PDO::FETCH_ASSOC)) {
+					echo $row["type"] . "</br>";
+				} ?>
 			</div>
 			<div class="col-sm-6 col-md-8">
+				<!-- Add a Degree-->
 				<div class="row">
 					<div class="col-sm-12">
 						<h4>Add Degree</h4>
@@ -63,12 +79,14 @@ $result = $con->query("select * from degree_tbl ORDER BY type ASC");
 							<div class="input-group mb-3">
 								<input type="text" class="form-control" name="addDegree">
 								<div class="input-group-append">
-									<button type="submit" class="btn btn-outline-primary" name="add">Add Degree</button>
+									<button type="submit" class="btn btn-success" name="add">Add Degree</button>
 								</div>
 							</div>
 						</form>
 					</div>
 				</div>
+				
+				<!-- Edit a Degree-->
 				<div class="row mt-2">
 					<div class="col-sm-12">
 						<h4>Edit Degree</h4>
@@ -93,29 +111,57 @@ $result = $con->query("select * from degree_tbl ORDER BY type ASC");
 						</form>
 					</div>
 				</div>
+				
+				<!-- Reactivate a Degree-->
 				<div class="row mt-2">
 					<div class="col-sm-12">
-						<h4>Remove Degree</h4>
+						<h4>Reactivate Degree</h4>
 						<form action="configureDegree.php" method="post">
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
 									<label class="input-group-text" for="degreeNameRemove">Degrees</label>
 								</div>
-								<select class="custom-select" name="degreeNameRemove">
+								<select class="custom-select" name="degreeNum">
 									<?php
-									$result1 = $con->query("select * from degree_tbl ORDER BY type ASC");
+									$result1 = $con->query("select * from degree_tbl WHERE active = 0 ORDER BY type ASC");
 									while($row1 = $result1->fetch(PDO::FETCH_ASSOC)) {
 										echo "<option value = '".$row1['ID']."'>".$row1['type']."</option>";
 									}
 									?>
 								</select>
 								<div class="input-group-append">
-									<button type="submit" class="btn btn-outline-danger" name="delete">Remove Degree</button>
+									<button type="submit" class="btn btn-success" name="activate">Activate Degree</button>
 								</div>
 							</div>
 						</form>
 					</div>
 				</div>
+				
+				<!-- Deactivate a Degree-->
+				<div class="row mt-2">
+					<div class="col-sm-12">
+						<h4>Deactivate Degree</h4>
+						<form action="configureDegree.php" method="post">
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<label class="input-group-text" for="degreeNameRemove">Degrees</label>
+								</div>
+								<select class="custom-select" name="degreeNum">
+									<?php
+									$result1 = $con->query("select * from degree_tbl  WHERE active = 1 ORDER BY type ASC");
+									while($row1 = $result1->fetch(PDO::FETCH_ASSOC)) {
+										echo "<option value = '".$row1['ID']."'>".$row1['type']."</option>";
+									}
+									?>
+								</select>
+								<div class="input-group-append">
+									<button type="submit" class="btn btn-outline-danger" name="deactivate">Deactivate Degree</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+								
 			</div>
 		</div>
 		
