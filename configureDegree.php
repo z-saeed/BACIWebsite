@@ -58,13 +58,13 @@ $result2 = $con->query("select * from degree_tbl WHERE active = 0 ORDER BY type 
 		<div class="row mt-3">
 			<div class="col-sm-6 col-md-4" style="padding-right:20px; border-right: 1px solid #ccc;">
 				<!-- PRINT ALL Degrees-->
-				<h4>List of active degrees in current database are:</h4>
+				<h4>List of active degrees in database are:</h4>
 				<?php 
 				while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 					echo $row["type"] . "</br>";
 				} ?>
 				</br></br>
-				<h4>List of inactive degrees in current database are:</h4>
+				<h4>List of inactive degrees in database are:</h4>
 				<?php 
 				while($row = $result2->fetch(PDO::FETCH_ASSOC)) {
 					echo $row["type"] . "</br>";

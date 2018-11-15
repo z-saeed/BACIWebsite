@@ -59,13 +59,13 @@ $result2 = $con->query("select * from country_tbl WHERE active = 0 ORDER BY name
 		<div class="row mt-3">
 			<div class="col-sm-6 col-md-4" style="padding-right:20px; border-right: 1px solid #ccc;">
 				<!-- PRINT ALL COUNTRIES-->
-				<h4>List of active countries in current database are:</h4>
+				<h4>List of active countries in database are:</h4>
 				<?php 
 				while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 					echo $row["name"] . "<br>";
 				} ?>
 				</br></br>
-				<h4>List of inactive countries in current database are:</h4>
+				<h4>List of inactive countries in database are:</h4>
 				<?php 
 				while($row = $result2->fetch(PDO::FETCH_ASSOC)) {
 					echo $row["name"] . "<br>";
