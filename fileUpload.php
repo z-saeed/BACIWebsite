@@ -11,8 +11,8 @@ $user = $_SESSION['user'];
 $userID = $user->getID();
 
 $currentDir = getcwd();
-$pictureDir = "/pics/";
-$resumeDir = "/resume/";
+$pictureDir = "pics/";
+$resumeDir = "resume/";
 
 $uploadPath = "";
 $savePath = "";
