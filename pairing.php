@@ -21,18 +21,44 @@ $stmtMentee = $con->prepare("SELECT * FROM user_tbl WHERE ID=:mentee");
 $stmtMentee -> execute(array('mentee' => $mentee));
 $menteeRow = $stmtMentee->fetch(PDO::FETCH_OBJ);
 
-if($change == "0"){
+//0 -> Pairing denied by coordinator
+//1 -> Pairing approved by coordinator
+//2 -> Current pairing ended by coordinator
+//3 -> Current pairing ended by user
+//4 -> Pairing denied by user
+//5 -> Pairing approved by user
+
+if($change == "0" or $change == "4"){
 	$stmt = $con->prepare("UPDATE mmRelationship_tbl SET rejectDate=:date WHERE mentorID = :mentor AND menteeID = :mentee");
 	$stmt -> execute(array('date' => $date, 'mentor' => $mentor, 'mentee' => $mentee));
 	$msg = "Pairing denied.";
 	$subject = "Pairing Denied";
-	$body = "A pairing has been denied by a coordinator. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been denied.";
-} else if ($change == "1"){
+	if($change == "0"){
+		$body = "A pairing has been denied by a coordinator. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been denied.";
+	} else if ($change == "4"){
+		$body = "A pairing has been denied by a user. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been denied.";
+	}
+} else if ($change == "1" or $change == "5"){
 	$stmt = $con->prepare("UPDATE mmRelationship_tbl SET startDate=:date WHERE mentorID = :mentor AND menteeID = :mentee");
 	$stmt -> execute(array('date' => $date, 'mentor' => $mentor, 'mentee' => $mentee));
 	$msg = "Pairing accepted.";
 	$subject = "Pairing Accepted";
-	$body = "A pairing has been started by a coordinator. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been activated.";
+	if($change == "1"){
+		$body = "A pairing has been started by a coordinator. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been activated.";
+	} else if ($change == "5"){
+		$body = "A pairing has been started by a user. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been activated.";
+	}
+	
+} else if ($change == "2" or $change == "3") {
+	$stmt = $con->prepare("UPDATE mmRelationship_tbl SET endDate=:date WHERE mentorID=:mentor AND menteeID=:mentee");
+	$stmt -> execute(array('date' => $date, 'mentor' => $mentor, 'mentee' => $mentee));
+	$msg = "Pairing ended.";
+	$subject = "Pairing Ended";
+	if($change == "2"){
+		$body = "A pairing has been ended by a coordinator. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been ended.";
+	} else if ($change == "3"){
+		$body = "A pairing has been ended by a user. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been ended.";
+	}
 } else {
 	$msg = "Error, change not recognized.";
 }

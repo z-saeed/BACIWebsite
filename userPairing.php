@@ -112,11 +112,11 @@ $mentor = false;
 									<th scope="row"><?php echo $status;?></th>
 									<?php if ($status == 'Current') { ?>
 									<th scope="row"><?php echo $row["startDate"]; ?></th>
-									<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"]; ?>&mentee=<?php echo $row["menteeID"]; ?>&change=3" class="btn btn-outline-danger">End</a></th>
+									<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>&change=3" class="btn btn-outline-danger">End</a></th>
 									<?php } else if ($status == 'Pending') { ?>
 									<th scope="row"><?php echo $row["requestDate"]; ?></th>
-									<th scope="row"><a href="" class="btn btn-block btn-outline-success">Approve</a></th>
-									<th scope="row"><a href="" class="btn btn-outline-danger">Reject</a></th>
+									<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>.'&change=5" class="btn btn-block btn-outline-success">Approve</a></th>
+									<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>.'&change=4" class="btn btn-outline-danger">Reject</a></th>
 									<?php } else if ($status == 'Rejected') {?>
 									<th scope="row"><?php echo $row["rejectDate"]; ?></th>
 									<?php } else if ($status == 'Ended') {?>

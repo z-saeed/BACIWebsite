@@ -230,7 +230,7 @@ if (isset($_POST['enter'])) {
 			<div class="form-group col-md-3 col-sm-6">
 				<label for="state">State</label>
 				<?php 
-				$resultState = $con->query("select * from state_tbl ORDER BY name ASC");
+				$resultState = $con->query("select * from state_tbl WHERE active = 1 ORDER BY name ASC");
 				echo '<select id="state" class="form-control" name="state">';
 				while($rowState = $resultState->fetch(PDO::FETCH_ASSOC)) {
 					echo "<option value='" . $rowState['ID'] ."'>" . $rowState['name'] ."</option>";
@@ -245,7 +245,7 @@ if (isset($_POST['enter'])) {
 			<div class="form-group col-md-3 col-sm-6">
 				<label for="country">Country</label>
 				<?php 
-				$resultCountry = $con->query("select * from country_tbl ORDER BY name ASC");
+				$resultCountry = $con->query("select * from country_tbl where active = 1 ORDER BY name ASC");
 				echo '<select id="country" class="form-control" name="country">';
 				while($rowCountry = $resultCountry->fetch(PDO::FETCH_ASSOC)) {
 					echo "<option value='" . $rowCountry['ID'] ."'>" . $rowCountry['name'] ."</option>";
