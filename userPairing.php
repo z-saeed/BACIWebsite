@@ -9,8 +9,11 @@ if($_SESSION['loggedin'] == false) {
 $user = $_SESSION['user'];
 $address = $_SESSION['address'];
 
-$pairStatus = $con->prepare('SELECT * FROM mmRelationship_tbl WHERE mentorID = :ID OR menteeID = :ID');
-$pairStatus->execute(array('ID'=>$user->getID()));
+// $pairStatus = $con->prepare('SELECT * FROM mmRelationship_tbl WHERE mentorID = :ID OR menteeID = :ID');
+// $pairStatus->execute(array('ID'=>$user->getID()));
+
+$pendingStmt = $con->prepare("SELECT * FROM mmRelationship_tbl WHERE rejectDate IS NULL AND  startDate IS NULL");
+$pendingStmt->execute(array());
 
 $mentee = false;
 $mentor = false;
@@ -28,51 +31,9 @@ $mentor = false;
 			<div class="col-md-12">
 				<div class="row">
 					<div class="col-md-4 col-sm-6">
-						<?php if ($pairStatus->rowCount() == 0) { ?>
-							<p class="lead">No User Pairings Found</p>
-						<?php } else { ?>
-
-							<p class="lead">Pairings Found</p>
-						<?php } ?>
+						<p class="lead">Pending Pairings</p>
 					</div>
 				</div>
-				<?php 
-				$header = true;
-				while($row = $pairStatus->fetch(PDO::FETCH_ASSOC)) { 
-					if ($row['mentorID'] == $user->getID()) {
-						$mentor = true;
-
-						$menteeStmt = $con->prepare("SELECT * FROM user_tbl WHERE ID = :ID");
-						$menteeStmt->execute(array('ID'=>$row["menteeID"]));
-						$menteeRow = $menteeStmt->fetch(PDO::FETCH_ASSOC);
-						$menteeFullName = $menteeRow["firstName"]." ".$menteeRow["lastName"];
-						$mentee = false;
-					} else {
-						$mentee = true;
-
-						$mentorStmt = $con->prepare("SELECT * FROM user_tbl WHERE ID = :ID");
-						$mentorStmt->execute(array('ID'=>$row["mentorID"]));
-						$mentorRow = $mentorStmt->fetch(PDO::FETCH_ASSOC);
-
-						$mentorFullName = $mentorRow["firstName"]." ".$mentorRow["lastName"];
-						$mentor = false;
-					}
-
-					$status = "";
-					if (is_null($row['rejectDate']) != true) {
-						$status = 'Rejected';
-					} else if (is_null($row['startDate'])) {
-						$status = 'Pending';
-					} else if (is_null($row['startDate']) != true && is_null($row['endDate'])) {
-						$status = 'Current';
-					} else if (is_null($row['endDate']) != true) {
-						$status = 'Ended';
-					}
-
-					if ($header) {
-						$header == false;
-					?>
-
 				<div class="row">
 					<div class="col-md-12 col-sm-12">
 						<table class="table">
@@ -81,67 +42,204 @@ $mentor = false;
 									<th scope="col">Mentor Name</th>
 									<th scope="col">Mentee Name</th>
 									<th scope="col">Requester</th>
-									<?php if ($status == 'Current') { ?>
-									<th scope="col">Status</th>
-									<th scope="col">Start Date</th>
-									<?php } else if ($status == 'Pending') { ?>
-									<th scope="col">Status</th>
 									<th scope="col">Request Date</th>
-									<?php } else if ($status == 'Rejected') {?>
-									<th scope="col">Status</th>
-									<th scope="col">Reject Date</th>
-									<?php } else if ($status == 'Ended') {?>
-									<th scope="col">Status</th>
-									<th scope="col">End Date</th>
-									<?php } ?>
 									<th scope="col">Actions</th>
 									<th scope="col"></th>
 								</tr>
 							</thead>
-						<?php } ?>
-							<tbody>
-								<tr>
-									<?php if ($mentor) { ?>
-									<th scope="row"><?php echo ($user->getFirstName()." ".$user->getLastName() );?></th>
-									<?php } else {?>
-									<th scope="row"><?php echo ($mentorFullName);?></th>
-									<?php } ?>
-									<?php if ($mentee) { ?>
-									<th scope="row"><?php echo ($user->getFirstName()." ".$user->getLastName() );?></th>
-									<?php } else {?>
-									<th scope="row"><?php echo ($menteeFullName);?></th>
-									<?php } 
-									if($row["requester"] == 0)
-											$requester = "Mentee";
-									else
-										$requester = "Mentor";
-									?>
-									<th scope="row"><?php echo $requester;?></th>
-									<?php 
-									
-									?>
-									<th scope="row"><?php echo $status;?></th>
-									<?php if ($status == 'Current') { ?>
-									<th scope="row"><?php echo $row["startDate"]; ?></th>
-									<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>&change=3" class="btn btn-outline-danger">End</a></th>
-									<?php } else if ($status == 'Pending') { ?>
-									<th scope="row"><?php echo $row["requestDate"]; ?></th>
-									<?php if($requester != $user->getUserStatus()){?>
-									<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>.'&change=5" class="btn btn-block btn-outline-success">Approve</a></th>
-									<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>.'&change=4" class="btn btn-outline-danger">Reject</a></th>
-									<?php } ?> 
-									<?php } else if ($status == 'Rejected') {?>
-									<th scope="row"><?php echo $row["rejectDate"]; ?></th>
-									<?php } else if ($status == 'Ended') {?>
-									<th scope="row"><?php echo $row["endDate"]; ?></th>
-									<?php } ?>
-								</tr>
-							</tbody>
-						</table>
+								<?php 
+								while($row = $pendingStmt->fetch(PDO::FETCH_ASSOC)) {
+									if ($row['mentorID'] == $user->getID()) {
+										$mentor = true;
 
+										$menteeStmt = $con->prepare("SELECT * FROM user_tbl WHERE ID = :ID");
+										$menteeStmt->execute(array('ID'=>$row["menteeID"]));
+										$menteeRow = $menteeStmt->fetch(PDO::FETCH_ASSOC);
+										$menteeFullName = $menteeRow["firstName"]." ".$menteeRow["lastName"];
+										$mentee = false;
+									} else {
+										$mentee = true;
+
+										$mentorStmt = $con->prepare("SELECT * FROM user_tbl WHERE ID = :ID");
+										$mentorStmt->execute(array('ID'=>$row["mentorID"]));
+										$mentorRow = $mentorStmt->fetch(PDO::FETCH_ASSOC);
+
+										$mentorFullName = $mentorRow["firstName"]." ".$mentorRow["lastName"];
+										$mentor = false;
+									}
+								?>
+
+								<tbody>
+									<tr>
+										<?php if ($mentor) { ?>
+										<th scope="row"><?php echo ($user->getFirstName()." ".$user->getLastName() );?></th>
+										<?php } else {?>
+										<th scope="row"><?php echo ($mentorFullName);?></th>
+										<?php } ?>
+										<?php if ($mentee) { ?>
+										<th scope="row"><?php echo ($user->getFirstName()." ".$user->getLastName() );?></th>
+										<?php } else {?>
+										<th scope="row"><?php echo ($menteeFullName);?></th>
+										<?php } 
+										if($row["requester"] == 0)
+											$requester = "Mentee";
+										else
+											$requester = "Mentor";
+										?>
+										<th scope="row"><?php echo $requester;?></th>
+										<th scope="row"><?php echo $row["requestDate"]; ?></th>
+										<?php if($requester != $user->getUserStatus()){?>
+										<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>.'&change=5" class="btn btn-block btn-outline-success">Approve</a></th>
+										<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>.'&change=4" class="btn btn-outline-danger">Reject</a></th>
+									<?php } ?>
+									</tr>
+								</tbody>									
+								<?php 
+								}
+								?>
+						</table>
 					</div>
 				</div>
-			<?php } ?>
+				<div class="row">
+					<div class="col-md-4 col-sm-6">
+						<p class="lead">Current Pairings</p>
+					</div>
+				</div>
+				<div class="row">
+					<?php 
+					$currentStmt = $con->prepare("SELECT * FROM mmRelationship_tbl WHERE endDate IS NULL AND  startDate IS NOT NULL");
+					$currentStmt->execute(array());
+					?>
+					<div class="col-md-12 col-sm-12">
+						<table class="table">
+							<thead class="thead-light">
+								<tr>
+									<th scope="col">Mentor Name</th>
+									<th scope="col">Mentee Name</th>
+									<th scope="col">Requester</th>
+									<th scope="col">Start Date</th>
+									<th scope="col">Actions</th>
+								</tr>
+							</thead>
+								<?php 
+								while($row = $currentStmt->fetch(PDO::FETCH_ASSOC)) {
+									if ($row['mentorID'] == $user->getID()) {
+										$mentor = true;
+
+										$menteeStmt = $con->prepare("SELECT * FROM user_tbl WHERE ID = :ID");
+										$menteeStmt->execute(array('ID'=>$row["menteeID"]));
+										$menteeRow = $menteeStmt->fetch(PDO::FETCH_ASSOC);
+										$menteeFullName = $menteeRow["firstName"]." ".$menteeRow["lastName"];
+										$mentee = false;
+									} else {
+										$mentee = true;
+
+										$mentorStmt = $con->prepare("SELECT * FROM user_tbl WHERE ID = :ID");
+										$mentorStmt->execute(array('ID'=>$row["mentorID"]));
+										$mentorRow = $mentorStmt->fetch(PDO::FETCH_ASSOC);
+
+										$mentorFullName = $mentorRow["firstName"]." ".$mentorRow["lastName"];
+										$mentor = false;
+									}
+								?>
+
+								<tbody>
+									<tr>
+										<?php if ($mentor) { ?>
+										<th scope="row"><?php echo ($user->getFirstName()." ".$user->getLastName() );?></th>
+										<?php } else {?>
+										<th scope="row"><?php echo ($mentorFullName);?></th>
+										<?php } ?>
+										<?php if ($mentee) { ?>
+										<th scope="row"><?php echo ($user->getFirstName()." ".$user->getLastName() );?></th>
+										<?php } else {?>
+										<th scope="row"><?php echo ($menteeFullName);?></th>
+										<?php } 
+										if($row["requester"] == 0)
+											$requester = "Mentee";
+										else
+											$requester = "Mentor";
+										?>
+										<th scope="row"><?php echo $requester;?></th>
+										<th scope="row"><?php echo $row["startDate"]; ?></th>
+										<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>&change=3" class="btn btn-outline-danger">End</a></th>
+									</tr>
+								</tbody>									
+								<?php 
+								}
+								?>
+						</table>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-sm-6">
+						<p class="lead">Ended Pairings</p>
+					</div>
+				</div>
+				<div class="row">
+					<?php 
+					$currentStmt = $con->prepare("SELECT * FROM mmRelationship_tbl WHERE endDate IS NOT NULL");
+					$currentStmt->execute(array());
+					?>
+					<div class="col-md-12 col-sm-12">
+						<table class="table">
+							<thead class="thead-light">
+								<tr>
+									<th scope="col">Mentor Name</th>
+									<th scope="col">Mentee Name</th>
+									<th scope="col">Requester</th>
+									<th scope="col">End Date</th>
+								</tr>
+							</thead>
+								<?php 
+								while($row = $currentStmt->fetch(PDO::FETCH_ASSOC)) {
+									if ($row['mentorID'] == $user->getID()) {
+										$mentor = true;
+
+										$menteeStmt = $con->prepare("SELECT * FROM user_tbl WHERE ID = :ID");
+										$menteeStmt->execute(array('ID'=>$row["menteeID"]));
+										$menteeRow = $menteeStmt->fetch(PDO::FETCH_ASSOC);
+										$menteeFullName = $menteeRow["firstName"]." ".$menteeRow["lastName"];
+										$mentee = false;
+									} else {
+										$mentee = true;
+
+										$mentorStmt = $con->prepare("SELECT * FROM user_tbl WHERE ID = :ID");
+										$mentorStmt->execute(array('ID'=>$row["mentorID"]));
+										$mentorRow = $mentorStmt->fetch(PDO::FETCH_ASSOC);
+
+										$mentorFullName = $mentorRow["firstName"]." ".$mentorRow["lastName"];
+										$mentor = false;
+									}
+								?>
+
+								<tbody>
+									<tr>
+										<?php if ($mentor) { ?>
+										<th scope="row"><?php echo ($user->getFirstName()." ".$user->getLastName() );?></th>
+										<?php } else {?>
+										<th scope="row"><?php echo ($mentorFullName);?></th>
+										<?php } ?>
+										<?php if ($mentee) { ?>
+										<th scope="row"><?php echo ($user->getFirstName()." ".$user->getLastName() );?></th>
+										<?php } else {?>
+										<th scope="row"><?php echo ($menteeFullName);?></th>
+										<?php } 
+										if($row["requester"] == 0)
+											$requester = "Mentee";
+										else
+											$requester = "Mentor";
+										?>
+										<th scope="row"><?php echo $requester;?></th>
+										<th scope="row"><?php echo $row["endDate"]; ?></th>
+									</tr>
+								</tbody>									
+								<?php 
+								}
+								?>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
