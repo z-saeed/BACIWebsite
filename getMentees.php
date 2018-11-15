@@ -31,13 +31,6 @@ $string = <<<EOT
 </tfoot>
 EOT;
 
-$coord = false;
-
-if (isset($_REQUEST['coord'])) {
-	$coord = $_REQUEST['coord']
-}
-
-
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	$gender = "";
 	$identity = "";
@@ -52,9 +45,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		$identity = "Student";
 	else
 		$identity = "Working Professional";
-	if ($coord) {
-		$string = $string."<tr><td>".$row["firstName"]."</td><td>".$row["lastName"]."</td><td>".$row["email"]."</td><td>".$gender."</td><td>".$row["phone"]."</td><td>".$identity."</td><td><a href='userProfile.php?userID=".$row["ID"]."&mmSelect=1' class='btn btn-outline-info'>Mentee Profile</a></td></tr>";
-	}
+	$string = $string."<tr><td>".$row["firstName"]."</td><td>".$row["lastName"]."</td><td>".$row["email"]."</td><td>".$gender."</td><td>".$row["phone"]."</td><td>".$identity."</td><td><a href='userProfile.php?userID=".$row["ID"]."&mmSelect=1' class='btn btn-outline-info'>Mentee Profile</a></td></tr>";
 }
 
 print($string);
