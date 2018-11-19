@@ -9,17 +9,45 @@ if mentor!=null &mentee=null show mentee table| if mentor&mentee!=null pair and 
 else show error w/ button to dashboard?
 -->
 
-<section id="adminPair">
-	<div class="container mt-2">
-		<a href="dashboard.php" class="btn btn-secondary btn-sm">Back to Dashboard <i class="fas fa-undo-alt"></i></a>
-	</div>
-	<div class="container mt-3">
-		<div id="coordMentee" class="table-responsive"></div>
-	</div>
-    
-    <div class="container mt-3">
-		<div id="coordMentor" class="table-responsive"></div>
-	</div>
-</section>
+<html>
+	<head>
+		<script>
+			function showMentors(str)
+			{
+				var xmlhttp;
+				if (str.length==0) { 
+					document.getElementById("mentors").innerHTML="";
+					return;}
+				  
+				if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp=new XMLHttpRequest();}
+				  
+				else{// code for IE6, IE5
+					xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");}
+				  
+				xmlhttp.onreadystatechange=function(){
+					if (xmlhttp.readyState==4 && xmlhttp.status==200){
+					document.getElementById("mentors").innerHTML=xmlhttp.responseText;
+					}
+				 }
+				xmlhttp.open("GET","mentorProcess.php?q="+str,true);
+				xmlhttp.send();
+			}
+		</script>
+	</head>
+	<body>
+		<br/><br/>
+		<h3>Search Mentors by Last Name</h3>
+		<form action="adminPair.php" method="post"> 
+			Enter Mentor's Last Name: 
+
+			<input type="text" list="mentors" name="drop" value="" onkeyup="showMentors(this.value)" />
+			<datalist id="mentors" >
+			  
+			</datalist>
+			<br/><br/>
+		</form>
+	</body>
+</html>
 
 <?php include 'footer.php'; ?>
