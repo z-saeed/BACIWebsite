@@ -55,6 +55,7 @@ if (isset($_FILES["picture"]["name"])) {
 
 				if ($didUpload) {
 					$savePath = $pictureDir . basename($picName);
+					$savePath = substr($savePath, 1);
 					$msg = $msg."The picture " . basename($picName) . " has been uploaded\n";
 					$stmt = $con->prepare('INSERT INTO picture_tbl (location) VALUES (:location)');
 		        	$stmt->execute(array('location'=>$savePath));
@@ -97,10 +98,12 @@ if (isset($_FILES["resume"]["name"])) {
 				$didUpload = move_uploaded_file($resumeTmpName, $uploadPath);
 
 				if ($didUpload) {
+					$savePath = $resumeDir . basename($resumeName);
+					$savePath = substr($savePath, 1);
 					$msg = $msg."The resume " . basename($resumeName) . " has been uploaded\n";
 					$stmt = $con->prepare('INSERT INTO resume_tbl (location) VALUES (:location)');
-		        	$stmt->execute(array('location'=>$uploadPath));
-		        	$user->setResumePath($uploadPath);
+		        	$stmt->execute(array('location'=>$savePath));
+		        	$user->setResumePath($savePath);
 		        	$resume_id = $con->lastInsertId();
 					$updateUserInfo = $con->prepare("UPDATE user_tbl SET resumeID = '$resume_id' WHERE ID = '$userID'");
 					$updateUserInfo->execute(array());
