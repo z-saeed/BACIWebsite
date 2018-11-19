@@ -77,13 +77,11 @@ if(($mailer->sendMail($menteeRow->email, "User", $subject, $body))){
 	<div id="login">
 		<div id="loginForm">
 			<h3><?php echo $msg; ?></h3>
-			<form action="listPending.php" method="post">
-				<div class="form-row">
-					<div class="form-group col-md-4 col-sm-8 offset-md-4 offset-sm-2">
-						<button type="submit" class="btn btn-light btn-sm"><a href="dashboard.php">Return to Dashboard</a></button>
-					</div>
+			<div class="form-row">
+				<div class="form-group col-md-4 col-sm-8 offset-md-4 offset-sm-2">
+					<button type="submit" class="btn btn-light btn-sm"><a href="dashboard.php">Return to Dashboard</a></button>
 				</div>
-			</form>
+			</div>
 		</div>
 	</div>
 
