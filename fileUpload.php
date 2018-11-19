@@ -39,7 +39,7 @@ if (isset($_FILES["picture"]["name"])) {
 		$picType = $_FILES['picture']['type'];
 		$picExtension = strtolower(end(explode('.',$picName)));
 
-		$uploadPath = $currentDir . $pictureDir . basename($picName); 
+		$uploadPath = $currentDir . $pictureDir . basename($picName) . $userID; 
 		if (isset($_POST['submit'])) {
 
 			if (! in_array($picExtension,$picExtensions)) {
@@ -54,7 +54,8 @@ if (isset($_FILES["picture"]["name"])) {
 				$didUpload = move_uploaded_file($picTmpName, $uploadPath);
 
 				if ($didUpload) {
-					$savePath = $pictureDir . basename($picName);
+					$savePath = $pictureDir . basename($picName) . $userID;
+					$savePath = substr($savePath, 1);
 					$msg = $msg."The picture " . basename($picName) . " has been uploaded\n";
 					$stmt = $con->prepare('INSERT INTO picture_tbl (location) VALUES (:location)');
 		        	$stmt->execute(array('location'=>$savePath));
@@ -82,7 +83,7 @@ if (isset($_FILES["resume"]["name"])) {
 		$resumeType = $_FILES['resume']['type'];
 		$resumeExtension = strtolower(end(explode('.',$resumeName)));
 
-		$uploadPath = $currentDir . $resumeDir . basename($resumeName); 
+		$uploadPath = $currentDir . $resumeDir . basename($resumeName) . $userID; 
 		if (isset($_POST['submit'])) {
 
 			if (! in_array($resumeExtension,$resumeExtensions)) {
@@ -97,10 +98,12 @@ if (isset($_FILES["resume"]["name"])) {
 				$didUpload = move_uploaded_file($resumeTmpName, $uploadPath);
 
 				if ($didUpload) {
+					$savePath = $resumeDir . basename($resumeName) . $userID;
+					$savePath = substr($savePath, 1);
 					$msg = $msg."The resume " . basename($resumeName) . " has been uploaded\n";
 					$stmt = $con->prepare('INSERT INTO resume_tbl (location) VALUES (:location)');
-		        	$stmt->execute(array('location'=>$uploadPath));
-		        	$user->setResumePath($uploadPath);
+		        	$stmt->execute(array('location'=>$savePath));
+		        	$user->setResumePath($savePath);
 		        	$resume_id = $con->lastInsertId();
 					$updateUserInfo = $con->prepare("UPDATE user_tbl SET resumeID = '$resume_id' WHERE ID = '$userID'");
 					$updateUserInfo->execute(array());
