@@ -58,6 +58,7 @@ if (isset($_FILES["picture"]["name"])) {
 					$msg = $msg."The picture " . basename($picName) . " has been uploaded\n";
 					$stmt = $con->prepare('INSERT INTO picture_tbl (location) VALUES (:location)');
 		        	$stmt->execute(array('location'=>$savePath));
+		        	$user->setImagePath($savePath);
 		        	$picture_id = $con->lastInsertId();
 					$updateUserInfo = $con->prepare("UPDATE user_tbl SET pictureID = '$picture_id' WHERE ID = '$userID'");
 					$updateUserInfo->execute(array());
@@ -99,6 +100,7 @@ if (isset($_FILES["resume"]["name"])) {
 					$msg = $msg."The resume " . basename($resumeName) . " has been uploaded\n";
 					$stmt = $con->prepare('INSERT INTO resume_tbl (location) VALUES (:location)');
 		        	$stmt->execute(array('location'=>$uploadPath));
+		        	$user->setResumePath($uploadPath);
 		        	$resume_id = $con->lastInsertId();
 					$updateUserInfo = $con->prepare("UPDATE user_tbl SET resumeID = '$resume_id' WHERE ID = '$userID'");
 					$updateUserInfo->execute(array());
