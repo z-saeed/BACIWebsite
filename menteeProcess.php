@@ -6,7 +6,7 @@ require_once "db_connect.php";
 $mentorStmt->execute(array('lastName'=>$lastName));
 $row = $mentorStmt->fetch(PDO::FETCH_OBJ);*/
 
-$sql = "select * from user_tbl where userStatus = 1"; 
+$sql = "select * from user_tbl where userStatus = 0"; 
 $a = $con->query($sql);
 
 $q = $_REQUEST["q"];
@@ -23,15 +23,16 @@ if ($q !== "")
 
 			if (stristr($q, substr($name['lastName'],0,$len))){ //test if $q matches with the first few characters of the same length in the lastname
 				if ($hint===""){ 
-					$hint = "<option>". $name['lastName']."</option>";
+					$hint = '<option onclick="setMenteeID('.$name['ID'].')">'.$name['lastName'].', '.$name['firstName'].'</option>';
 				}
 				else{ 	
-					$hint .= "<option>". $name['lastName']."</option>";
+					$hint .= '<option onclick="setMenteeID('.$name['ID'].')">'.$name['lastName'].', '.$name['firstName'].'</option>';
 				}
 			}
 		}
 }
 
+if($hint)
 
 print $hint;
 ?>

@@ -162,16 +162,15 @@ function passwordToDots($password) {
 					</div>
 				</div>
 			</div>
-			<!--<div class="col-sm-4">
+			<div class="col-sm-4">
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Create New Pair</h5>
 						<p class="card-text">Add a new mentor/mentee pair.</p>
-						<a href="adminPair.php" class="btn btn-primary">Current Pairings</a>
+						<a href="adminPair.php" class="btn btn-primary">New Pair</a>
 					</div>
 				</div>
 			</div>
-			-->
 		</div>
 		<hr>
 	<?php } ?>
