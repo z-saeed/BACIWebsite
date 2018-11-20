@@ -105,7 +105,7 @@ $result2 = $con->query("select * from country_tbl WHERE active = 0 ORDER BY name
 								</select>
 								<input type="text" class="form-control" name="editCountry">
 								<div class="input-group-append">
-									<button type="submit" class="btn btn-outline-primary" name="edit">Edit Country</button>
+									<button type="submit" class="btn btn-primary" name="edit">Edit Country</button>
 								</div>
 							</div>
 						</form>
@@ -154,7 +154,7 @@ $result2 = $con->query("select * from country_tbl WHERE active = 0 ORDER BY name
 									?>
 								</select>
 								<div class="input-group-append">
-									<button type="submit" class="btn btn-outline-danger" name="deactivate">Deactivate Country</button>
+									<button type="submit" class="btn btn-danger" name="deactivate">Deactivate Country</button>
 								</div>
 							</div>
 						</form>
