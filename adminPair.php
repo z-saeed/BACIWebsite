@@ -3,10 +3,10 @@ if($_SESSION['loggedin'] == false) {
 	header('Location: login.php'); 
 }
 
-/*if (isset($_POST['pair'])){
+if (isset($_POST['pair'])){
 		
-	$mentorLast = trim($_POST['mentor']);
-	$menteeLast = trim($_POST['mentee']);
+	$mentor = trim($_POST['mentor']);
+	$mentee = trim($_POST['mentee']);
 	
 	echo $menteeLast;
 	
@@ -17,9 +17,9 @@ if($_SESSION['loggedin'] == false) {
 		
 		//echo $name;
 		
-		header('Location: pairing.php?mentor=".$row["mentorID"]."&mentee=".$row["menteeID"]."&change=1');
+		header('Location: pairing.php?mentor='.$mentor.'&mentee='.$mentee.'&change=1');
 	}
-}*/
+}
 ?>
 
 <!--use 1st table to save userID, and refresh to show 2nd table w/ userID tag in header. 2nd table saves 2nd userID
@@ -107,31 +107,33 @@ else show error w/ button to dashboard?
 		</div>
 		<h3>Create new Pair</h3>
 	</div>
-		<div class="row mt-4">
-			<div class="col-md-4 col-sm-4">
-				<div class="mentor">
-					<form action="adminPair.php" method="post"> 
-						Enter Mentor's Last Name: 
-						<input type="text" list="mentor" name="mentor" value="" onkeyup="showMentors(this.value)" />
-						<datalist id="mentor" >
+		<form action="adminPair.php" method="post"> 
+			<div class="row mt-4">
+			
+				<div class="col-md-4 col-sm-4">
+					<div class="mentor">
 						
-						</datalist>
-					</form>
-				</div>
-			</div>
-			<div class="col-md-4 col-sm-4"">
-				<div class="mentee">
-					<form action="adminPair.php" method="post"> 
-						Enter Mentee's Last Name: 
-						<input type="text" list="mentee" name="mentee" value="" onkeyup="showMentees(this.value)" />
-						<datalist id="mentee" >
+							Enter Mentor's Last Name: 
+							<input type="text" list="mentor" name="mentor" value="" onkeyup="showMentors(this.value)" />
+							<datalist id="mentor" >
+							
+							</datalist>
 						
-						</datalist>
-					</form>
+					</div>
 				</div>
+				<div class="col-md-4 col-sm-4"">
+					<div class="mentee">
+							Enter Mentee's Last Name: 
+							<input type="text" list="mentee" name="mentee" value="" onkeyup="showMentees(this.value)" />
+							<datalist id="mentee" >
+							
+							</datalist>
+					</div>
+				</div>
+				<input name="pair" class="btn" type="submit" value="Pair" />
+			
 			</div>
-			<input name="pair" class="btn" type="submit" value="Pair" />
-		</div>
+		</form>
 	</section>
 </html>
 

@@ -23,16 +23,14 @@ if ($q !== "")
 
 			if (stristr($q, substr($name['lastName'],0,$len))){ //test if $q matches with the first few characters of the same length in the lastname
 				if ($hint===""){ 
-					$hint = '<option onclick="setMenteeID('.$name['ID'].')">'.$name['lastName'].', '.$name['firstName'].'</option>';
+					$hint = '<option value="'.$name['ID'].'">'.$name['lastName'].', '.$name['firstName'].'</option>';
 				}
 				else{ 	
-					$hint .= '<option onclick="setMenteeID('.$name['ID'].')">'.$name['lastName'].', '.$name['firstName'].'</option>';
+					$hint .= '<option value="'.$name['ID'].'">'.$name['lastName'].', '.$name['firstName'].'</option>';
 				}
 			}
 		}
 }
-
-if($hint)
 
 print $hint;
 ?>
