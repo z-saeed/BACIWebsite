@@ -12,8 +12,10 @@ $address = $_SESSION['address'];
 // $pairStatus = $con->prepare('SELECT * FROM mmRelationship_tbl WHERE mentorID = :ID OR menteeID = :ID');
 // $pairStatus->execute(array('ID'=>$user->getID()));
 
-$pendingStmt = $con->prepare("SELECT * FROM mmRelationship_tbl WHERE rejectDate IS NULL AND  startDate IS NULL");
-$pendingStmt->execute(array());
+//$ID = $user->getID();
+
+$pendingStmt = $con->prepare("SELECT * FROM mmRelationship_tbl WHERE rejectDate IS NULL AND  startDate IS NULL AND  (mentorID = :ID OR menteeID = :ID)");
+$pendingStmt->execute(array('ID'=>$user->getID()));
 
 $mentee = false;
 $mentor = false;
@@ -109,8 +111,8 @@ $mentor = false;
 				</div>
 				<div class="row">
 					<?php 
-					$currentStmt = $con->prepare("SELECT * FROM mmRelationship_tbl WHERE endDate IS NULL AND  startDate IS NOT NULL");
-					$currentStmt->execute(array());
+					$currentStmt = $con->prepare("SELECT * FROM mmRelationship_tbl WHERE endDate IS NULL AND  startDate IS NOT NULL AND  (mentorID = :ID OR menteeID = :ID)");
+					$currentStmt->execute(array('ID'=>$user->getID()));
 					?>
 					<div class="col-md-12 col-sm-12">
 						<table class="table">
@@ -180,8 +182,8 @@ $mentor = false;
 				</div>
 				<div class="row">
 					<?php 
-					$currentStmt = $con->prepare("SELECT * FROM mmRelationship_tbl WHERE endDate IS NOT NULL");
-					$currentStmt->execute(array());
+					$currentStmt = $con->prepare("SELECT * FROM mmRelationship_tbl WHERE endDate IS NOT NULL AND  (mentorID = :ID OR menteeID = :ID)");
+					$currentStmt->execute(array('ID'=>$user->getID()));
 					?>
 					<div class="col-md-12 col-sm-12">
 						<table class="table">
