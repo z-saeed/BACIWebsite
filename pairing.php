@@ -61,7 +61,7 @@ if($change == "0" or $change == "4"){
 	}
 	
 } else if ($change == "6") {
-	$stmt = $con->prepare("INSERT INTO mmRelationship_tbl (`ID`, `mentorID`, `menteeID`, `requester`,`startDate`,) VALUES (NULL, :mentor, :mentee , '2', :date, NULL);");
+	$stmt = $con->prepare("INSERT INTO mmRelationship_tbl (mentorID, menteeID, requester,startDate) VALUES (:mentor, :mentee , '2', :date)");
 	$stmt -> execute(array('date' => $date, 'mentor' => $mentor, 'mentee' => $mentee));
 	$msg = "Pairing Started.";
 	$subject = "Pairing Started by admin!";
@@ -71,10 +71,10 @@ if($change == "0" or $change == "4"){
 }
 
 $mailer = new Mail();
-if(($mailer->sendMail($mentorRow->email, "BACI", $subject, $body))){
+if(($mailer->sendMail($mentorRow->email, "USER", $subject, $body))){
 	$msg = "Message 1 sent";
 }
-if(($mailer->sendMail($menteeRow->email, "BACI", $subject, $body))){
+if(($mailer->sendMail($menteeRow->email, "USER", $subject, $body))){
 	$msg = "Emails have been sent to both parties";
 }
 ?>
