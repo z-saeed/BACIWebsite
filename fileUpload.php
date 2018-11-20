@@ -98,7 +98,7 @@ if (isset($_FILES["resume"]["name"])) {
 				$didUpload = move_uploaded_file($resumeTmpName, $uploadPath);
 
 				if ($didUpload) {
-					$savePath = $resumeDir . basename($resumeName) . $userID;
+					$savePath = $resumeDir . $userID . basename($resumeName);
 					$savePath = substr($savePath, 1);
 					$msg = $msg."The resume " . basename($resumeName) . " has been uploaded\n";
 					$stmt = $con->prepare('INSERT INTO resume_tbl (location) VALUES (:location)');
