@@ -3,7 +3,7 @@ if($_SESSION['loggedin'] == false) {
 	header('Location: login.php'); 
 }
 
-if (isset($_POST['pair'])){
+/*if (isset($_POST['pair'])){
 		
 	$mentor = trim($_POST['mentor']);
 	$mentee = trim($_POST['mentee']);
@@ -12,7 +12,7 @@ if (isset($_POST['pair'])){
 	if ($name !== ""){		
 		header('Location: pairing.php?mentor='.$mentor.'&mentee='.$mentee.'&change=1');
 	}
-}
+}*/
 ?>
 
 <!--use 1st table to save userID, and refresh to show 2nd table w/ userID tag in header. 2nd table saves 2nd userID
