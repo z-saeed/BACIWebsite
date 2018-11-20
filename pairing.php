@@ -59,15 +59,22 @@ if($change == "0" or $change == "4"){
 	} else if ($change == "3"){
 		$body = "A pairing has been ended by a user. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been ended.";
 	}
-} else {
+	
+} else if ($change == "6") {
+	$stmt = $con->prepare("INSERT INTO mmRelationship_tbl (`ID`, `mentorID`, `menteeID`, `requester`,`startDate`,) VALUES (NULL, :mentor, :mentee , '2', :date, NULL);");
+	$stmt -> execute(array('date' => $date, 'mentor' => $mentor, 'mentee' => $mentee));
+	$msg = "Pairing Started.";
+	$subject = "Pairing Started by admin!";
+	$body = "A pairing has been started by an admin. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been started by an administator.";
+}else {
 	$msg = "Error, change not recognized.";
 }
 
 $mailer = new Mail();
-if(($mailer->sendMail($mentorRow->email, "User", $subject, $body))){
+if(($mailer->sendMail($mentorRow->email, "BACI", $subject, $body))){
 	$msg = "Message 1 sent";
 }
-if(($mailer->sendMail($menteeRow->email, "User", $subject, $body))){
+if(($mailer->sendMail($menteeRow->email, "BACI", $subject, $body))){
 	$msg = "Emails have been sent to both parties";
 }
 ?>
