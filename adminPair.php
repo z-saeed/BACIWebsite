@@ -101,39 +101,43 @@ else show error w/ button to dashboard?
 		</script>
 	</head>
 	<section id="adminPair">
-	<div class="row mt-4">
-		<div class="col-md-4 col-sm-4">
-			<a href="dashboard.php" class="btn btn-primary btn-sm">Back to Dashboard <i class="fas fa-undo-alt"></i></a>
-		</div>
-		<h3>Create new Pair</h3>
-	</div>
-		<form action="adminPair.php" method="post"> 
+		<div class="container">
 			<div class="row mt-4">
-			
 				<div class="col-md-4 col-sm-4">
-					<div class="mentor">
-						
-							Enter Mentor's Last Name: 
-							<input type="text" list="mentor" name="mentor" value="" onkeyup="showMentors(this.value)" />
-							<datalist id="mentor" >
-							
-							</datalist>
-						
-					</div>
+					<a href="dashboard.php" class="btn btn-primary btn-sm">Back to Dashboard <i class="fas fa-undo-alt"></i></a>
 				</div>
-				<div class="col-md-4 col-sm-4"">
-					<div class="mentee">
-							Enter Mentee's Last Name: 
-							<input type="text" list="mentee" name="mentee" value="" onkeyup="showMentees(this.value)" />
-							<datalist id="mentee" >
-							
-							</datalist>
-					</div>
-				</div>
-				<input name="pair" class="btn" type="submit" value="Pair" />
-			
 			</div>
-		</form>
+			<div class="row mt-3">
+				<h3>Create new Pair</h3>
+			</div>
+			<form action="adminPair.php" method="post"> 
+				<div class="row mt-4">
+				
+					<div class="col-md-4 col-sm-4">
+						<div class="mentor">
+							
+								Enter Mentor's Last Name: 
+								<input type="text" list="mentor" name="mentor" value="" onkeyup="showMentors(this.value)" />
+								<datalist id="mentor" >
+								
+								</datalist>
+							
+						</div>
+					</div>
+					<div class="col-md-4 col-sm-4"">
+						<div class="mentee">
+								Enter Mentee's Last Name: 
+								<input type="text" list="mentee" name="mentee" value="" onkeyup="showMentees(this.value)" />
+								<datalist id="mentee" >
+								
+								</datalist>
+						</div>
+					</div>
+					<input name="pair" class="btn" type="submit" value="Pair" />
+				
+				</div>
+			</form>
+		</div>
 	</section>
 </html>
 
