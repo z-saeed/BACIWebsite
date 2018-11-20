@@ -23,14 +23,16 @@ if ($q !== "")
 
 			if (stristr($q, substr($name['lastName'],0,$len))){ //test if $q matches with the first few characters of the same length in the lastname
 				if ($hint===""){ 
-					$hint = '<option value="'.$name['ID'].'">'.$name['lastName'].', '.$name['firstName'].'</option>';
+					$hint = '<option data-id="'.$name['ID'].'">'.$name['lastName'].', '.$name['firstName'].'</option>';
 				}
 				else{ 	
-					$hint .= '<option value="'.$name['ID'].'">'.$name['lastName'].', '.$name['firstName'].'</option>';
+					$hint .= '<option data-id="'.$name['ID'].'">'.$name['lastName'].', '.$name['firstName'].'</option>';
 				}
 			}
 		}
 }
+
+if($hint)
 
 print $hint;
 ?>
