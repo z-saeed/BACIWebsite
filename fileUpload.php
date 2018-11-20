@@ -83,7 +83,7 @@ if (isset($_FILES["resume"]["name"])) {
 		$resumeType = $_FILES['resume']['type'];
 		$resumeExtension = strtolower(end(explode('.',$resumeName)));
 
-		$uploadPath = $currentDir . $resumeDir . basename($resumeName) . $userID; 
+		$uploadPath = $currentDir . $resumeDir . $userID. basename($resumeName); 
 		if (isset($_POST['submit'])) {
 
 			if (! in_array($resumeExtension,$resumeExtensions)) {
