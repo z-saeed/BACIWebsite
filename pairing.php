@@ -27,6 +27,7 @@ $menteeRow = $stmtMentee->fetch(PDO::FETCH_OBJ);
 //3 -> Current pairing ended by user
 //4 -> Pairing denied by user
 //5 -> Pairing approved by user
+//6 -> Admin enter pairing and approve
 
 if($change == "0" or $change == "4"){
 	$stmt = $con->prepare("UPDATE mmRelationship_tbl SET rejectDate=:date WHERE mentorID = :mentor AND menteeID = :mentee");
@@ -61,10 +62,10 @@ if($change == "0" or $change == "4"){
 	}
 	
 } else if ($change == "6") {
-	$stmt = $con->prepare("INSERT INTO mmRelationship_tbl (mentorID, menteeID, requester,startDate) VALUES (:mentor, :mentee , '2', :date)");
+	$stmt = $con->prepare("INSERT INTO mmRelationship_tbl (mentorID, menteeID, requester, requestDate, startDate) VALUES (:mentor, :mentee , '2', :date, :date)");
 	$stmt -> execute(array('date' => $date, 'mentor' => $mentor, 'mentee' => $mentee));
 	$msg = "Pairing Started.";
-	$subject = "Pairing Started by admin!";
+	$subject = "Pairing Started by admin.";
 	$body = "A pairing has been started by an admin. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been started by an administator.";
 }else {
 	$msg = "Error, change not recognized.";
