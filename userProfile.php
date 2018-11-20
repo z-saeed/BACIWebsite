@@ -132,9 +132,11 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 					<div class="row mt-4">
 						<img src="<?php echo($user->getImagePath());?>" alt="profile_pic" class="rounded-circle" width="75%" height="75%">
 					</div>
+					<?php if($boolUser == false) {?>
 					<div class="row mt-4">
 						<p class="lead"><a href="fileUpload.php">Edit Profile Picture</a></p>
 					</div>
+					<?php } ?>
 					<?php if ($boolUser == false || $admin) {?>
 					<div class="row">
 						<p class="lead"><a href="<?php echo($user->getResumePath());?>">Resume</a></p>

@@ -91,7 +91,9 @@ $mentor = false;
 										<?php if($requester != $user->getUserStatus()){?>
 										<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>.'&change=5" class="btn btn-block btn-outline-success">Approve Pairing</a></th>
 										<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>.'&change=4" class="btn btn-outline-danger">Reject Pairing</a></th>
-									<?php } ?>
+										<?php } else { ?>									
+										<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>.'&change=4" class="btn btn-outline-danger">Reject Pairing</a></th>		
+										<?php } ?>
 									</tr>
 								</tbody>									
 								<?php 

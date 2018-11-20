@@ -43,10 +43,8 @@ if(($mailer->sendMail($row->email, "User", "You have been requested in a pairing
 ?>
 
 <div class="container" id="mmRelationship">
-	<section id="mmRelationship">
-		<h2>Mentor/Mentee Pairing Requested!</h2>
-		<h2><?php echo $msg;?>
-	</section>
+	<h2>Mentor/Mentee Pairing Requested!</h2>
+	<h2><?php echo $msg;?>
 	MentorID: <?php echo $mmPair->getMentorID();?>
 	</br></br>
 	MenteeID: <?php echo $mmPair->getMenteeID();?>
