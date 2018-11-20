@@ -3,23 +3,16 @@ if($_SESSION['loggedin'] == false) {
 	header('Location: login.php'); 
 }
 
-if (isset($_POST['pair'])){
+/*if (isset($_POST['pair'])){
 		
 	$mentor = trim($_POST['mentor']);
 	$mentee = trim($_POST['mentee']);
 	
-	echo $menteeLast;
 	
-	if ($name !== ""){
-		
-		session_start();
-		$_SESSION['lname'] = $name;
-		
-		//echo $name;
-		
+	if ($name !== ""){		
 		header('Location: pairing.php?mentor='.$mentor.'&mentee='.$mentee.'&change=1');
 	}
-}
+}*/
 ?>
 
 <!--use 1st table to save userID, and refresh to show 2nd table w/ userID tag in header. 2nd table saves 2nd userID
@@ -33,6 +26,8 @@ else show error w/ button to dashboard?
 		<script>
 
 			var menteeID, mentorID;
+			var mentees = [];
+			var mentors = [];
 
 			function showMentors(str)
 			{
@@ -50,6 +45,13 @@ else show error w/ button to dashboard?
 				xmlhttp.onreadystatechange=function(){
 					if (xmlhttp.readyState==4 && xmlhttp.status==200){
 					document.getElementById("mentor").innerHTML=xmlhttp.responseText;
+
+					createMentorMap();
+
+						if(mentors[str])
+						{
+							mentorID = mentors[str];
+						}
 					}
 				 }
 				xmlhttp.open("GET","mentorProcess.php?q="+str,true);
@@ -72,30 +74,65 @@ else show error w/ button to dashboard?
 				xmlhttp.onreadystatechange=function(){
 					if (xmlhttp.readyState==4 && xmlhttp.status==200){
 					document.getElementById("mentee").innerHTML=xmlhttp.responseText;
+
+					createMenteeMap();
+
+						if(mentees[str])
+						{
+							menteeID = mentees[str];
+						}
 					}
 				 }
 				xmlhttp.open("GET","menteeProcess.php?q="+str,true);
 				xmlhttp.send();
 			}
 
-			function setMenteeID(id)
+			function createMenteeMap()
 			{
-				menteeID = id;
+				$('#mentee option').each( function(index, value){
+					var id = $(this).data('id');
+					var name = this.innerHTML;
+
+					if(name.length > 0)
+					{
+						if(!mentees[name])
+						{
+							mentees[name] = id;
+						}
+					}
+				});
 			}
 
-			function setMentorID(id)
+			function createMentorMap()
 			{
-				mentorID = id;
+				$('#mentor option').each( function(index, value){
+					var id = $(this).data('id');
+					var name = this.innerHTML;
+
+					if(name.length > 0)
+					{
+						if(!mentors[name])
+						{
+							mentors[name] = id;
+						}
+					}
+				});
 			}
 
-			function getMenteeID()
+			function submitPair()
 			{
-				return menteeID;
-			}
+				if(!mentorID || !menteeID) 
+					alert('please double check your selections');
 
-			function getMentorID()
-			{
-				return mentorID;
+					var paths = location.pathname.split('/')
+					var url = '';
+					for (i = 0; i < paths.length - 1; i++)
+					{
+						url += paths[i] + '/';
+					}
+					url += 'pairing.php?mentor=' + mentorID + '&mentee=' + menteeID + '&change=6';
+
+				location.href = url;
 			}
 
 		</script>
@@ -133,7 +170,7 @@ else show error w/ button to dashboard?
 								</datalist>
 						</div>
 					</div>
-					<input name="pair" class="btn" type="submit" value="Pair" />
+					<input name="pair" class="btn" type="button" value="Pair" />
 				
 				</div>
 			</form>
@@ -141,4 +178,5 @@ else show error w/ button to dashboard?
 	</section>
 </html>
 
+>>>>>>> 18a0b1886fe118350a7f8032e2dc5aa9c5fc4d39
 <?php include 'footer.php'; ?>
