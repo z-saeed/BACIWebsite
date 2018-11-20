@@ -105,7 +105,7 @@ $result2 = $con->query("select * from degree_tbl WHERE active = 0 ORDER BY type 
 								</select>
 								<input type="text" class="form-control" name="editDegree">
 								<div class="input-group-append">
-									<button type="submit" class="btn btn-outline-primary" name="edit">Edit Degree</button>
+									<button type="submit" class="btn btn-primary" name="edit">Edit Degree</button>
 								</div>
 							</div>
 						</form>
@@ -155,7 +155,7 @@ $result2 = $con->query("select * from degree_tbl WHERE active = 0 ORDER BY type 
 									?>
 								</select>
 								<div class="input-group-append">
-									<button type="submit" class="btn btn-outline-danger" name="deactivate">Deactivate Degree</button>
+									<button type="submit" class="btn btn-danger" name="deactivate">Deactivate Degree</button>
 								</div>
 							</div>
 						</form>
