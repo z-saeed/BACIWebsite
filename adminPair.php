@@ -170,7 +170,7 @@ else show error w/ button to dashboard?
 								</datalist>
 						</div>
 					</div>
-					<input name="pair" class="btn" type="button" value="Pair" />
+					<input name="pair" class="btn" type="button" value="Pair" onclick="submitPair()"/>
 				
 				</div>
 			</form>
@@ -178,5 +178,4 @@ else show error w/ button to dashboard?
 	</section>
 </html>
 
->>>>>>> 18a0b1886fe118350a7f8032e2dc5aa9c5fc4d39
 <?php include 'footer.php'; ?>
