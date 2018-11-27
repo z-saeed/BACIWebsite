@@ -14,7 +14,10 @@ $password = ""; //hold password for storing
 if (isset($_POST['submit'])){
 	
 	$password = ($_POST['password']);
-
+	
+	//$stmtPassword = $con->prepare("UPDATE user_tbl SET password = :password WHERE activationURL = :code");
+	//$stmtPassword -> execute(array('password' => $password, 'code' => $code));
+	
 	$msg = "Password Changed";
 
 	$stmtURL = $con->prepare("UPDATE user_tbl SET activationURL = '1' WHERE activationURL = :code");
