@@ -148,6 +148,25 @@ $(document).ready(function() {
 			xmlhttp.open("GET","getDegree.php?num=" + num,true);
 			xmlhttp.send();
 		}
+
+		$('.yearDropdown').each(function() {
+			var time = new Date();
+			var year = time.getYear();
+			if (year < 1900) {
+				year = year + 1900;
+			}
+			var date = year - 40;
+			var future = year + 10;
+			do {
+				future--;
+				if (future == (new Date()).getFullYear())
+					$(this).append("<option value=\"" + future +"\" selected>" + future + "</option>");
+				else
+					$(this).append("<option value=\"" + future +"\">" + future + "</option>");
+			}
+			while (future > date);
+
+		});
 		num++;
 	}
 
@@ -180,7 +199,6 @@ $(document).ready(function() {
 	});
 
 	$('.yearDropdown').each(function() {
-	
 		var time = new Date();
 		var year = time.getYear();
 		if (year < 1900) {
@@ -191,11 +209,11 @@ $(document).ready(function() {
 		do {
 			future--;
 			if (future == (new Date()).getFullYear())
-				$(this).append("<option value=\"" +future+"\" selected>" +future+ "</option>");
+				$(this).append("<option value=\"" + future +"\" selected>" + future + "</option>");
 			else
-				$(this).append("<option value=\"" +future+"\">" +future+ "</option>");
+				$(this).append("<option value=\"" + future +"\">" + future + "</option>");
 		}
-		while (future > date)
+		while (future > date);
 
 	});
 
