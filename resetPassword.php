@@ -15,8 +15,8 @@ if (isset($_POST['submit'])){
 	
 	$password = ($_POST['password']);
 	
-	//$stmtPassword = $con->prepare("UPDATE user_tbl SET password = :password WHERE activationURL = :code");
-	//$stmtPassword -> execute(array('password' => $password, 'code' => $code));
+	$stmtPassword = $con->prepare("UPDATE user_tbl SET password = :password WHERE activationURL = :code");
+	$stmtPassword -> execute(array('password' => $password, 'code' => $code));
 	
 	$msg = "Password Changed";
 
