@@ -7,9 +7,11 @@ $msg = "";
 $subject = "";
 $body = "";
 
-$mentor = ($_GET["mentor"]);
-$mentee = ($_GET["mentee"]);
-$change = ($_GET["change"]);
+$mmPair = $_SESSION['mmPair'];
+$mentor = $mmPair->getMentorID();
+$mentee = $mmPair->getMenteeID();
+$change = $mmPair->getChange();
+$requester = $mmPair->getRequester();
 
 $date = date("Y-m-d");
 
@@ -39,7 +41,8 @@ if($change == "0" or $change == "4"){
 	} else if ($change == "4"){
 		$body = "A pairing has been denied by a user. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been denied.";
 	}
-} else if ($change == "1" or $change == "5"){
+}
+if ($change == "1" or $change == "5"){
 	$stmt = $con->prepare("UPDATE mmRelationship_tbl SET startDate=:date WHERE mentorID = :mentor AND menteeID = :mentee");
 	$stmt -> execute(array('date' => $date, 'mentor' => $mentor, 'mentee' => $mentee));
 	$msg = "Pairing accepted.";
@@ -49,8 +52,8 @@ if($change == "0" or $change == "4"){
 	} else if ($change == "5"){
 		$body = "A pairing has been started by a user. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been activated.";
 	}
-	
-} else if ($change == "2" or $change == "3") {
+}
+if ($change == "2" or $change == "3") {
 	$stmt = $con->prepare("UPDATE mmRelationship_tbl SET endDate=:date WHERE mentorID=:mentor AND menteeID=:mentee");
 	$stmt -> execute(array('date' => $date, 'mentor' => $mentor, 'mentee' => $mentee));
 	$msg = "Pairing ended.";
@@ -60,16 +63,16 @@ if($change == "0" or $change == "4"){
 	} else if ($change == "3"){
 		$body = "A pairing has been ended by a user. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been ended.";
 	}
-	
-} else if ($change == "6") {
+}
+if ($change == "6") {
 	$stmt = $con->prepare("INSERT INTO mmRelationship_tbl (mentorID, menteeID, requester, requestDate, startDate) VALUES (:mentor, :mentee , '2', :date, :date)");
 	$stmt -> execute(array('date' => $date, 'mentor' => $mentor, 'mentee' => $mentee));
 	$msg = "Pairing Started.";
 	$subject = "Pairing Started by admin.";
 	$body = "A pairing has been started by an admin. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been started by an administator.";
-}else {
-	$msg = "Error, change not recognized.";
 }
+if($change <  0 || $change > 6)
+	$msg = "Error, change not recognized.";
 
 $mailer = new Mail();
 if(($mailer->sendMail($mentorRow->email, "USER", $subject, $body))){
@@ -94,3 +97,8 @@ if(($mailer->sendMail($menteeRow->email, "USER", $subject, $body))){
 	</div>
 
 </section>
+
+<?php 
+$mmPair = new Pair();
+$_SESSION['mmPair'] = $mmPair;
+?>
