@@ -14,6 +14,7 @@ $firstName = "";
 $lastName = "";
 $phoneNumber = "";
 $gender = "";
+$birthYear = "";
 $userStatus = "";
 
 $userNameReq = "";
@@ -31,14 +32,16 @@ if (isset($_POST['update'])) {
 	$lastName = trim($_POST['lastName']);
 	$phoneNumber = trim($_POST['phoneNumber']);
 	$gender = trim($_POST['gender']);
+	$birthYear = trim($_POST['birthYear']);
 	$userStatus = trim($_POST['userStatus']);
 	
-	$updateUserInfo = $con->prepare("UPDATE user_tbl SET email = '$email', firstName = '$firstName', lastName = '$lastName', gender = '$gender', userStatus = '$userStatus' WHERE ID = '$userID'");
+	$updateUserInfo = $con->prepare("UPDATE user_tbl SET email = '$email', firstName = '$firstName', lastName = '$lastName', gender = '$gender', birthYear = '$birthYear', userStatus = '$userStatus' WHERE ID = '$userID'");
 	$updateUserInfo->execute(array());
 	$user->setFirstName($firstName);
 	$user->setLastName($lastName);
 	$user->setEmail($email);
 	$user->setGender($gender);
+	$user->setBirthYear($birthYear);
 	$user->setPhoneNumber($phoneNumber);
 	$user->setUserStatus($userStatus);
 
@@ -100,6 +103,14 @@ if (isset($_POST['update'])) {
 							<option value="0" <?php if($user->getGender() == "Male") echo "selected"  ?>>Male</option>
 							<option value="1" <?php if($user->getGender() != "Male") echo "selected"  ?>>Female</option>				
 						</select>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-md-4 col-sm-8">
+						<p class="lead">Birth Year:</p>
+					</div>
+					<div class="form-group col-md-8 col-sm-12">
+						<select name="birthYear" id="birthYear" class="form-control"></select>
 					</div>
 				</div>
 				<div class="form-row">

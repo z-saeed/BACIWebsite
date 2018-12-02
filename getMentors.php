@@ -13,6 +13,7 @@ $string = <<<EOT
 <th>Last Name</th>
 <th>Email</th>
 <th>Gender</th>
+<th>Age</th>
 <th>Phone</th>
 <th>Identity</th>
 <th></th>
@@ -24,6 +25,7 @@ $string = <<<EOT
 <th>Last Name</th>
 <th>Email</th>
 <th>Gender</th>
+<th>Age</th>
 <th>Phone</th>
 <th>Identity</th>
 <th></th>
@@ -31,11 +33,13 @@ $string = <<<EOT
 </tfoot>
 EOT;
 
+$curYear = date('Y');
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	$gender = "";
 	$identity = "";
-	$userStatus = "";
+	$birthYear = "";
+	$age = "";
 
 	if ($row["gender"] == 0)
 		$gender = "Male";
@@ -47,7 +51,10 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	else
 		$identity = "Working Professional";
 
-	$string = $string."<tr><td>".$row["firstName"]."</td><td>".$row["lastName"]."</td><td>".$row["email"]."</td><td>".$gender."</td><td>".$row["phone"]."</td><td>".$identity."</td><td><a href='userProfile.php?userID=".$row["ID"]."&mmSelect=0' class='btn btn-outline-info'>Mentor Profile</a></td></tr>";
+	$birthYear = $row["birthYear"];
+	$age = $curYear - $birthYear;
+
+	$string = $string."<tr><td>".$row["firstName"]."</td><td>".$row["lastName"]."</td><td>".$row["email"]."</td><td>".$gender."</td><td>".$age."</td><td>".$row["phone"]."</td><td>".$identity."</td><td><a href='userProfile.php?userID=".$row["ID"]."&mmSelect=0' class='btn btn-outline-info'>Mentor Profile</a></td></tr>";
 }
 
 print($string);

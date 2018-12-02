@@ -35,6 +35,7 @@ if (isset($_POST['login'])) {
 			$user->setLastName($row->lastName);
 			$user->setPhoneNumber($row->phone);
 			$user->setGender($row->gender);
+			$user->setBirthYear($row->birthYear);
 			$user->setUserStatus($row->userStatus);
 			$user->setAddressID($row->addressID);
 			$user->setUserPrivilege($row->privilege);

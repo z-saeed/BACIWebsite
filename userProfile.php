@@ -36,6 +36,7 @@ if (isset($_REQUEST["userID"])) {
 		$user->setLastName($row->lastName);
 		$user->setPhoneNumber($row->phone);
 		$user->setGender($row->gender);
+		$user->setBirthYear($row->birthYear);
 		$user->setUserStatus($row->userStatus);
 		$user->setAddressID($row->addressID);
 		$user->setUserPrivilege($row->privilege);
@@ -122,7 +123,7 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 				</div>
 				<?php if ($mmSelect != "") { ?>
 				<div class="col-md-4 col-sm-4">
-					<a href="pairRequest.php?id=<?php echo $user->getID(); ?>" class="btn btn-success btn-sm">Select as <?php echo $mmSelect?></a> <!-- ADD THE LINK TO INSERT TO MMRELATION TABLE HERE -->
+					<a href="pairRequest.php?id=<?php echo $user->getID(); ?>" class="btn btn-success">Select as <?php echo $mmSelect?></a> <!-- ADD THE LINK TO INSERT TO MMRELATION TABLE HERE -->
 				</div>
 				<?php } ?>
 			</div>
@@ -138,8 +139,8 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 					</div>
 					<?php } ?>
 					<?php if ($boolUser == false || $admin) {?>
-					<div class="row">
-						<p class="lead"><a href="<?php echo($user->getResumePath());?>">Resume</a></p>
+					<div class="row mt-3">
+						<p class="lead"><a href="<?php echo($user->getResumePath());?>" class="btn btn-info">View Resume</a></p>
 					</div>
 					<?php } ?>
 				</div>
@@ -211,6 +212,14 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 						</div>
 						<div class="col-md-8 col-sm-12">
 							<p class="lead"><?php echo($user->getGender()); ?></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 col-sm-8">
+							<p class="lead">Age:</p>
+						</div>
+						<div class="col-md-8 col-sm-12">
+							<p class="lead"><?php echo($user->getAge()); ?></p>
 						</div>
 					</div>
 					<div class="row">

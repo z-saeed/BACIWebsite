@@ -10,6 +10,7 @@ class User
 	private $lastName;
 	private $phoneNumber;
 	private $gender;
+    private $birthYear;
 	private $registerDate;
 	private $userStatus;
 	private $addressID;
@@ -21,7 +22,7 @@ class User
     private $twLink;
     private $lkLink;
 
-	function __construct($ID = 0, $userName = "", $password = "", $email = "", $firstName = "", $lastName = "", $phoneNumber = "", $gender = "", $registerDate = "", $userStatus = "", $addressID = 0, $userPrivilege = 0, $imagePath= "", $resumePath = "", $identityID = "", $fbLink = "", $twLink = "", $lkLink = "")
+	function __construct($ID = 0, $userName = "", $password = "", $email = "", $firstName = "", $lastName = "", $phoneNumber = "", $gender = "", $birthYear = "", $registerDate = "", $userStatus = "", $addressID = 0, $userPrivilege = 0, $imagePath= "", $resumePath = "", $identityID = "", $fbLink = "", $twLink = "", $lkLink = "")
 	{
 		$this->ID = $ID;
 		$this->userName = $userName;
@@ -31,6 +32,7 @@ class User
 		$this->lastName = $lastName;
 		$this->phoneNumber = $phoneNumber;
 		$this->gender = $gender;
+        $this->birthYear = $birthYear;
 		$this->registerDate = $registerDate;
 		$this->userStatus = $userStatus;
 		$this->addressID = $addressID;
@@ -124,6 +126,23 @@ class User
     public function setGender($gender)
     {
         $this->gender = $gender;
+    }
+
+    public function getBirthYear()
+    {
+        return $this->birthYear;
+    }
+
+    public function setBirthYear($birthYear)
+    {
+        $this->birthYear = $birthYear;
+    }
+
+    public function getAge()
+    {
+        $curYear = date('Y');
+        $age = $curYear - $this->birthYear;
+        return $age;
     }
 
     public function getRegisterDate()
