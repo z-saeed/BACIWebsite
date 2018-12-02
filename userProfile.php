@@ -103,12 +103,14 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 		$mmPair->setMenteeID($pairer->getID());
 		$mmPair->setMentorID($user->getID());
 		$mmPair->setRequester(0);
+		$mmPair->setChange(7);
 		$_SESSION['mmPair'] = $mmPair;
 		$mmSelect = "Mentor";
 	} else if($_REQUEST["mmSelect"] == 1) {
 		$mmPair->setMenteeID($user->getID());
 		$mmPair->setMentorID($pairer->getID());
 		$mmPair->setRequester(1);
+		$mmPair->setChange(7);
 		$_SESSION['mmPair'] = $mmPair;
 		$mmSelect = "Mentee";
 	}
@@ -123,7 +125,7 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 				</div>
 				<?php if ($mmSelect != "") { ?>
 				<div class="col-md-4 col-sm-4">
-					<a href="pairRequest.php?id=<?php echo $user->getID(); ?>" class="btn btn-success">Select as <?php echo $mmSelect?></a> <!-- ADD THE LINK TO INSERT TO MMRELATION TABLE HERE -->
+					<a href="pairing.php" class="btn btn-success">Select as <?php echo $mmSelect?></a> <!-- ADD THE LINK TO INSERT TO MMRELATION TABLE HERE -->
 				</div>
 				<?php } ?>
 			</div>

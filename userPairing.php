@@ -23,7 +23,7 @@ $mentee = false;
 $mentor = false;
 
 
-//set pairClass for database use
+//set pairClass for database use, 
 if(isset($_POST['approve'])){
 	$mmPair->setChange(5);
 	$_SESSION['mmPair'] = $mmPair;
@@ -131,9 +131,9 @@ if(isset($_POST['reject'])){
 										<th scope="row"><?php echo $row["requestDate"]; ?></th>
 										<?php if($requester != $user->getUserStatus()){?>
 										<th scope="row"><button type="submit" class="btn btn-block btn-outline-success" name="approve">Approve Pairing</button></th>
-										<th scope="row"><button type="submit" class="btn btn-outline-danger" name="reject">Reject Pairing</a></th>
+										<th scope="row"><button type="submit" class="btn btn-outline-danger" name="reject">Reject Pairing</button></th>
 										<?php } else { ?>									
-										<th scope="row"><button type="submit" class="btn btn-outline-danger" name="reject">Reject Pairing</a></th>
+										<th scope="row"><button type="submit" class="btn btn-outline-danger" name="reject">Reject Pairing</button></th>
 										<?php } ?>
 									</tr>
 								</tbody>							
@@ -207,7 +207,7 @@ if(isset($_POST['reject'])){
 										?>
 										<th scope="row"><?php echo $requester;?></th>
 										<th scope="row"><?php echo $row["startDate"]; ?></th>
-										<th scope="row"><button type="submit" class="btn btn-outline-danger" name="end">End Pairing</a></th>
+										<th scope="row"><button type="submit" class="btn btn-outline-danger" name="end">End Pairing</button></th>
 									</tr>
 								</tbody>									
 								<?php 

@@ -71,7 +71,15 @@ if ($change == "6") {
 	$subject = "Pairing Started by admin.";
 	$body = "A pairing has been started by an admin. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been started by an administator.";
 }
-if($change <  0 || $change > 6)
+if($change == 7){ //user end request new mmRelationship
+	$mmRelationship = $con->prepare("INSERT INTO mmRelationship_tbl (`ID`, `mentorID`, `menteeID`, `requester`, `requestDate`) VALUES (NULL, :mentorID, :menteeID, :requester, :requestDate)");
+	$mmRelationship->execute(array('mentorID'=>$mmPair->getMentorID(), 'menteeID'=>$mmPair->getMenteeID(), 'requester'=>$mmPair->getRequester(), 'requestDate'=>$date));
+	$msg = "Pairing Requested.";
+	$subject = "Pairing Requested.";
+	$body = "A pairing has been requested by an another user . Please login to approve or deny: corsair.cs.iupui.edu:23051/CourseProject/BaciProjectAlt/";
+
+}
+if($change <  0 || $change > 7)
 	$msg = "Error, change not recognized.";
 
 $mailer = new Mail();
