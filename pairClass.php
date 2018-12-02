@@ -8,7 +8,7 @@ class Pair
 	private $change; //used to send a # to pairing.php indicating what changes need to be made to the database i.e. end, start, deny
 	
 
-	function __construct($menteeID = "", $mentorID = "", $requester = "", $change = 0)
+	function __construct($menteeID = "", $mentorID = "", $requester = "", $change = 15)
 	{
 		$this->menteeID = $menteeID;
 		$this->mentorID = $mentorID;

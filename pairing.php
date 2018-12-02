@@ -79,7 +79,7 @@ if($change == 7){ //user end request new mmRelationship
 	$body = "A pairing has been requested by an another user . Please login to approve or deny: corsair.cs.iupui.edu:23051/CourseProject/BaciProjectAlt/";
 
 }
-if($change <  0 || $change > 7)
+if($change ==  15 )
 	$msg = "Error, change not recognized.";
 
 $mailer = new Mail();
@@ -89,6 +89,8 @@ if(($mailer->sendMail($mentorRow->email, "USER", $subject, $body))){
 if(($mailer->sendMail($menteeRow->email, "USER", $subject, $body))){
 	$msg = "Emails have been sent to both parties";
 }
+
+	$_SESSION['mmPair'] = Null;
 ?>
 
 <section id="loginPage">
@@ -105,8 +107,3 @@ if(($mailer->sendMail($menteeRow->email, "USER", $subject, $body))){
 	</div>
 
 </section>
-
-<?php 
-$mmPair = new Pair();
-$_SESSION['mmPair'] = $mmPair;
-?>
