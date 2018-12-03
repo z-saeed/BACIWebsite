@@ -18,8 +18,10 @@ $degree = "";
 //add to database
 if(isset($_POST['add'])) {
 	$newDegree = trim($_POST['addDegree']);
-	$stmt = $con->prepare('INSERT INTO degree_tbl (ID, type, active) VALUES (Null, :degree, 1)');
-	$stmt->execute(array('degree' => $newDegree));
+	if($newDegree != ""){
+		$stmt = $con->prepare('INSERT INTO degree_tbl (ID, type, active) VALUES (Null, :degree, 1)');
+		$stmt->execute(array('degree' => $newDegree));
+	}
 }
 
 //edit in database

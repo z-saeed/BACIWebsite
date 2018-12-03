@@ -38,10 +38,11 @@ if(isset($_POST['show'])) {
 if(isset($_POST['add'])) {
 	$newState = trim($_POST['addState']);
 	$countryID = trim($_POST['countryID']);
-	$stmt = $con->prepare('INSERT INTO state_tbl (ID, name, countryID) VALUES (Null, :state, :countryID)');
-	$stmt->execute(array('state' => $newState, 'countryID' => $countryID));
+	if($newState != ""){
+		$stmt = $con->prepare('INSERT INTO state_tbl (ID, name, countryID) VALUES (Null, :state, :countryID)');
+		$stmt->execute(array('state' => $newState, 'countryID' => $countryID));
+	}
 }
-
 //edit from database
 if(isset($_POST['edit'])){
 		$stateNum = trim($_POST['stateNameEdit']);

@@ -19,8 +19,10 @@ $country = "";
 //add to database
 if(isset($_POST['add'])) {
 	$newCountry = trim($_POST['addCountry']);
-	$stmt = $con->prepare('INSERT INTO country_tbl (ID, name, active) VALUES (Null, :country, 1)');
-	$stmt->execute(array('country' => $newCountry));
+	if($newCountry != ""){
+		$stmt = $con->prepare('INSERT INTO country_tbl (ID, name, active) VALUES (Null, :country, 1)');
+		$stmt->execute(array('country' => $newCountry));
+	}
 }
 
 //edit from database
