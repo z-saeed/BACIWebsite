@@ -1,20 +1,16 @@
 <?php 
 include 'header.php';
 require_once 'db_connect.php';
-
 if($_SESSION['loggedin'] == false) {
 	header('Location: login.php'); 
 }
-
 $user = new User();
 $address = new Address();
-
 $admin = false;
 $adminCheck = $_SESSION['user'];
 if ($adminCheck->getUserPrivilege() != 0) {
 	$admin = true;
 }
-
 $boolUser = false;
 $mmSelect ="";
 if (isset($_REQUEST["userID"])) {
@@ -23,7 +19,6 @@ if (isset($_REQUEST["userID"])) {
 	$profileStmt = $con->prepare('SELECT * FROM user_tbl WHERE ID = :ID');
 	$profileStmt->execute(array('ID'=>$userID));
 	$row = $profileStmt->fetch(PDO::FETCH_OBJ);
-
 	if($profileStmt->rowCount() != 1) {
 		$msg = "Profile Not Found";
 	} else {
@@ -36,7 +31,6 @@ if (isset($_REQUEST["userID"])) {
 		$user->setLastName($row->lastName);
 		$user->setPhoneNumber($row->phone);
 		$user->setGender($row->gender);
-		$user->setBirthYear($row->birthYear);
 		$user->setUserStatus($row->userStatus);
 		$user->setAddressID($row->addressID);
 		$user->setUserPrivilege($row->privilege);
@@ -44,31 +38,23 @@ if (isset($_REQUEST["userID"])) {
 		$user->setFbLink($row->fbLink);
 		$user->setTwLink($row->twLink);
 		$user->setLkLink($row->lkdLink);
-
 		$imageSTMT = $con->prepare('SELECT * FROM picture_tbl WHERE ID = :ID');
 		$imageSTMT->execute(array('ID'=>$row->pictureID));
 		$imageRow = $imageSTMT->fetch(PDO::FETCH_OBJ);
-
 		$user->setImagePath($imageRow->location);
-
 		$resumeSTMT = $con->prepare('SELECT * FROM resume_tbl WHERE ID = :ID');
 		$resumeSTMT->execute(array('ID'=>$row->resumeID));
 		$resumeRow = $resumeSTMT->fetch(PDO::FETCH_OBJ);
-
 		$user->setResumePath($resumeRow->location);
-
 		$addressSTMT = $con->prepare('SELECT * FROM address_tbl WHERE ID = :ID');
 		$addressSTMT->execute(array('ID'=>$user->getAddressID()));
 		$addressRow = $addressSTMT->fetch(PDO::FETCH_OBJ);
-
 		$stateSTMT = $con->prepare('SELECT * FROM state_tbl WHERE ID = :ID');
 		$stateSTMT->execute(array('ID'=>$addressRow->stateID));
 		$stateRow = $stateSTMT->fetch(PDO::FETCH_OBJ);
-
 		$countrySTMT = $con->prepare('SELECT * FROM country_tbl WHERE ID = :ID');
 		$countrySTMT->execute(array('ID'=>$stateRow->countryID));
 		$countryRow = $countrySTMT->fetch(PDO::FETCH_OBJ);
-
 		$address->setID($addressRow->ID);
 		$address->setStreet1($addressRow->street1);
 		$address->setStreet2($addressRow->street2);
@@ -79,12 +65,10 @@ if (isset($_REQUEST["userID"])) {
 		$address->setCountry($countryRow->name);
 		$address->setCountryID($stateRow->countryID);
 	}
-
 } else {
 	$user = $_SESSION['user'];
 	$address = $_SESSION['address'];
 }
-
 function passwordToDots($password) {
 	$len = strlen($password);
 	$hiddenPSW = "";
@@ -93,7 +77,6 @@ function passwordToDots($password) {
 	}
 	return $hiddenPSW;
 }
-
 if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 	//set PairClass
 	$mmPair = new Pair();
@@ -103,18 +86,15 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 		$mmPair->setMenteeID($pairer->getID());
 		$mmPair->setMentorID($user->getID());
 		$mmPair->setRequester(0);
-		$mmPair->setChange(7);
 		$_SESSION['mmPair'] = $mmPair;
 		$mmSelect = "Mentor";
 	} else if($_REQUEST["mmSelect"] == 1) {
 		$mmPair->setMenteeID($user->getID());
 		$mmPair->setMentorID($pairer->getID());
 		$mmPair->setRequester(1);
-		$mmPair->setChange(7);
 		$_SESSION['mmPair'] = $mmPair;
 		$mmSelect = "Mentee";
 	}
-
 }
 ?>
 <section id="dashboard">
@@ -125,7 +105,7 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 				</div>
 				<?php if ($mmSelect != "") { ?>
 				<div class="col-md-4 col-sm-4">
-					<a href="pairing.php" class="btn btn-success">Select as <?php echo $mmSelect?></a> <!-- ADD THE LINK TO INSERT TO MMRELATION TABLE HERE -->
+					<a href="pairRequest.php?id=<?php echo $user->getID(); ?>" class="btn btn-success btn-sm">Select as <?php echo $mmSelect?></a> <!-- ADD THE LINK TO INSERT TO MMRELATION TABLE HERE -->
 				</div>
 				<?php } ?>
 			</div>
@@ -141,8 +121,8 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 					</div>
 					<?php } ?>
 					<?php if ($boolUser == false || $admin) {?>
-					<div class="row mt-3">
-						<p class="lead"><a href="<?php echo($user->getResumePath());?>" class="btn btn-info">View Resume</a></p>
+					<div class="row">
+						<p class="lead"><a href="<?php echo($user->getResumePath());?>">Resume</a></p>
 					</div>
 					<?php } ?>
 				</div>
@@ -214,14 +194,6 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 						</div>
 						<div class="col-md-8 col-sm-12">
 							<p class="lead"><?php echo($user->getGender()); ?></p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-4 col-sm-8">
-							<p class="lead">Age:</p>
-						</div>
-						<div class="col-md-8 col-sm-12">
-							<p class="lead"><?php echo($user->getAge()); ?></p>
 						</div>
 					</div>
 					<div class="row">
@@ -305,12 +277,10 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 						<?php } ?>
 					</div>
 					<?php 
-
 					$eduSTMT = $con->prepare('SELECT * FROM education_tbl WHERE userID = :ID');
 					$eduSTMT->execute(array('ID'=>$user->getID()));
 					$count = 1;
 					while($eduRow = $eduSTMT->fetch(PDO::FETCH_OBJ)) {
-
 						$degreeSTMT = $con->prepare('SELECT * FROM degree_tbl WHERE ID = :ID');
 						$degreeSTMT->execute(array('ID'=>$eduRow->degreeType));
 						$degreeRow = $degreeSTMT->fetch(PDO::FETCH_OBJ);

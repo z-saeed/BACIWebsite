@@ -70,7 +70,7 @@ function passwordToDots($password) {
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-4">
+			<!-- <div class="col-sm-4">
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">User Search</h5>
@@ -78,7 +78,7 @@ function passwordToDots($password) {
 						<a href="#" class="btn btn-warning">User Search</a>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 		<div class="row mt-1">
 			<div class="col-sm-4">

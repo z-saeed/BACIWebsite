@@ -1,28 +1,19 @@
 <?php 
-
 include 'header.php';
 require_once 'db_connect.php';
-
 $msg = "";
 $subject = "";
 $body = "";
-
-$mmPair = $_SESSION['mmPair'];
-$mentor = $mmPair->getMentorID();
-$mentee = $mmPair->getMenteeID();
-$change = $mmPair->getChange();
-$requester = $mmPair->getRequester();
-
+$mentor = ($_GET["mentor"]);
+$mentee = ($_GET["mentee"]);
+$change = ($_GET["change"]);
 $date = date("Y-m-d");
-
 $stmtMentor = $con->prepare("SELECT * FROM user_tbl WHERE ID=:mentor");
 $stmtMentor -> execute(array('mentor' => $mentor));
 $mentorRow = $stmtMentor->fetch(PDO::FETCH_OBJ);
-
 $stmtMentee = $con->prepare("SELECT * FROM user_tbl WHERE ID=:mentee");
 $stmtMentee -> execute(array('mentee' => $mentee));
 $menteeRow = $stmtMentee->fetch(PDO::FETCH_OBJ);
-
 //0 -> Pairing denied by coordinator
 //1 -> Pairing approved by coordinator
 //2 -> Current pairing ended by coordinator
@@ -30,7 +21,6 @@ $menteeRow = $stmtMentee->fetch(PDO::FETCH_OBJ);
 //4 -> Pairing denied by user
 //5 -> Pairing approved by user
 //6 -> Admin enter pairing and approve
-
 if($change == "0" or $change == "4"){
 	$stmt = $con->prepare("UPDATE mmRelationship_tbl SET rejectDate=:date WHERE mentorID = :mentor AND menteeID = :mentee");
 	$stmt -> execute(array('date' => $date, 'mentor' => $mentor, 'mentee' => $mentee));
@@ -41,8 +31,7 @@ if($change == "0" or $change == "4"){
 	} else if ($change == "4"){
 		$body = "A pairing has been denied by a user. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been denied.";
 	}
-}
-if ($change == "1" or $change == "5"){
+} else if ($change == "1" or $change == "5"){
 	$stmt = $con->prepare("UPDATE mmRelationship_tbl SET startDate=:date WHERE mentorID = :mentor AND menteeID = :mentee");
 	$stmt -> execute(array('date' => $date, 'mentor' => $mentor, 'mentee' => $mentee));
 	$msg = "Pairing accepted.";
@@ -52,8 +41,8 @@ if ($change == "1" or $change == "5"){
 	} else if ($change == "5"){
 		$body = "A pairing has been started by a user. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been activated.";
 	}
-}
-if ($change == "2" or $change == "3") {
+	
+} else if ($change == "2" or $change == "3") {
 	$stmt = $con->prepare("UPDATE mmRelationship_tbl SET endDate=:date WHERE mentorID=:mentor AND menteeID=:mentee");
 	$stmt -> execute(array('date' => $date, 'mentor' => $mentor, 'mentee' => $mentee));
 	$msg = "Pairing ended.";
@@ -63,25 +52,16 @@ if ($change == "2" or $change == "3") {
 	} else if ($change == "3"){
 		$body = "A pairing has been ended by a user. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been ended.";
 	}
-}
-if ($change == "6") {
+	
+} else if ($change == "6") {
 	$stmt = $con->prepare("INSERT INTO mmRelationship_tbl (mentorID, menteeID, requester, requestDate, startDate) VALUES (:mentor, :mentee , '2', :date, :date)");
 	$stmt -> execute(array('date' => $date, 'mentor' => $mentor, 'mentee' => $mentee));
 	$msg = "Pairing Started.";
 	$subject = "Pairing Started by admin.";
 	$body = "A pairing has been started by an admin. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been started by an administator.";
-}
-if($change == 7){ //user end request new mmRelationship
-	$mmRelationship = $con->prepare("INSERT INTO mmRelationship_tbl (`ID`, `mentorID`, `menteeID`, `requester`, `requestDate`) VALUES (NULL, :mentorID, :menteeID, :requester, :requestDate)");
-	$mmRelationship->execute(array('mentorID'=>$mmPair->getMentorID(), 'menteeID'=>$mmPair->getMenteeID(), 'requester'=>$mmPair->getRequester(), 'requestDate'=>$date));
-	$msg = "Pairing Requested.";
-	$subject = "Pairing Requested.";
-	$body = "A pairing has been requested by an another user . Please login to approve or deny: corsair.cs.iupui.edu:23051/CourseProject/BaciProjectAlt/";
-
-}
-if($change ==  15 )
+}else {
 	$msg = "Error, change not recognized.";
-
+}
 $mailer = new Mail();
 if(($mailer->sendMail($mentorRow->email, "USER", $subject, $body))){
 	$msg = "Message 1 sent";
@@ -89,8 +69,6 @@ if(($mailer->sendMail($mentorRow->email, "USER", $subject, $body))){
 if(($mailer->sendMail($menteeRow->email, "USER", $subject, $body))){
 	$msg = "Emails have been sent to both parties";
 }
-
-	$_SESSION['mmPair'] = Null;
 ?>
 
 <section id="loginPage">

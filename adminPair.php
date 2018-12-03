@@ -2,7 +2,6 @@
 if($_SESSION['loggedin'] == false) {
 	header('Location: login.php'); 
 }
-
 /*if (isset($_POST['pair'])){
 		
 	$mentor = trim($_POST['mentor']);
@@ -24,11 +23,9 @@ else show error w/ button to dashboard?
 <html>
 	<head>
 		<script>
-
 			var menteeID, mentorID;
 			var mentees = [];
 			var mentors = [];
-
 			function showMentors(str)
 			{
 				var xmlhttp;
@@ -45,9 +42,7 @@ else show error w/ button to dashboard?
 				xmlhttp.onreadystatechange=function(){
 					if (xmlhttp.readyState==4 && xmlhttp.status==200){
 					document.getElementById("mentor").innerHTML=xmlhttp.responseText;
-
 					createMentorMap();
-
 						if(mentors[str])
 						{
 							mentorID = mentors[str];
@@ -57,7 +52,6 @@ else show error w/ button to dashboard?
 				xmlhttp.open("GET","mentorProcess.php?q="+str,true);
 				xmlhttp.send();
 			}
-
 			function showMentees(str)
 			{
 				var xmlhttp;
@@ -74,9 +68,7 @@ else show error w/ button to dashboard?
 				xmlhttp.onreadystatechange=function(){
 					if (xmlhttp.readyState==4 && xmlhttp.status==200){
 					document.getElementById("mentee").innerHTML=xmlhttp.responseText;
-
 					createMenteeMap();
-
 						if(mentees[str])
 						{
 							menteeID = mentees[str];
@@ -86,13 +78,11 @@ else show error w/ button to dashboard?
 				xmlhttp.open("GET","menteeProcess.php?q="+str,true);
 				xmlhttp.send();
 			}
-
 			function createMenteeMap()
 			{
 				$('#mentee option').each( function(index, value){
 					var id = $(this).data('id');
 					var name = this.innerHTML;
-
 					if(name.length > 0)
 					{
 						if(!mentees[name])
@@ -102,13 +92,11 @@ else show error w/ button to dashboard?
 					}
 				});
 			}
-
 			function createMentorMap()
 			{
 				$('#mentor option').each( function(index, value){
 					var id = $(this).data('id');
 					var name = this.innerHTML;
-
 					if(name.length > 0)
 					{
 						if(!mentors[name])
@@ -118,62 +106,52 @@ else show error w/ button to dashboard?
 					}
 				});
 			}
-
 			function submitPair()
 			{
 				if(!mentorID || !menteeID) 
 					alert('please double check your selections');
-
 					var paths = location.pathname.split('/')
 					var url = '';
 					for (i = 0; i < paths.length - 1; i++)
 					{
 						url += paths[i] + '/';
 					}
-					url += 'pairing.php?mentor=' + mentorID + '&mentee=' + menteeID + '&change=6';
-
+					url += 'pairing.php?mentor' + mentorID + '&mentee=' + menteeID + '&change=2';
 				location.href = url;
 			}
-
 		</script>
 	</head>
-	<section id="adminPair">
-		<div class="container">
-			<div class="row mt-4">
-				<div class="col-md-4 col-sm-4">
-					<a href="dashboard.php" class="btn btn-primary btn-sm">Back to Dashboard <i class="fas fa-undo-alt"></i></a>
+	<section id="adminPair" class="container">
+	<div class="row mt-4">
+		<div class="col-md-4 col-sm-4">
+			<a href="dashboard.php" class="btn btn-primary btn-sm">Back to Dashboard <i class="fas fa-undo-alt"></i></a>
+		</div>
+		<h3>Create new Pair</h3>
+	</div>
+		<div class="row mt-4">
+			<div class="col-md-4 col-sm-4">
+				<div class="mentor">
+					<form action="adminPair.php" method="post"> 
+						Enter Mentor's Last Name: 
+						<input type="text" list="mentor" name="mentor" value="" onkeyup="showMentors(this.value)" />
+						<datalist id="mentor" >
+						
+						</datalist>
+					</form>
 				</div>
 			</div>
-			<div class="row mt-3">
-				<h3>Create new Pair</h3>
-			</div>
-			<form action="adminPair.php" method="post"> 
-				<div class="row mt-4">
-				
-					<div class="col-md-4 col-sm-4">
-						<div class="mentor">
-							
-								Enter Mentor's Last Name: 
-								<input type="text" list="mentor" name="mentor" value="" onkeyup="showMentors(this.value)" />
-								<datalist id="mentor" >
-								
-								</datalist>
-							
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-4"">
-						<div class="mentee">
-								Enter Mentee's Last Name: 
-								<input type="text" list="mentee" name="mentee" value="" onkeyup="showMentees(this.value)" />
-								<datalist id="mentee" >
-								
-								</datalist>
-						</div>
-					</div>
-					<input name="pair" class="btn" type="button" value="Pair" onclick="submitPair()"/>
-				
+			<div class="col-md-4 col-sm-4">
+				<div class="mentee">
+					<form action="adminPair.php" method="post"> 
+						Enter Mentee's Last Name: 
+						<input type="text" list="mentee" name="mentee" value="" onkeyup="showMentees(this.value)" />
+						<datalist id="mentee" >
+						
+						</datalist>
+					</form>
 				</div>
-			</form>
+			</div>
+			<input name="pair" class="btn" type="submit" value="Pair" onclick="submitPair()"/>
 		</div>
 	</section>
 </html>
