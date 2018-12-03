@@ -116,7 +116,7 @@ else show error w/ button to dashboard?
 					{
 						url += paths[i] + '/';
 					}
-					url += 'pairing.php?mentor' + mentorID + '&mentee=' + menteeID + '&change=2';
+					url += 'pairing.php?mentor=' + mentorID + '&mentee=' + menteeID + '&change=2';
 				location.href = url;
 			}
 		</script>
