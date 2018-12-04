@@ -28,8 +28,10 @@ if(isset($_POST['add'])) {
 if(isset($_POST['edit'])){
 		$degreeNum = trim($_POST['degreeNameEdit']);
 		$degree = trim($_POST['editDegree']);
-		$stmt = $con->prepare('UPDATE degree_tbl SET type = :name WHERE ID = :num');
-		$stmt->execute(array('name' => $degree, 'num' => $degreeNum));
+		if($degree != ""){
+			$stmt = $con->prepare('UPDATE degree_tbl SET type = :name WHERE ID = :num');
+			$stmt->execute(array('name' => $degree, 'num' => $degreeNum));
+		}
 	}	
 
 //activate in database

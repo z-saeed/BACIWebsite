@@ -29,8 +29,10 @@ if(isset($_POST['add'])) {
 if(isset($_POST['edit'])){
 		$countryNum = trim($_POST['countryNameEdit']);
 		$country = trim($_POST['editCountry']);
-		$stmt = $con->prepare('UPDATE country_tbl SET name = :name WHERE ID = :num');
-		$stmt->execute(array('name' => $country, 'num' => $countryNum));
+		if($country != ""){
+			$stmt = $con->prepare('UPDATE country_tbl SET name = :name WHERE ID = :num');
+			$stmt->execute(array('name' => $country, 'num' => $countryNum));
+		}
 	}	
 
 //activate in database
