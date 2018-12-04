@@ -9,10 +9,12 @@ $stmt->execute(array());
 $stmtCountry = $con->prepare('SELECT * FROM country_tbl');
 
 $string = <<<EOT
-<table  id="userList" class="display table" cellspacing="0" width="100%">
+<table  id="userList" class="display table" cellspacing="0" width="110%">
 <thead>
 <tr>
+<th></th>
 <th>Name</th>
+<th>Email</th>
 <th>Gender</th>
 <th>Age</th>
 <th>State</th>
@@ -20,12 +22,13 @@ $string = <<<EOT
 <th>Identity</th>
 <th>Education Level</th>
 <th>Registered</th>
-<th></th>
 </tr>
 </thead>
 <tfoot>
 <tr>
+<th></th>
 <th>Name</th>
+<th>Email</th>
 <th>Gender</th>
 <th>Age</th>
 <th>State</th>
@@ -33,7 +36,6 @@ $string = <<<EOT
 <th>Identity</th>
 <th>Education Level</th>
 <th>Registered</th>
-<th></th>
 </tr>
 </tfoot>
 EOT;
@@ -88,7 +90,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	if($degree == "")
 		$degree = "n/a";
 	
-	$string = $string."<tr><td>".$row["firstName"]." ".$row["lastName"]."</td><td>".$gender."</td><td>".$row["birthYear"]."</td><td>".$state."</td><td>".$country."</td>";
-	$string = $string."<td>".$identity."</td><td>".$degree."</td><td>".$row["registerDate"]."</td><td><a href='userProfile.php?userID=".$row["ID"]."' class='btn btn-outline-info'>User Profile</a></td></tr>";
+	$string = $string."<tr><td><a href='userProfile.php?userID=".$row["ID"]."' class='btn btn-outline-info'>View</a></td><td>".$row["firstName"]." ".$row["lastName"]."</td><td>".$row["email"]."</td><td>".$gender."</td><td>".$row["birthYear"];
+	$string = $string."</td><td>".$state."</td><td>".$country."</td><td>".$identity."</td><td>".$degree."</td><td>".$row["registerDate"]."</td></tr>";
 }
 print($string);
