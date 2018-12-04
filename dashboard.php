@@ -79,35 +79,6 @@ function passwordToDots($password) {
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row mt-1">
-			<div class="col-sm-4">
-				<div class="card">
-					<div class="card-body">
-						<h5 class="card-title">Configure Country list</h5>
-						<p class="card-text">Add, edit or delete a country from the database</p>
-						<a href="configureCountry.php" class="btn btn-warning">Configure Country list</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-4">
-				<div class="card">
-					<div class="card-body">
-						<h5 class="card-title">Configure State list</h5>
-						<p class="card-text">Add, edit or delete a state from the database</p>
-						<a href="configureState.php" class="btn btn-warning">Configure State list</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-4">
-				<div class="card">
-					<div class="card-body">
-						<h5 class="card-title">Configure Degree Level list</h5>
-						<p class="card-text">Add, edit or delete an educational degree from the database</p>
-						<a href="configureDegree.php" class="btn btn-warning">Configure Degree level list</a>
-					</div>
-				</div>
-			</div>
 		</div>	
 		<hr>
 	<?php } ?>
@@ -168,6 +139,35 @@ function passwordToDots($password) {
 						<h5 class="card-title">Create New Pair</h5>
 						<p class="card-text">Add a new mentor/mentee pair.</p>
 						<a href="adminPair.php" class="btn btn-primary">New Pair</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-1">
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Configure Country list</h5>
+						<p class="card-text">Add, edit or delete a country from the database</p>
+						<a href="configureCountry.php" class="btn btn-primary">Configure Country list</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Configure State list</h5>
+						<p class="card-text">Add, edit or delete a state from the database</p>
+						<a href="configureState.php" class="btn btn-primary">Configure State list</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Configure Degree Level list</h5>
+						<p class="card-text">Add, edit or delete an educational degree from the database</p>
+						<a href="configureDegree.php" class="btn btn-primary">Configure Degree level list</a>
 					</div>
 				</div>
 			</div>
