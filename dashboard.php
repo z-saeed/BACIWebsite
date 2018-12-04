@@ -41,7 +41,7 @@ function passwordToDots($password) {
 					<div class="card-body">
 						<h5 class="card-title">Delete User</h5>
 						<p class="card-text">Delete a User, Coordinator, or Admin from the database.</p>
-						<a href="#" class="btn btn-danger">Delete User</a>
+						<a href="deactUser.php" class="btn btn-danger">Delete User</a>
 					</div>
 				</div>
 			</div>
