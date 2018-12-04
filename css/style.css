@@ -146,6 +146,11 @@ h4 {
 	font-weight: 300;
 }*/
 
+/*download tables*/
+#downloadTables{
+	min-height: 82vh;
+}
+
 
 .btn.sharp {
   border-radius:0;
