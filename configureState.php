@@ -39,7 +39,7 @@ if(isset($_POST['add'])) {
 	$newState = trim($_POST['addState']);
 	$countryID = trim($_POST['countryID']);
 	if($newState != ""){
-		$stmt = $con->prepare('INSERT INTO state_tbl (ID, name, countryID) VALUES (Null, :state, :countryID)');
+		$stmt = $con->prepare('INSERT INTO state_tbl (ID, name, countryID, active) VALUES (Null, :state, :countryID, 1)');
 		$stmt->execute(array('state' => $newState, 'countryID' => $countryID));
 	}
 }
