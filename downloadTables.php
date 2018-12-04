@@ -12,10 +12,16 @@ if($_SESSION['loggedin'] == false) {
 
     <div class="row mt-4">
         <div class="col-sm-12 col-md-6">
-			<h4>User Info</h4>
+			<h4>User Table</h4>
         </div>
         <div class="col-sm-12 col-md-6">
-            <p class="lead"><a href="saveUsers.php" class="btn btn-outline-primary btn-sm">Download Users</a></p>
+            <p class="lead"><a href="saveTables.php?tag=1" class="btn btn-outline-primary btn-sm">Download Users</a></p>
+        </div>
+        <div class="col-sm-12 col-md-6">
+			<h4>Country Table</h4>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <p class="lead"><a href="saveTables.php?tag=2" class="btn btn-outline-primary btn-sm">Download Users</a></p>
         </div>
     </div>
 
