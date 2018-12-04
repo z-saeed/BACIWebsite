@@ -69,8 +69,8 @@
 			<select name="birthYear" id="birthYear" class="form-control"></select>
 		</div>
 		<div class="form-group col-md-3 col-sm-6">
-			<label for="userType">User Status</label>
-			<select id="userType" class="form-control" name="userStatus">
+			<label for="userStatus">User Status</label>
+			<select id="userStatus" class="form-control" name="userStatus">
 				<option value="0" selected>Mentee</option>
 				<option value="1">Mentor</option>
 				<option value="2">Other</option>					
@@ -95,14 +95,16 @@
 		</div>
 		<div class="form-group col-md-3 col-sm-6">
 			<label for="state">State</label>
+			<select id="state" class="form-control" name="state">
 			<?php 
-			$resultState = $con->query("select * from state_tbl WHERE active = 1 ORDER BY name ASC");
-			echo '<select id="state" class="form-control" name="state">';
-			while($rowState = $resultState->fetch(PDO::FETCH_ASSOC)) {
-				echo "<option value='" . $rowState['ID'] ."'>" . $rowState['name'] ."</option>";
-			}
-			echo "</select>";
+			// $resultState = $con->query("select * from state_tbl WHERE active = 1 ORDER BY name ASC");
+			// echo '<select id="state" class="form-control" name="state">';
+			// while($rowState = $resultState->fetch(PDO::FETCH_ASSOC)) {
+			// 	echo "<option value='" . $rowState['ID'] ."'>" . $rowState['name'] ."</option>";
+			// }
+			// echo "</select>";
 			?>
+			</select>
 		</div>
 		<div class="form-group col-md-2 col-sm-4">
 			<label for="zip">Zip Code</label>
@@ -110,14 +112,22 @@
 		</div>
 		<div class="form-group col-md-3 col-sm-6">
 			<label for="country">Country</label>
+			<select id="country" class="form-control" name="country">
+				<option selected="" disabled="">Select Country</option>
 			<?php 
-			$resultCountry = $con->query("select * from country_tbl where active = 1 ORDER BY name ASC");
-			echo '<select id="country" class="form-control" name="country">';
-			while($rowCountry = $resultCountry->fetch(PDO::FETCH_ASSOC)) {
-				echo "<option value='" . $rowCountry['ID'] ."'>" . $rowCountry['name'] ."</option>";
+			require_once 'data.php';
+			$countries = loadCountries($con);
+			foreach ($countries as $country) {
+				echo "<option value='".$country['ID']."'>".$country['name']."</option>";
 			}
-			echo "</select>";
+			// $resultCountry = $con->query("select * from country_tbl where active = 1 ORDER BY name ASC");
+			// echo '<select id="country" class="form-control" name="country">';
+			// while($rowCountry = $resultCountry->fetch(PDO::FETCH_ASSOC)) {
+			// 	echo "<option value='" . $rowCountry['ID'] ."'>" . $rowCountry['name'] ."</option>";
+			// }
+			// echo "</select>";
 			?>
+			</select>
 		</div>
 	</div>
 	<hr>

@@ -233,6 +233,27 @@ $(document).ready(function() {
     	}
 	});
 
+	/*
+	##############################################
+	###### COUNTRY/STATE DROPDOWN SELECTION ######
+	##############################################
+	*/
+	$("#country").change(function(){
+		var countryID = $("#country").val();
+		$.ajax({
+			url: 'data.php',
+			method: 'post',
+			data: 'country=' + countryID
+		}).done(function(states){
+			console.log(states);
+			states = JSON.parse(states);
+			$('#state').empty();
+			states.forEach(function(state){
+				$('#state').append('<option>' + state.name + '</option>')
+			})
+		})
+	});
+
 });
 
 $(function() {
