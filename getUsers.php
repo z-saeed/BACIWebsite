@@ -85,6 +85,8 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	$stmtEdu2->execute(array('id' => $degreeType));
 	$rowEdu2 = $stmtEdu2->fetch(PDO::FETCH_ASSOC);
 	$degree = $rowEdu2["type"];
+	if($degree == "")
+		$degree = "n/a";
 	
 	$string = $string."<tr><td>".$row["firstName"]." ".$row["lastName"]."</td><td>".$gender."</td><td>".$row["birthYear"]."</td><td>".$state."</td><td>".$country."</td>";
 	$string = $string."<td>".$identity."</td><td>".$degree."</td><td>".$row["registerDate"]."</td><td><a href='userProfile.php?userID=".$row["ID"]."' class='btn btn-outline-info'>User Profile</a></td></tr>";
