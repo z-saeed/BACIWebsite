@@ -2,35 +2,40 @@
 
 require_once "db_connect.php";
 
-$stmt = $con->prepare("SELECT * FROM user_tbl");
+$stmt = $con->prepare('SELECT * FROM user_tbl');
 $stmt->execute(array());
 
+
+$stmtCountry = $con->prepare('SELECT * FROM country_tbl');
+
 $string = <<<EOT
-<table  id="userList" class="display table" cellspacing="0" width="100%">
+<table  id="userList" class="display table" cellspacing="0" width="110%">
 <thead>
 <tr>
-<th>First Name</th>
-<th>Last Name</th>
+<th></th>
+<th>Name</th>
 <th>Email</th>
 <th>Gender</th>
 <th>Age</th>
-<th>Phone</th>
+<th>State</th>
+<th>Country</th>
 <th>Identity</th>
-<th>User Status</th>
-<th></th>
+<th>Education Level</th>
+<th>Registered</th>
 </tr>
 </thead>
 <tfoot>
 <tr>
-<th>First Name</th>
-<th>Last Name</th>
+<th></th>
+<th>Name</th>
 <th>Email</th>
 <th>Gender</th>
 <th>Age</th>
-<th>Phone</th>
+<th>State</th>
+<th>Country</th>
 <th>Identity</th>
-<th>User Status</th>
-<th></th>
+<th>Education Level</th>
+<th>Registered</th>
 </tr>
 </tfoot>
 EOT;
@@ -48,22 +53,48 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	else
 		$gender = "Female";
 
-	if ($row["identityID"] == 0)
+	if ($row["identityID"] == 0){
 		$identity = "Student";
-	else
+	}else{
 		$identity = "Working Professional";
+		$idID = $row["identityID"];
+		$stmtID = $con->prepare('SELECT * FROM identity_tbl WHERE ID = :id');
+		$stmtID->execute(array('id' => $idID));
+		$rowID = $stmtID->fetch(PDO::FETCH_ASSOC);
+	}
 
-	if ($row["userStatus"] == 0)
-		$userStatus = "Mentee";
-	else if ($row["userStatus"] == 1)
-		$userStatus = "Mentor";
-	else
-		$userStatus = "Neither";
+	$addressID = $row["addressID"];
+	$stmtAddress = $con->prepare('SELECT * FROM address_tbl WHERE ID = :id');
+	$stmtAddress->execute(array('id' => $addressID));
+	$rowAddress = $stmtAddress->fetch(PDO::FETCH_ASSOC);
+	$stateID = $rowAddress["stateID"];
+
+	$stmtState = $con->prepare('SELECT * FROM state_tbl WHERE ID = :id');
+	$stmtState->execute(array('id' => $stateID));
+	$rowState = $stmtState->fetch(PDO::FETCH_ASSOC);
+	$state = $rowState["name"];
+	$countryID = $rowState["countryID"];
+
+	$stmtCountry = $con->prepare('SELECT * FROM country_tbl WHERE ID = :id');
+	$stmtCountry->execute(array('id' => $countryID));
+	$rowCountry = $stmtCountry->fetch(PDO::FETCH_ASSOC);
+	$country = $rowCountry["name"];
+
+	$stmtEdu = $con->prepare('SELECT * FROM education_tbl WHERE userID = :id');
+	$stmtEdu->execute(array('id' => $row["ID"]));
+	$rowEdu = $stmtEdu->fetch(PDO::FETCH_ASSOC);
+	$degreeType = $rowEdu["degreeType"];
+
+	$stmtEdu2 = $con->prepare('SELECT * FROM degree_tbl WHERE ID = :id');
+	$stmtEdu2->execute(array('id' => $degreeType));
+	$rowEdu2 = $stmtEdu2->fetch(PDO::FETCH_ASSOC);
+	$degree = $rowEdu2["type"];
+	if($degree == "")
+		$degree = "n/a";
 
 	$birthYear = $row["birthYear"];
 	$age = $curYear - $birthYear;
 
-	$string = $string."<tr><td>".$row["firstName"]."</td><td>".$row["lastName"]."</td><td>".$row["email"]."</td><td>".$gender."</td><td>".$age."</td><td>".$row["phone"]."</td><td>".$identity."</td><td>".$userStatus."</td><td><a href='userProfile.php?userID=".$row["ID"]."' class='btn btn-outline-info'>User Profile</a></td></tr>";
+	$string = $string."<tr><td><a href='userProfile.php?userID=".$row["ID"]."' class='btn btn-outline-info'>View</a></td><td>".$row["firstName"]." ".$row["lastName"]."</td><td>".$row["email"]."</td><td>".$gender."</td><td>".$age."</td><td>".$state."</td><td>".$country."</td><td>".$identity."</td><td>".$degree."</td><td>".$row["registerDate"]."</td></tr>";
 }
-
 print($string);

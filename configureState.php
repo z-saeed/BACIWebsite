@@ -26,8 +26,14 @@ if(isset($_POST['show'])) {
 		if($rowCountryName['ID'] == $countryID)
 			$country = $rowCountryName['name'];
 	}
-	$msgState = "The states currently in ".$country." are : "."</br>";
-	$resultShow = $con->query("select * from state_tbl ORDER BY name ASC");
+	$msgState = "The active states currently in ".$country." are : "."</br>";
+	$resultShow = $con->query("select * from state_tbl WHERE active = 1 ORDER BY name ASC");
+	while($rowShow = $resultShow->fetch(PDO::FETCH_ASSOC)) {
+		if($rowShow['countryID'] == $countryID)
+			$msgState = $msgState.$rowShow['name']."</br>";
+	}
+	$msgState = $msgState."</br>The active states currently in ".$country." are : "."</br>";
+	$resultShow = $con->query("select * from state_tbl WHERE active = 0 ORDER BY name ASC");
 	while($rowShow = $resultShow->fetch(PDO::FETCH_ASSOC)) {
 		if($rowShow['countryID'] == $countryID)
 			$msgState = $msgState.$rowShow['name']."</br>";
@@ -47,15 +53,23 @@ if(isset($_POST['add'])) {
 if(isset($_POST['edit'])){
 		$stateNum = trim($_POST['stateNameEdit']);
 		$state = trim($_POST['editState']);
-		$stmt = $con->prepare('UPDATE state_tbl SET name = :name WHERE ID = :num');
-		$stmt->execute(array('name' => $state, 'num' => $stateNum));
+		if($state != ""){
+			$stmt = $con->prepare('UPDATE state_tbl SET name = :name WHERE ID = :num');
+			$stmt->execute(array('name' => $state, 'num' => $stateNum));
+		}
 	}	
 
-//delete from database
-if(isset($_POST['delete'])){
-		$stmt = $con->prepare('DELETE FROM state_tbl WHERE ID = :stateID');
-		$stmt->execute(array('stateID' => $_POST['stateNameRemove']));
-	}		
+//activate in database
+if(isset($_POST['activate'])){
+		$stmt = $con->prepare('UPDATE state_tbl SET active = 1 WHERE ID = :num');
+		$stmt->execute(array('num' => $_POST["stateID"]));
+	}
+
+//deactivate from database
+if(isset($_POST['deactivate'])){
+		$stmt = $con->prepare('UPDATE state_tbl SET active = 0 WHERE ID = :num');
+		$stmt->execute(array('num' => $_POST["stateID"]));
+	}	
 	
 $result = $con->query("select * from state_tbl ORDER BY name ASC");
 $resultCountry = $con->query("select name from country_tbl ORDER BY name ASC");
@@ -119,7 +133,7 @@ $resultCountry = $con->query("select name from country_tbl ORDER BY name ASC");
 									?>
 								</select>
 								<div class="input-group-append">
-									<button type="submit" class="btn btn-outline-primary" name="add">Add State</button>
+									<button type="submit" class="btn btn-success" name="add">Add State</button>
 								</div>
 							</div>
 						</form>
@@ -128,7 +142,7 @@ $resultCountry = $con->query("select name from country_tbl ORDER BY name ASC");
 				<div class="row mt-2">
 					<div class="col-sm-12">
 					<!-- EDIT STATES-->
-						<h4>Edit State</h4>
+						<h4>Edit State Name</h4>
 						<form action="configureState.php" method="post">
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
@@ -138,13 +152,17 @@ $resultCountry = $con->query("select name from country_tbl ORDER BY name ASC");
 									<?php
 									$result1 = $con->query("select * from state_tbl ORDER BY name ASC");
 									while($row1 = $result1->fetch(PDO::FETCH_ASSOC)) {
-										echo "<option value = '".$row1['ID']."'>".$row1['name'].", ".$row1['countryID']."</option>";
+										$stmtCountry = $con->prepare('SELECT * FROM country_tbl WHERE ID = :id');
+										$stmtCountry->execute(array('id' => $row1["countryID"]));
+										$rowCountry = $stmtCountry->fetch(PDO::FETCH_ASSOC);
+										$country = $rowCountry["name"];
+										echo "<option value = '".$row1['ID']."'>".$row1['name'].", ".$country."</option>";
 									}
 									?>
 								</select>
 								<input type="text" class="form-control" name="editState">
 								<div class="input-group-append">
-									<button type="submit" class="btn btn-outline-primary" name="edit">Edit State</button>
+									<button type="submit" class="btn btn-primary" name="edit">Edit State</button>
 								</div>
 							</div>
 						</form>
@@ -152,23 +170,55 @@ $resultCountry = $con->query("select name from country_tbl ORDER BY name ASC");
 				</div>
 				<div class="row mt-2">
 					<div class="col-sm-12">
-					<!-- REMOVE STATES-->
-						<h4>Remove State</h4>
+					<!-- Activate STATES-->
+						<h4>Activate State</h4>
 						<form action="configureState.php" method="post">
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
-									<label class="input-group-text" for="stateNameRemove">States</label>
+									<label class="input-group-text" for="stateNameAct">States</label>
 								</div>
-								<select class="custom-select" name="stateNameRemove">
+								<select class="custom-select" name="stateID">
 									<?php
-									$result1 = $con->query("select * from state_tbl ORDER BY name ASC");
+									$result1 = $con->query("select * from state_tbl WHERE active = 0 ORDER BY name ASC");
 									while($row1 = $result1->fetch(PDO::FETCH_ASSOC)) {
-										echo "<option value = '".$row1['ID']."'>".$row1['name'].", ".$row1['countryID']."</option>";
+										$stmtCountry = $con->prepare('SELECT * FROM country_tbl WHERE ID = :id');
+										$stmtCountry->execute(array('id' => $row1["countryID"]));
+										$rowCountry = $stmtCountry->fetch(PDO::FETCH_ASSOC);
+										$country = $rowCountry["name"];
+										echo "<option value = '".$row1['ID']."'>".$row1['name'].", ".$country."</option>";
 									}
 									?>
 								</select>
 								<div class="input-group-append">
-									<button type="submit" class="btn btn-outline-danger" name="delete">Remove State</button>
+									<button type="submit" class="btn btn-success" name="activate">Activate State</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="row mt-2">
+					<div class="col-sm-12">
+					<!-- Deactivate STATES-->
+						<h4>Dectivate State</h4>
+						<form action="configureState.php" method="post">
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<label class="input-group-text" for="stateNameDeact">States</label>
+								</div>
+								<select class="custom-select" name="stateID">
+									<?php
+									$result1 = $con->query("select * from state_tbl WHERE active = 1 ORDER BY name ASC");
+									while($row1 = $result1->fetch(PDO::FETCH_ASSOC)) {
+										$stmtCountry = $con->prepare('SELECT * FROM country_tbl WHERE ID = :id');
+										$stmtCountry->execute(array('id' => $row1["countryID"]));
+										$rowCountry = $stmtCountry->fetch(PDO::FETCH_ASSOC);
+										$country = $rowCountry["name"];
+										echo "<option value = '".$row1['ID']."'>".$row1['name'].", ".$country."</option>";
+									}
+									?>
+								</select>
+								<div class="input-group-append">
+									<button type="submit" class="btn btn-danger" name="deactivate">Deactivate State</button>
 								</div>
 							</div>
 						</form>

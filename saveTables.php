@@ -54,7 +54,7 @@ $fields = $export->columnCount();
 
 for ( $i = 0; $i < $fields; $i++ )
 {
-    $header .= $q->fetchAll(PDO::FETCH_COLUMN) . ",";
+    $header .= $q->fetch(PDO::FETCH_COLUMN) . ",";
 }
 
 while( $row = $export->fetch(PDO::FETCH_OBJ))

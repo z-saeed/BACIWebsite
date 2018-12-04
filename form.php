@@ -73,7 +73,7 @@
 			<select id="userStatus" class="form-control" name="userStatus">
 				<option value="0" selected>Mentee</option>
 				<option value="1">Mentor</option>
-				<option value="2">Other</option>					
+				<option value="2">Neither</option>					
 			</select>
 		</div>
 	</div>
