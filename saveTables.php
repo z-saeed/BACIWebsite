@@ -10,8 +10,31 @@ if (isset($_GET['tag'])){
         $table = "user_tbl";
 
     if ($tag==2)
+        $table = "address_tbl";
+
+    if ($tag==3)
         $table = "country_tbl";
-    
+
+    if ($tag==4)
+        $table = "state_tbl";
+        
+    if ($tag==5)
+        $table = "degree_tbl";
+
+    if ($tag==6)
+        $table = "education_tbl";
+
+    if ($tag==7)
+        $table = "identity_tbl";
+
+    if ($tag==8)
+        $table = "mmRelationship_tbl";
+
+    if ($tag==9)
+        $table = "picture_tbl";
+        
+    if ($tag==10)
+        $table = "resume_tbl";
 }
 
 
