@@ -8,7 +8,8 @@ if($_SESSION['loggedin'] == false) {
 		<a href="dashboard.php" class="btn btn-secondary btn-sm">Back to Dashboard <i class="fas fa-undo-alt"></i></a>
 	</div>
 
-    <h3>Save Database Information</h3>
+    
+    <h3 class="mt-4">Save Database Information</h3>
 
     <div class="row mt-4">
         <div class="col-4">
