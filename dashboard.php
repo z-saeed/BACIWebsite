@@ -70,15 +70,15 @@ function passwordToDots($password) {
 					</div>
 				</div>
 			</div>
-			<!-- <div class="col-sm-4">
+			<div class="col-sm-4">
 				<div class="card">
 					<div class="card-body">
-						<h5 class="card-title">User Search</h5>
-						<p class="card-text">Search for a registered user and view thier profile</p>
-						<a href="#" class="btn btn-warning">User Search</a>
+						<h5 class="card-title">Download Tables</h5>
+						<p class="card-text">Export the information within the database</p>
+						<a href="downloadTables.php" class="btn btn-warning">Download Tables</a>
 					</div>
 				</div>
-			</div> -->
+			</div>
 		</div>
 		<div class="row mt-1">
 			<div class="col-sm-4">
