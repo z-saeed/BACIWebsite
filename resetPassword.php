@@ -11,7 +11,7 @@ $msg = "Enter new password:"; //message to user
 
 $password = ""; //hold password for storing
 
-if (isset($_POST['submit'])){
+if ((isset($_POST['submit'])) and ($code != "1")){
 	
 	$password = ($_POST['password']);
 	
