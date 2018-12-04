@@ -42,6 +42,7 @@ $confirmPasswordReq = "*";
 
 $phoneNumber = "";
 $gender = "";
+$birthYear = "";
 $userStatus = "";
 
 $fbLink = "";
@@ -83,6 +84,7 @@ if (isset($_POST['enter'])) {
 		}
 		$phoneNumber = trim($_POST['phoneNumber']);
 		$gender = trim($_POST['gender']);
+		$birthYear = trim($_POST['birthYear']);
 		$userStatus = trim($_POST['userStatus']);
 		$address1 = trim($_POST['address1']);
 		$address2 = trim($_POST['address2']);
@@ -115,8 +117,8 @@ if (isset($_POST['enter'])) {
 			$stmtID = $con->prepare('INSERT INTO identity_tbl (employment, field, employer) VALUES (:employment, :field, :employer)');
         	$stmtID->execute(array('employment'=>$employment, 'field'=>$field, 'employer'=>$employer));
         	$identity_id = $con->lastInsertId();
-			$stmtUser = $con->prepare("INSERT INTO user_tbl (`ID`, `username`, `email`, `password`, `firstName`, `lastName`, `gender`, `addressID`, `phone`, `identityID`, `fbLink`, `twLink`, `lkdLink`, `resumeID`, `pictureID`, `registerDate`, `activationURL`, `active`, `privilege`, `userStatus`) VALUES (NULL, :username, :email, :password, :firstName, :lastName, :gender, :addressID, :phone, :identityID, :fbLink, :twLink, :lkdLink, 1, 1, :registerDate, :activationURL, :active, :privilege, :userStatus)");
-			$stmtUser->execute(array('username'=>$userName, 'email'=>$email, 'password'=>$password, 'firstName'=>$firstName, 'lastName'=>$lastName, 'gender'=>$gender, 'addressID'=>$address_id, 'phone'=>$phoneNumber, 'identityID'=>$identity_id, 'fbLink'=>"", 'twLink'=>"", 'lkdLink'=>"", 'registerDate'=>$registrationDate, 'activationURL'=>"adminAdded", 'active'=>1, 'privilege'=>$userType, 'userStatus'=>$userStatus));
+			$stmtUser = $con->prepare("INSERT INTO user_tbl (`ID`, `username`, `email`, `password`, `firstName`, `lastName`, `gender`, `birthYear`,`addressID`, `phone`, `identityID`, `fbLink`, `twLink`, `lkdLink`, `resumeID`, `pictureID`, `registerDate`, `activationURL`, `active`, `privilege`, `userStatus`) VALUES (NULL, :username, :email, :password, :firstName, :lastName, :gender, :birthYear, :addressID, :phone, :identityID, :fbLink, :twLink, :lkdLink, 1, 1, :registerDate, :activationURL, :active, :privilege, :userStatus)");
+			$stmtUser->execute(array('username'=>$userName, 'email'=>$email, 'password'=>$password, 'firstName'=>$firstName, 'lastName'=>$lastName, 'gender'=>$gender, 'birthYear'=>$birthYear, 'addressID'=>$address_id, 'phone'=>$phoneNumber, 'identityID'=>$identity_id, 'fbLink'=>"", 'twLink'=>"", 'lkdLink'=>"", 'registerDate'=>$registrationDate, 'activationURL'=>"adminAdded", 'active'=>1, 'privilege'=>$userType, 'userStatus'=>$userStatus));
 			$user_id = $con->lastInsertID();
 			$stmtEdu = $con->prepare("INSERT INTO education_tbl (degreeType, major, schoolName, completionYear, userID) VALUES (:degree, :major, :school, :yearCompleted, :userID)");
 			while(!empty($degree)) {
