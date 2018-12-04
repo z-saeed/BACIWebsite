@@ -94,23 +94,6 @@
 		<input type="text" class="form-control" id="city" value="<?php print $city; ?>" name="city">
 		</div>
 		<div class="form-group col-md-3 col-sm-6">
-			<label for="state">State</label>
-			<select id="state" class="form-control" name="state">
-			<?php 
-			// $resultState = $con->query("select * from state_tbl WHERE active = 1 ORDER BY name ASC");
-			// echo '<select id="state" class="form-control" name="state">';
-			// while($rowState = $resultState->fetch(PDO::FETCH_ASSOC)) {
-			// 	echo "<option value='" . $rowState['ID'] ."'>" . $rowState['name'] ."</option>";
-			// }
-			// echo "</select>";
-			?>
-			</select>
-		</div>
-		<div class="form-group col-md-2 col-sm-4">
-			<label for="zip">Zip Code</label>
-			<input type="text" class="form-control" id="zip" value="<?php print $zip; ?>" name="zip">
-		</div>
-		<div class="form-group col-md-3 col-sm-6">
 			<label for="country">Country</label>
 			<select id="country" class="form-control" name="country">
 				<option selected="" disabled="">Select Country</option>
@@ -128,6 +111,24 @@
 			// echo "</select>";
 			?>
 			</select>
+		</div>
+		<div class="form-group col-md-3 col-sm-6">
+			<label for="state">State</label>
+			<select id="state" class="form-control" name="state">
+				<option selected="" disabled="">Select State</option>
+			<?php 
+			// $resultState = $con->query("select * from state_tbl WHERE active = 1 ORDER BY name ASC");
+			// echo '<select id="state" class="form-control" name="state">';
+			// while($rowState = $resultState->fetch(PDO::FETCH_ASSOC)) {
+			// 	echo "<option value='" . $rowState['ID'] ."'>" . $rowState['name'] ."</option>";
+			// }
+			// echo "</select>";
+			?>
+			</select>
+		</div>
+		<div class="form-group col-md-2 col-sm-4">
+			<label for="zip">Zip Code</label>
+			<input type="text" class="form-control" id="zip" value="<?php print $zip; ?>" name="zip">
 		</div>
 	</div>
 	<hr>
