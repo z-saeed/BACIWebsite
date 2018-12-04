@@ -60,7 +60,7 @@ if ( $data == "" )
 }
 
 header("Content-type: application/octet-stream");
-header("Content-Disposition: attachment; filename=users.csv");
+header("Content-Disposition: attachment; filename=".$table.".csv");
 header("Pragma: no-cache");
 header("Expires: 0");
 print "$header\n$data";
