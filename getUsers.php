@@ -2,7 +2,7 @@
 
 require_once "db_connect.php";
 
-$stmt = $con->prepare('SELECT * FROM user_tbl');
+$stmt = $con->prepare('SELECT * FROM user_tbl WHERE active = 1');
 $stmt->execute(array());
 
 
@@ -40,9 +40,11 @@ $string = <<<EOT
 </tfoot>
 EOT;
 
+$curYear = date('Y');
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	$gender = "";
+	$birthYear = "";
 	$identity = "";
 	$userStatus = "";
 
@@ -60,37 +62,39 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		$stmtID->execute(array('id' => $idID));
 		$rowID = $stmtID->fetch(PDO::FETCH_ASSOC);
 	}
+
 	$addressID = $row["addressID"];
 	$stmtAddress = $con->prepare('SELECT * FROM address_tbl WHERE ID = :id');
 	$stmtAddress->execute(array('id' => $addressID));
 	$rowAddress = $stmtAddress->fetch(PDO::FETCH_ASSOC);
 	$stateID = $rowAddress["stateID"];
-	
+
 	$stmtState = $con->prepare('SELECT * FROM state_tbl WHERE ID = :id');
 	$stmtState->execute(array('id' => $stateID));
 	$rowState = $stmtState->fetch(PDO::FETCH_ASSOC);
 	$state = $rowState["name"];
 	$countryID = $rowState["countryID"];
-	
-	
+
 	$stmtCountry = $con->prepare('SELECT * FROM country_tbl WHERE ID = :id');
 	$stmtCountry->execute(array('id' => $countryID));
 	$rowCountry = $stmtCountry->fetch(PDO::FETCH_ASSOC);
 	$country = $rowCountry["name"];
-	
+
 	$stmtEdu = $con->prepare('SELECT * FROM education_tbl WHERE userID = :id');
 	$stmtEdu->execute(array('id' => $row["ID"]));
 	$rowEdu = $stmtEdu->fetch(PDO::FETCH_ASSOC);
 	$degreeType = $rowEdu["degreeType"];
-	
+
 	$stmtEdu2 = $con->prepare('SELECT * FROM degree_tbl WHERE ID = :id');
 	$stmtEdu2->execute(array('id' => $degreeType));
 	$rowEdu2 = $stmtEdu2->fetch(PDO::FETCH_ASSOC);
 	$degree = $rowEdu2["type"];
 	if($degree == "")
 		$degree = "n/a";
-	
-	$string = $string."<tr><td><a href='userProfile.php?userID=".$row["ID"]."' class='btn btn-outline-info'>View</a></td><td>".$row["firstName"]." ".$row["lastName"]."</td><td>".$row["email"]."</td><td>".$gender."</td><td>".$row["birthYear"];
-	$string = $string."</td><td>".$state."</td><td>".$country."</td><td>".$identity."</td><td>".$degree."</td><td>".$row["registerDate"]."</td></tr>";
+
+	$birthYear = $row["birthYear"];
+	$age = $curYear - $birthYear;
+
+	$string = $string."<tr><td><a href='userProfile.php?userID=".$row["ID"]."' class='btn btn-outline-info'>View</a></td><td>".$row["firstName"]." ".$row["lastName"]."</td><td>".$row["email"]."</td><td>".$gender."</td><td>".$age."</td><td>".$state."</td><td>".$country."</td><td>".$identity."</td><td>".$degree."</td><td>".$row["registerDate"]."</td></tr>";
 }
 print($string);

@@ -2,7 +2,7 @@
 
 require_once "db_connect.php";
 
-$stmt = $con->prepare("SELECT * FROM user_tbl WHERE userStatus = 0");
+$stmt = $con->prepare("SELECT * FROM user_tbl WHERE userStatus = 0 AND active = 1");
 $stmt->execute(array());
 
 $string = <<<EOT
@@ -13,6 +13,7 @@ $string = <<<EOT
 <th>Last Name</th>
 <th>Email</th>
 <th>Gender</th>
+<th>Age</th>
 <th>Phone</th>
 <th>Identity</th>
 <th></th>
@@ -24,6 +25,7 @@ $string = <<<EOT
 <th>Last Name</th>
 <th>Email</th>
 <th>Gender</th>
+<th>Age</th>
 <th>Phone</th>
 <th>Identity</th>
 <th></th>
@@ -31,8 +33,11 @@ $string = <<<EOT
 </tfoot>
 EOT;
 
+$curYear = date('Y');
+
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	$gender = "";
+	$birthYear = "";
 	$identity = "";
 	$userStatus = "";
 
@@ -45,7 +50,11 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		$identity = "Student";
 	else
 		$identity = "Working Professional";
-	$string = $string."<tr><td>".$row["firstName"]."</td><td>".$row["lastName"]."</td><td>".$row["email"]."</td><td>".$gender."</td><td>".$row["phone"]."</td><td>".$identity."</td><td><a href='userProfile.php?userID=".$row["ID"]."&mmSelect=1' class='btn btn-outline-info'>Mentee Profile</a></td></tr>";
+
+	$birthYear = $row["birthYear"];
+	$age = $curYear - $birthYear;
+
+	$string = $string."<tr><td>".$row["firstName"]."</td><td>".$row["lastName"]."</td><td>".$row["email"]."</td><td>".$gender."</td><td>".$age."</td><td>".$row["phone"]."</td><td>".$identity."</td><td><a href='userProfile.php?userID=".$row["ID"]."&mmSelect=1' class='btn btn-outline-info'>Mentee Profile</a></td></tr>";
 }
 
 print($string);

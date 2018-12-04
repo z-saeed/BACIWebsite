@@ -133,7 +133,7 @@ if (isset($_POST['enter'])) {
 
 <div class="container" id="registration">
 	<section id="registrationHeader">
-		<h2>Add User, Coordinator, or Admin</h2>
+		<h2>Add User, Coordinator<?php if ($priv == 3) { ?>, or Admin <?php } ?></h2>
 	</section>
 
 	<?php include 'form.php'; ?>

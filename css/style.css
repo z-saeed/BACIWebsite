@@ -138,6 +138,14 @@ h4 {
 	height: 80vh;
 }
 
+
+/* Table Div */
+.tableDiv {
+	width: 95vw;
+	margin: 10px auto;
+}
+
+
 /*input.editUser {
 	border: 0;
  	outline: 0;
