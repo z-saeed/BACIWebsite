@@ -162,7 +162,7 @@ class User
         else if ($this->userStatus == 1)
             return 'Mentor';
         else
-            return 'Other';
+            return 'Neither';
     }
 	
 	public function getUserStatusNum()
