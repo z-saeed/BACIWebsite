@@ -8,7 +8,37 @@ if($_SESSION['loggedin'] == false) {
 
 $user = $_SESSION['user'];
 
+$userPage = "";
+if (isset($_REQUEST['id']))
+	$userPage = $_REQUEST['id'];
+
 $userID = $user->getID();
+$userPriv = $user->getUserPrivilege();
+
+if ($userID != $userPage && $userPriv == 0)
+	header('Location: dashboard.php'); 
+
+if ($userID != $userPage) {
+	$profileStmt = $con->prepare('SELECT * FROM user_tbl WHERE ID = :ID');
+	$profileStmt->execute(array('ID'=>$userPage));
+	$row = $profileStmt->fetch(PDO::FETCH_OBJ);
+	if($profileStmt->rowCount() != 1) {
+		$msg = "Profile Not Found";
+	} else {
+		$user = new User();
+		$user->setID($row->ID);
+		$user->setEmail($row->email);
+		$user->setFirstName($row->firstName);
+		$user->setLastName($row->lastName);
+		$user->setPhoneNumber($row->phone);
+		$user->setGender($row->gender);
+		$user->setUserStatus($row->userStatus);
+
+		$userID = $user->getID();
+	}
+}
+
+
 $email = "";
 $firstName = "";
 $lastName = "";
@@ -34,6 +64,8 @@ if (isset($_POST['update'])) {
 	$gender = trim($_POST['gender']);
 	$birthYear = trim($_POST['birthYear']);
 	$userStatus = trim($_POST['userStatus']);
+
+	echo "<h3>".$userID."</h3>";
 	
 	$updateUserInfo = $con->prepare("UPDATE user_tbl SET email = '$email', firstName = '$firstName', lastName = '$lastName', gender = '$gender', birthYear = '$birthYear', userStatus = '$userStatus' WHERE ID = '$userID'");
 	$updateUserInfo->execute(array());
@@ -61,7 +93,7 @@ if (isset($_POST['update'])) {
 					<p class="lead">Click the information you wish to edit</p>
 				</div>
 			</div>
-			<form action="editUserInformation.php" method="post">
+			<form action="editUserInformation.php?id=<?php echo $user->getID(); ?>" method="post">
 				<div class="form-row">
 					<div class="col-md-4 col-sm-8">
 						<p class="lead">Email: <?php echo $emailReq; ?></p>
@@ -127,7 +159,7 @@ if (isset($_POST['update'])) {
 				</div>
 				<div class="form-row">
 					<div class="col-md-4 col-sm-8">
-						<a href="userProfile.php" class="btn btn-secondary btn-sm">Back to User Profile <i class="fas fa-undo-alt"></i></a>
+						<a href="userProfile.php?userID=<?php echo $userID; ?>" class="btn btn-secondary btn-sm">Back to User Profile <i class="fas fa-undo-alt"></i></a>
 					</div>
 					<div class="form-group col-sm-12 col-md-8">
 						<button type="submit" class="btn btn-dark btn-sm" name="update">Update <i class="fas fa-cloud-upload-alt"></i></button>

@@ -6,10 +6,56 @@ if($_SESSION['loggedin'] == false) {
 	header('Location: login.php'); 
 }
 
+$userPage = "";
+if (isset($_REQUEST['id']))
+	$userPage = $_REQUEST['id'];
+
+
 $user = $_SESSION['user'];
 $address = $_SESSION['address'];
 
+$userPriv = $user->getUserPrivilege();
+$userID = $user->getID();
 $addressID = $address->getID();
+
+if ($userID != $userPage && $userPriv == 0)
+	header('Location: dashboard.php'); 
+
+if ($userID != $userPage) {
+	$profileStmt = $con->prepare('SELECT * FROM user_tbl WHERE ID = :ID');
+	$profileStmt->execute(array('ID'=>$userPage));
+	$row = $profileStmt->fetch(PDO::FETCH_OBJ);
+	if($profileStmt->rowCount() != 1) {
+		$msg = "Profile Not Found";
+	} else {
+		$user = new User();
+		$address = new Address();
+		$user->setID($row->ID);
+		$user->setAddressID($row->addressID);
+		$addressSTMT = $con->prepare('SELECT * FROM address_tbl WHERE ID = :ID');
+		$addressSTMT->execute(array('ID'=>$user->getAddressID()));
+		$addressRow = $addressSTMT->fetch(PDO::FETCH_OBJ);
+		$stateSTMT = $con->prepare('SELECT * FROM state_tbl WHERE ID = :ID');
+		$stateSTMT->execute(array('ID'=>$addressRow->stateID));
+		$stateRow = $stateSTMT->fetch(PDO::FETCH_OBJ);
+		$countrySTMT = $con->prepare('SELECT * FROM country_tbl WHERE ID = :ID');
+		$countrySTMT->execute(array('ID'=>$stateRow->countryID));
+		$countryRow = $countrySTMT->fetch(PDO::FETCH_OBJ);
+		$address->setID($addressRow->ID);
+		$address->setStreet1($addressRow->street1);
+		$address->setStreet2($addressRow->street2);
+		$address->setCity($addressRow->city);
+		$address->setState($stateRow->name);
+		$address->setStateID($addressRow->stateID);
+		$address->setZipCode($addressRow->zipCode);
+		$address->setCountry($countryRow->name);
+		$address->setCountryID($stateRow->countryID);
+		$userID = $user->getID();
+
+		$addressID = $address->getID();
+	}
+}
+
 $street1 = "";
 $street2 = "";
 $city = "";
@@ -63,7 +109,7 @@ if (isset($_POST['update'])) {
 					<p class="lead">Click the information you wish to edit</p>
 				</div>
 			</div>
-			<form action="editAddressInformation.php" method="post">
+			<form action="editAddressInformation.php?id=<?php echo $user->getID(); ?>" method="post">
 				<div class="form-row">
 					<div class="col-md-4 col-sm-8">
 						<p class="lead">Street 1:</p>
@@ -101,17 +147,9 @@ if (isset($_POST['update'])) {
 						<p class="lead">State:</p>
 					</div>
 					<div class="form-group col-md-8 col-sm-12">
-						<?php 
-						$result = $con->query("select * from state_tbl ORDER BY name ASC");
-						echo '<select id="state" class="form-control" name="state">';
-						while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-							if ($row['name'] == $address->getState())
-								echo "<option value='" . $row['ID'] ."' selected>" . $row['name'] ."</option>";
-							else
-								echo "<option value='" . $row['ID'] ."'>" . $row['name'] ."</option>";
-						}
-						echo "</select>";
-						?>
+						<select id="state" class="form-control" name="state">
+							<option selected="" disabled="">Select Country</option>
+						</select>
 					</div>
 				</div>
 				<div class="form-row">
@@ -119,22 +157,21 @@ if (isset($_POST['update'])) {
 						<p class="lead">Country:</p>
 					</div>
 					<div class="form-group col-md-8 col-sm-12">
-						<?php 
-						$result = $con->query("select * from country_tbl ORDER BY name ASC");
-						echo '<select id="country" class="form-control" name="country">';
-						while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-							if ($row['name'] == $address->getCountry())
-								echo "<option value='" . $row['ID'] ."' selected>" . $row['name'] ."</option>";
-							else
-								echo "<option value='" . $row['ID'] ."'>" . $row['name'] ."</option>";
-						}
-						echo "</select>";
-						?>
+						<select id="country" class="form-control" name="country">
+							<option selected="" disabled="">Countries</option>
+							<?php 
+							require_once 'data.php';
+							$countries = loadCountries($con);
+							foreach ($countries as $country) {
+								echo "<option value='".$country['ID']."'>".$country['name']."</option>";
+							}
+							?>
+						</select>
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="col-md-4 col-sm-8">
-						<a href="userProfile.php" class="btn btn-secondary btn-sm">Back to User Profile <i class="fas fa-undo-alt"></i></a>
+						<a href="userProfile.php?userID=<?php echo $userID; ?>" class="btn btn-secondary btn-sm">Back to User Profile <i class="fas fa-undo-alt"></i></a>
 					</div>
 					<div class="form-group col-sm-12 col-md-8">
 						<button type="submit" class="btn btn-dark btn-sm" name="update">Update <i class="fas fa-cloud-upload-alt"></i></button>

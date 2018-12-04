@@ -249,7 +249,7 @@ $(document).ready(function() {
 			states = JSON.parse(states);
 			$('#state').empty();
 			states.forEach(function(state){
-				$('#state').append('<option>' + state.name + '</option>')
+				$('#state').append('<option value="' + state.ID + '">' + state.name + '</option>')
 			})
 		})
 	});

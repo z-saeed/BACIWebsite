@@ -14,57 +14,64 @@ if ($adminCheck->getUserPrivilege() != 0) {
 $boolUser = false;
 $mmSelect ="";
 if (isset($_REQUEST["userID"])) {
-	$boolUser = true;
+	$tempUser = $_SESSION['user'];
 	$userID = $_REQUEST["userID"];
-	$profileStmt = $con->prepare('SELECT * FROM user_tbl WHERE ID = :ID');
-	$profileStmt->execute(array('ID'=>$userID));
-	$row = $profileStmt->fetch(PDO::FETCH_OBJ);
-	if($profileStmt->rowCount() != 1) {
-		$msg = "Profile Not Found";
+	if ($tempUser->getID() != $userID) {
+		$boolUser = true;
+		$profileStmt = $con->prepare('SELECT * FROM user_tbl WHERE ID = :ID');
+		$profileStmt->execute(array('ID'=>$userID));
+		$row = $profileStmt->fetch(PDO::FETCH_OBJ);
+		if($profileStmt->rowCount() != 1) {
+			$msg = "Profile Not Found";
+		} else {
+			$user = new User();
+			$user->setID($row->ID);
+			$user->setUserName($row->username);
+			$user->setPassword($row->password);
+			$user->setEmail($row->email);
+			$user->setFirstName($row->firstName);
+			$user->setLastName($row->lastName);
+			$user->setPhoneNumber($row->phone);
+			$user->setGender($row->gender);
+			$user->setUserStatus($row->userStatus);
+			$user->setAddressID($row->addressID);
+			$user->setUserPrivilege($row->privilege);
+			$user->setIdentityID($row->identityID);
+			$user->setFbLink($row->fbLink);
+			$user->setTwLink($row->twLink);
+			$user->setLkLink($row->lkdLink);
+			$imageSTMT = $con->prepare('SELECT * FROM picture_tbl WHERE ID = :ID');
+			$imageSTMT->execute(array('ID'=>$row->pictureID));
+			$imageRow = $imageSTMT->fetch(PDO::FETCH_OBJ);
+			$user->setImagePath($imageRow->location);
+			$resumeSTMT = $con->prepare('SELECT * FROM resume_tbl WHERE ID = :ID');
+			$resumeSTMT->execute(array('ID'=>$row->resumeID));
+			$resumeRow = $resumeSTMT->fetch(PDO::FETCH_OBJ);
+			$user->setResumePath($resumeRow->location);
+			$addressSTMT = $con->prepare('SELECT * FROM address_tbl WHERE ID = :ID');
+			$addressSTMT->execute(array('ID'=>$user->getAddressID()));
+			$addressRow = $addressSTMT->fetch(PDO::FETCH_OBJ);
+			$stateSTMT = $con->prepare('SELECT * FROM state_tbl WHERE ID = :ID');
+			$stateSTMT->execute(array('ID'=>$addressRow->stateID));
+			$stateRow = $stateSTMT->fetch(PDO::FETCH_OBJ);
+			$countrySTMT = $con->prepare('SELECT * FROM country_tbl WHERE ID = :ID');
+			$countrySTMT->execute(array('ID'=>$stateRow->countryID));
+			$countryRow = $countrySTMT->fetch(PDO::FETCH_OBJ);
+			$address->setID($addressRow->ID);
+			$address->setStreet1($addressRow->street1);
+			$address->setStreet2($addressRow->street2);
+			$address->setCity($addressRow->city);
+			$address->setState($stateRow->name);
+			$address->setStateID($addressRow->stateID);
+			$address->setZipCode($addressRow->zipCode);
+			$address->setCountry($countryRow->name);
+			$address->setCountryID($stateRow->countryID);
+		}
 	} else {
-		$user = new User();
-		$user->setID($row->ID);
-		$user->setUserName($row->username);
-		$user->setPassword($row->password);
-		$user->setEmail($row->email);
-		$user->setFirstName($row->firstName);
-		$user->setLastName($row->lastName);
-		$user->setPhoneNumber($row->phone);
-		$user->setGender($row->gender);
-		$user->setUserStatus($row->userStatus);
-		$user->setAddressID($row->addressID);
-		$user->setUserPrivilege($row->privilege);
-		$user->setIdentityID($row->identityID);
-		$user->setFbLink($row->fbLink);
-		$user->setTwLink($row->twLink);
-		$user->setLkLink($row->lkdLink);
-		$imageSTMT = $con->prepare('SELECT * FROM picture_tbl WHERE ID = :ID');
-		$imageSTMT->execute(array('ID'=>$row->pictureID));
-		$imageRow = $imageSTMT->fetch(PDO::FETCH_OBJ);
-		$user->setImagePath($imageRow->location);
-		$resumeSTMT = $con->prepare('SELECT * FROM resume_tbl WHERE ID = :ID');
-		$resumeSTMT->execute(array('ID'=>$row->resumeID));
-		$resumeRow = $resumeSTMT->fetch(PDO::FETCH_OBJ);
-		$user->setResumePath($resumeRow->location);
-		$addressSTMT = $con->prepare('SELECT * FROM address_tbl WHERE ID = :ID');
-		$addressSTMT->execute(array('ID'=>$user->getAddressID()));
-		$addressRow = $addressSTMT->fetch(PDO::FETCH_OBJ);
-		$stateSTMT = $con->prepare('SELECT * FROM state_tbl WHERE ID = :ID');
-		$stateSTMT->execute(array('ID'=>$addressRow->stateID));
-		$stateRow = $stateSTMT->fetch(PDO::FETCH_OBJ);
-		$countrySTMT = $con->prepare('SELECT * FROM country_tbl WHERE ID = :ID');
-		$countrySTMT->execute(array('ID'=>$stateRow->countryID));
-		$countryRow = $countrySTMT->fetch(PDO::FETCH_OBJ);
-		$address->setID($addressRow->ID);
-		$address->setStreet1($addressRow->street1);
-		$address->setStreet2($addressRow->street2);
-		$address->setCity($addressRow->city);
-		$address->setState($stateRow->name);
-		$address->setStateID($addressRow->stateID);
-		$address->setZipCode($addressRow->zipCode);
-		$address->setCountry($countryRow->name);
-		$address->setCountryID($stateRow->countryID);
+		$user = $_SESSION['user'];
+		$address = $_SESSION['address'];
 	}
+
 } else {
 	$user = $_SESSION['user'];
 	$address = $_SESSION['address'];
@@ -131,9 +138,9 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 						<div class="col-md-4 col-sm-8">
 							<h4>User Information</h4>
 						</div>
-						<?php if ($boolUser == false) { ?>
+						<?php if ($boolUser == false || $admin) { ?>
 						<div class="col-md-8 col-sm-12">
-							<p class="lead"><a href="editUserInformation.php">Edit User Information</a></p>
+							<p class="lead"><a href="editUserInformation.php?id=<?php echo($user->getID()) ?>">Edit User Information</a></p>
 						</div>
 						<?php } ?>
 					</div>
@@ -209,9 +216,9 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 						<div class="col-md-4 col-sm-8">
 							<h4>Address Information</h4>
 						</div>
-						<?php if ($boolUser == false) { ?>
+						<?php if ($boolUser == false || $admin) { ?>
 						<div class="col-md-8 col-sm-12">
-							<p class="lead"><a href="editAddressInformation.php">Edit Address Information</a></p>
+							<p class="lead"><a href="editAddressInformation.php?id=<?php echo($user->getID()) ?>">Edit Address Information</a></p>
 						</div>
 						<?php } ?>
 					</div>
@@ -289,9 +296,9 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 						<div class="col-md-4 col-sm-8">
 							<h4>Education <?php echo $count; ?></h4>
 						</div>
-						<?php if ($boolUser == false) { ?>
+						<?php if ($boolUser == false || $admin) { ?>
 						<div class="col-md-8 col-sm-12">
-							<p class="lead"><a href="editEducation.php?num=<?php echo $eduRow->ID; ?>">Edit Education <?php echo $count; ?></a></p>
+							<p class="lead"><a href="editEducation.php?num=<?php echo $eduRow->ID; ?>&id=<?php echo($user->getID()) ?>">Edit Education <?php echo $count; ?></a></p>
 						</div>
 						<?php } ?>
 					</div>
@@ -335,7 +342,7 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 						<div class="col-md-4 col-sm-8">
 							<h4>Additional Information</h4>
 						</div>
-						<?php if ($boolUser == false) { ?>
+						<?php if ($boolUser == false || $admin) { ?>
 						<div class="col-md-8 col-sm-12">
 							<p class="lead"><a href="">Edit Additional Information</a></p>
 						</div>

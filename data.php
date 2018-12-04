@@ -19,14 +19,14 @@ if(isset($_POST['country'])) {
 		echo $e->getMessage();
 	}
 
-	$stmt = $con->prepare("SELECT * FROM state_tbl WHERE countryID = ".$_POST['country']);
+	$stmt = $con->prepare("SELECT * FROM state_tbl WHERE active = 1 AND countryID = ".$_POST['country']);
 	$stmt->execute();
 	$states = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	echo json_encode($states);
 }
 
 function loadCountries($con) {
-	$stmt = $con->prepare("SELECT * FROM country_tbl");
+	$stmt = $con->prepare("SELECT * FROM country_tbl WHERE active = 1");
 	$stmt->execute();
 	$countries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	return $countries;
