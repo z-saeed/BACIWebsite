@@ -32,7 +32,7 @@ if(isset($_POST['show'])) {
 		if($rowShow['countryID'] == $countryID)
 			$msgState = $msgState.$rowShow['name']."</br>";
 	}
-	$msgState = $msgState."</br>The active states currently in ".$country." are : "."</br>";
+	$msgState = $msgState."</br>The inactive states currently in ".$country." are : "."</br>";
 	$resultShow = $con->query("select * from state_tbl WHERE active = 0 ORDER BY name ASC");
 	while($rowShow = $resultShow->fetch(PDO::FETCH_ASSOC)) {
 		if($rowShow['countryID'] == $countryID)
