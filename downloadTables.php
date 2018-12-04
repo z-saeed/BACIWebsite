@@ -3,7 +3,7 @@ if($_SESSION['loggedin'] == false) {
 	header('Location: login.php'); 
 }?>
 
-<section id="listUsers" class="container">
+<section id="downloadTables" class="container">
 	<div class="container mt-2">
 		<a href="dashboard.php" class="btn btn-secondary btn-sm">Back to Dashboard <i class="fas fa-undo-alt"></i></a>
 	</div>
