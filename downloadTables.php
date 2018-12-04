@@ -15,13 +15,13 @@ if($_SESSION['loggedin'] == false) {
 			<h4>User Table</h4>
         </div>
         <div class="col-sm-12 col-md-6">
-            <p class="lead"><a href="saveTables.php?tag=1" class="btn btn-outline-primary btn-sm">Download Users</a></p>
+            <p class="lead"><a href="saveTables.php?tag=1" class="btn btn-outline-primary btn-sm">Download User Table</a></p>
         </div>
         <div class="col-sm-12 col-md-6">
 			<h4>Country Table</h4>
         </div>
         <div class="col-sm-12 col-md-6">
-            <p class="lead"><a href="saveTables.php?tag=2" class="btn btn-outline-primary btn-sm">Download Users</a></p>
+            <p class="lead"><a href="saveTables.php?tag=2" class="btn btn-outline-primary btn-sm">Download Country Table</a></p>
         </div>
     </div>
 
