@@ -57,7 +57,7 @@
 	<div class="form-row">
 		<div class="form-group col-md-3 col-sm-6">
 			<label for="phoneNumber">Phone Number</label>
-			<input type="number" class="form-control" id="phoneNumber" value="<?php print $phoneNumber; ?>" name="phoneNumber">
+			<input type="tele" class="form-control" id="phoneNumber" value="<?php print $phoneNumber; ?>" name="phoneNumber">
 		</div>
 		<div class="form-group col-md-3 col-sm-6">
 			<label for="gender">Gender</label>
