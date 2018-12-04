@@ -129,7 +129,7 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 					<?php } ?>
 					<?php if ($boolUser == false || $admin) {?>
 					<div class="row">
-						<p class="lead"><a href="<?php echo($user->getResumePath());?>">Resume</a></p>
+						<p class="lead"><a href="<?php echo($user->getResumePath());?>" class="btn btn-info">Resume</a></p>
 					</div>
 					<?php } ?>
 				</div>
