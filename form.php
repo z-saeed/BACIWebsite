@@ -11,7 +11,9 @@
 			<select id="userType" class="form-control" name="userType">
 				<option value="0" selected>User</option>
 				<option value="1">Coordinator</option>
-				<option value="2">Admin</option>					
+				<?php if ($priv == 3) { ?>
+				<option value="2">Admin</option>
+				<?php } ?>					
 			</select>
 		</div>
 	</div>

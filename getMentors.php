@@ -2,7 +2,7 @@
 
 require_once "db_connect.php";
 
-$stmt = $con->prepare("SELECT * FROM user_tbl WHERE userStatus = 1");
+$stmt = $con->prepare("SELECT * FROM user_tbl WHERE userStatus = 1 AND active = 1");
 $stmt->execute(array());
 
 $string = <<<EOT

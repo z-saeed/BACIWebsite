@@ -30,9 +30,9 @@ function passwordToDots($password) {
 			<div class="col-sm-4">
 				<div class="card">
 					<div class="card-body">
-						<h5 class="card-title">Add Super Admin</h5>
-						<p class="card-text">Add a new Super Admin.</p>
-						<a href="#" class="btn btn-danger">Add Super Admin</a>
+						<h5 class="card-title">Add Admin</h5>
+						<p class="card-text">Add a new Admin.</p>
+						<a href="addUser.php" class="btn btn-danger">Add Admin</a>
 					</div>
 				</div>
 			</div>
@@ -65,7 +65,7 @@ function passwordToDots($password) {
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Add User</h5>
-						<p class="card-text">Add a User, Coordinator, or Admin Manually</p>
+						<p class="card-text">Add a User or Coordinator Manually</p>
 						<a href="addUser.php" class="btn btn-warning">Add User</a>
 					</div>
 				</div>
