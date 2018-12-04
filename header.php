@@ -14,26 +14,28 @@ require_once 'mail/mail.class.php';
 <meta charset="UTF-8">
 	<title>BACI: 
 	<?php
-	if(basename($_SERVER['PHP_SELF'])=="index.php") print 'Homepage';
+	if(basename($_SERVER['PHP_SELF'])=="index.php") print 'Homepage';		
 			else if(basename($_SERVER['PHP_SELF'])=="activate.php") print 'Activation';
+			else if(basename($_SERVER['PHP_SELF'])=="dashboard.php") print 'Dashboard';
+			else if(basename($_SERVER['PHP_SELF'])=="login.php") print 'Login';
+			else if(basename($_SERVER['PHP_SELF'])=="forgotPassword.php") print 'Forgot Password';
+			else if(basename($_SERVER['PHP_SELF'])=="registration.php") print 'Registration';
+			else if(basename($_SERVER['PHP_SELF'])=="listDeleteUsers.php") print 'Deactivate User';
+			else if(basename($_SERVER['PHP_SELF'])=="listUsers.php") print 'All Users List';
+			else if(basename($_SERVER['PHP_SELF'])=="addUser.php") print 'Create User';
+			else if(basename($_SERVER['PHP_SELF'])=="downloadTables.php") print 'Download Tables';
 			else if(basename($_SERVER['PHP_SELF'])=="configureCountry.php") print 'Configure Country list';
 			else if(basename($_SERVER['PHP_SELF'])=="configureDegree.php") print 'Configure Degree list';
 			else if(basename($_SERVER['PHP_SELF'])=="configureState.php") print 'Configure State list';
-			else if(basename($_SERVER['PHP_SELF'])=="dashboard.php") print 'Dashboard';
-			else if(basename($_SERVER['PHP_SELF'])=="login.php") print 'Login';
-			else if(basename($_SERVER['PHP_SELF'])=="registration.php") print 'Registration';
-			else if(basename($_SERVER['PHP_SELF'])=="userProfile.php") print 'User Profile';
 			else if(basename($_SERVER['PHP_SELF'])=="listMentors.php") print 'Mentors List';
 			else if(basename($_SERVER['PHP_SELF'])=="listMentees.php") print 'Mentees List';
-			else if(basename($_SERVER['PHP_SELF'])=="listUsers.php") print 'All Users List';
+			else if(basename($_SERVER['PHP_SELF'])=="listPending.php") print 'Pending Pairings';
+			else if(basename($_SERVER['PHP_SELF'])=="listCurrent.php") print 'Current Pairings';
+			else if(basename($_SERVER['PHP_SELF'])=="adminPair.php") print 'Create Mentorship';
+			else if(basename($_SERVER['PHP_SELF'])=="pairing.php") print 'Pairing';
+			else if(basename($_SERVER['PHP_SELF'])=="userProfile.php") print 'User Profile';
 			else if(basename($_SERVER['PHP_SELF'])=="fileUpload.php") print 'Upload Picture/Resume';
 			else if(basename($_SERVER['PHP_SELF'])=="userPairing.php") print 'Mentor/Mentee Pairings';
-			else if(basename($_SERVER['PHP_SELF'])=="adminPair.php") print 'Create Mentorship';
-			else if(basename($_SERVER['PHP_SELF'])=="listCurrent.php") print 'Current Pairings';
-			else if(basename($_SERVER['PHP_SELF'])=="listPending.php") print 'Pending Pairings';
-			else if(basename($_SERVER['PHP_SELF'])=="addUser.php") print 'Create User';
-			else if(basename($_SERVER['PHP_SELF'])=="pairing.php") print 'Pairing';
-			else if(basename($_SERVER['PHP_SELF'])=="forgotPassword.php") print 'Forgot Password';
 	?>
 	</title>
 	
