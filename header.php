@@ -20,7 +20,7 @@ require_once 'mail/mail.class.php';
 			else if(basename($_SERVER['PHP_SELF'])=="login.php") print 'Login';
 			else if(basename($_SERVER['PHP_SELF'])=="forgotPassword.php") print 'Forgot Password';
 			else if(basename($_SERVER['PHP_SELF'])=="registration.php") print 'Registration';
-			else if(basename($_SERVER['PHP_SELF'])=="listDeleteUsers.php") print 'Deactivate User';
+			else if(basename($_SERVER['PHP_SELF'])=="deactUser.php") print 'Deactivate User';
 			else if(basename($_SERVER['PHP_SELF'])=="listUsers.php") print 'All Users List';
 			else if(basename($_SERVER['PHP_SELF'])=="addUser.php") print 'Create User';
 			else if(basename($_SERVER['PHP_SELF'])=="downloadTables.php") print 'Download Tables';
@@ -58,7 +58,19 @@ require_once 'mail/mail.class.php';
 	?>
 	<nav class="navbar navbar-expand-lg navbar-dark <?php echo($navBackground); ?>">
 		<div class="container">
-			<a href="index.php" class="navbar-brand">Baci Project</a>
+			<?php 
+			if(isset($_SESSION['loggedin'])){
+				if($_SESSION['loggedin'] == true){
+				echo '<a href="userProfile.php" class="navbar-brand">';
+				$user = $_SESSION['user'];
+				$name = $user->getFirstName()." ".$user->getLastName();
+				echo "Hello, ".$name;
+				}
+			}else{
+				
+				echo '<a href="index.php" class="navbar-brand">';
+				echo "Baci Project" ;
+			}?></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
