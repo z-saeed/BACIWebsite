@@ -91,10 +91,6 @@
 		</div>
 	</div>
 	<div class="form-row">
-		<div class="form-group col-md-4 col-sm-8">
-		<label for="city">City</label>
-		<input type="text" class="form-control" id="city" value="<?php print $city; ?>" name="city">
-		</div>
 		<div class="form-group col-md-3 col-sm-6">
 			<label for="country">Country</label>
 			<select id="country" class="form-control" name="country">
@@ -115,7 +111,7 @@
 			</select>
 		</div>
 		<div class="form-group col-md-3 col-sm-6">
-			<label for="state">State</label>
+			<label for="state">State/Province</label>
 			<select id="state" class="form-control" name="state">
 				<option selected="" disabled="">Select State</option>
 			<?php 
@@ -127,6 +123,10 @@
 			// echo "</select>";
 			?>
 			</select>
+		</div>
+		<div class="form-group col-md-4 col-sm-8">
+		<label for="city">City</label>
+		<input type="text" class="form-control" id="city" value="<?php print $city; ?>" name="city">
 		</div>
 		<div class="form-group col-md-2 col-sm-4">
 			<label for="zip">Zip Code</label>
