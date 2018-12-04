@@ -8,7 +8,7 @@ if($_SESSION['loggedin'] == false) {
 	header('Location: login.php'); 
 }
 $userPriv = $user->getUserPrivilege();
-if($userPriv < 2 || $userPriv > 3){
+if($userPriv < 1 || $userPriv > 3){
 	header('Location: dashboard.php');
 }			
 	
