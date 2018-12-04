@@ -26,7 +26,8 @@ if (isset($_POST['resend'])) {
 	$row = $stmt->fetch(PDO::FETCH_OBJe);
 	$code = randomCodeGenerator(50); //get random code generated
     $subject = "Registration Activation"; //set email subject
-    $body = 'Please click the url to activate your account. http://corsair.cs.iupui.edu:23151/BaciProjectAlt/activate.php?code='.$code.'&userID='.$user_id; //set email body
+	$body = 'Please click the url to activate your account. http://corsair.cs.iupui.edu:23041/BaciProjectAlt/activate.php?code='.$code.'&userID='.$user_id; //set email body
+	//$body = 'Please click the url to activate your account. http://corsair.cs.iupui.edu:23151/BaciProjectAlt/activate.php?code='.$code.'&userID='.$user_id; //set email body
     $mailer = new Mail();
     if(($mailer->sendMail($row->email, "User", $subject, $body))){ //send email
     	$msg = "Email Sent";
