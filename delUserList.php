@@ -104,7 +104,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		if($row["privilege"] == 0)
 			$priv = "User";
 
-		$string = $string."<tr><td><a href='hideUser.php?userID=".$row["ID"]."' class='btn btn-outline-danger'>DeActivate</a></td><td>".$row["firstName"]." ".$row["lastName"]."</td><td>".$priv."</td>";
+		$string = $string."<tr><td><a href='hideUser.php?userID=".$row["ID"]."' class='btn btn-outline-danger'>Deactivate</a></td><td>".$row["firstName"]." ".$row["lastName"]."</td><td>".$priv."</td>";
 		$string = $string."<td>".$row["email"]."</td><td>".$gender."</td><td>".$age."</td><td>".$state."</td><td>".$country."</td><td>".$identity."</td><td>".$degree."</td><td>".$row["registerDate"]."</td></tr>";
 
 	}

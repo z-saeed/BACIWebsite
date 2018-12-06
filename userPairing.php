@@ -81,10 +81,10 @@ $mentor = false;
 										<th scope="row"><?php echo $requester;?></th>
 										<th scope="row"><?php echo $row["requestDate"]; ?></th>
 										<?php if($requester != $user->getUserStatus()){?>
-										<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>.'&change=5" class="btn btn-block btn-outline-success">Approve Pairing</a></th>
-										<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>.'&change=4" class="btn btn-outline-danger">Reject Pairing</a></th>
+										<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>'&change=5" class="btn btn-block btn-outline-success">Approve Pairing</a></th>
+										<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>'&change=4" class="btn btn-outline-danger">Reject Pairing</a></th>
 										<?php } else { ?>									
-										<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>.'&change=4" class="btn btn-outline-danger">Reject Pairing</a></th>		
+										<th scope="row"><a href="pairing.php?mentor=<?php echo $row["mentorID"] ?>&mentee=<?php echo $row["menteeID"] ?>'&change=4" class="btn btn-outline-danger">Reject Pairing</a></th>		
 										<?php } ?>
 									</tr>
 								</tbody>									

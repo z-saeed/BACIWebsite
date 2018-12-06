@@ -11,6 +11,7 @@ $string = <<<EOT
 <tr>
 <th></th>
 <th>Name</th>
+<th>Privilege</th>
 <th>Email</th>
 <th>Gender</th>
 <th>Age</th>
@@ -25,6 +26,7 @@ $string = <<<EOT
 <tr>
 <th></th>
 <th>Name</th>
+<th>Privilege</th>
 <th>Email</th>
 <th>Gender</th>
 <th>Age</th>
@@ -92,8 +94,16 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 		$birthYear = $row["birthYear"];
 		$age = $curYear - $birthYear;
+		
+		if($row["privilege"] == 2)
+			$priv = "Admin";
+		if($row["privilege"] == 1)
+			$priv = "Coordinator";
+		if($row["privilege"] == 0)
+			$priv = "User";
 
-		$string = $string."<tr><td><a href='renewUser.php?userID=".$row["ID"]."' class='btn btn-outline-primary'>Activate</a></td><td>".$row["firstName"]." ".$row["lastName"]."</td><td>".$row["email"]."</td><td>".$gender."</td><td>".$age."</td><td>".$state."</td><td>".$country."</td><td>".$identity."</td><td>".$degree."</td><td>".$row["registerDate"]."</td></tr>";
+
+		$string = $string."<tr><td><a href='renewAdmin.php?userID=".$row["ID"]."' class='btn btn-outline-primary'>Activate</a></td><td>".$row["firstName"]." ".$row["lastName"]."</td><td>".$priv."</td><td>".$row["email"]."</td><td>".$gender."</td><td>".$age."</td><td>".$state."</td><td>".$country."</td><td>".$identity."</td><td>".$degree."</td><td>".$row["registerDate"]."</td></tr>";
 
 	}
 }

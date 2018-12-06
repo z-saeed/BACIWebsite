@@ -7,7 +7,7 @@ if($_SESSION['loggedin'] == false) {
 	header('Location: login.php'); 
 }
 $userPriv = $user->getUserPrivilege();
-if($userPriv < 2 || $userPriv > 3){
+if($userPriv != 3){
 	header('Location: dashboard.php');
 }	
 
@@ -15,7 +15,6 @@ $userID = ($_GET["userID"]);
 
 $stmt = $con->prepare("UPDATE user_tbl SET active = 1 WHERE ID = :userID");
 $stmt -> execute(array('userID' => $userID));
-	header('Location: deactUser.php')
 ?>
 
 <div class="container" id="renewUser">

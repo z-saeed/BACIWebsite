@@ -45,17 +45,15 @@ function passwordToDots($password) {
 					</div>
 				</div>
 			</div>
-<!--		
 			<div class="col-sm-4">
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Activate/Reactivate a User/Coord/Admin</h5>
-						<p class="card-text">Activate a user/coord or Reactivate a user/coord/admin</p>
+						<p class="card-text">Activate/Reactive any deleted or inactive User/Coord/Admin.</p>
 						<a href="reactAdmin.php" class="btn btn-danger">Activate/Reactivate</a>
 					</div>
 				</div>
 			</div>
--->
 		</div>	
 		<hr>
 	<?php } ?>
@@ -67,7 +65,7 @@ function passwordToDots($password) {
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">User List</h5>
-						<p class="card-text">View all users (not activated, activated, hidden) .</p>
+						<p class="card-text">View all users/coordinators (not activated, activated, hidden) .</p>
 						<a href="listUsers.php" class="btn btn-warning">View/Edit</a>
 					</div>
 				</div>
@@ -110,6 +108,7 @@ function passwordToDots($password) {
 	<?php if ($userPriv == 1 || $userPriv == 2 || $userPriv == 3) {?>
 		<h3>Coordinator Dashboard</h3>
 		<div class="row mt-1">
+		<?php if($userPriv == 1){ ?>
 			<div class="col-sm-4">
 				<div class="card">
 					<div class="card-body">
@@ -119,6 +118,7 @@ function passwordToDots($password) {
 					</div>
 				</div>
 			</div>
+		<?php } ?>
 			<div class="col-sm-4">
 				<div class="card">
 					<div class="card-body">
