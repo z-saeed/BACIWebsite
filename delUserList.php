@@ -1,5 +1,7 @@
 <?php 
-require_once "db_connect.php";
+require_once 'db_connect.php';
+include 'userClass.php';
+session_start();
 $stmt = $con->prepare('SELECT * FROM user_tbl WHERE active = 1');
 $stmt->execute(array());
 
@@ -11,6 +13,7 @@ $string = <<<EOT
 <tr>
 <th></th>
 <th>Name</th>
+<th>Privileges>
 <th>Email</th>
 <th>Gender</th>
 <th>Age</th>
@@ -25,6 +28,7 @@ $string = <<<EOT
 <tr>
 <th></th>
 <th>Name</th>
+<th>Privileges>
 <th>Email</th>
 <th>Gender</th>
 <th>Age</th>
@@ -40,7 +44,7 @@ EOT;
 $curYear = date('Y');
 
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	if($row["privilege"] < 2){
+	if($row["privilege"] < $_SESSION['user']->getUserPrivilege()){
 		$gender = "";
 		$birthYear = "";
 		$identity = "";
@@ -92,8 +96,16 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 		$birthYear = $row["birthYear"];
 		$age = $curYear - $birthYear;
+		
+		if($row["privilege"] == 2)
+			$priv = "Admin";
+		if($row["privilege"] == 1)
+			$priv = "Coordinator";
+		if($row["privilege"] == 0)
+			$priv = "User";
 
-		$string = $string."<tr><td><a href='hideUser.php?userID=".$row["ID"]."' class='btn btn-outline-danger'>DeActivate</a></td><td>".$row["firstName"]." ".$row["lastName"]."</td><td>".$row["email"]."</td><td>".$gender."</td><td>".$age."</td><td>".$state."</td><td>".$country."</td><td>".$identity."</td><td>".$degree."</td><td>".$row["registerDate"]."</td></tr>";
+		$string = $string."<tr><td><a href='hideUser.php?userID=".$row["ID"]."' class='btn btn-outline-danger'>DeActivate</a></td><td>".$row["firstName"]." ".$row["lastName"]."</td><td>".$priv."</td>";
+		$string = $string."<td>".$row["email"]."</td><td>".$gender."</td><td>".$age."</td><td>".$state."</td><td>".$country."</td><td>".$identity."</td><td>".$degree."</td><td>".$row["registerDate"]."</td></tr>";
 
 	}
 }

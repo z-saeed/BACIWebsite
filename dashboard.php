@@ -39,13 +39,13 @@ function passwordToDots($password) {
 			<div class="col-sm-4">
 				<div class="card">
 					<div class="card-body">
-						<h5 class="card-title">Delete a User/Coord/Admin</h5>
-						<p class="card-text">Hides an User/Coord/Admin.</p>
-						<a href="deactAdmin.php" class="btn btn-danger">Delete</a>
+						<h5 class="card-title">Delete a Registered User/Coord/Admin</h5>
+						<p class="card-text">Hides a User, Coordinator or Admin.</p>
+						<a href="delUser.php" class="btn btn-danger">Delete</a>
 					</div>
 				</div>
 			</div>
-<!--			
+<!--		
 			<div class="col-sm-4">
 				<div class="card">
 					<div class="card-body">
@@ -91,17 +91,19 @@ function passwordToDots($password) {
 				</div>
 			</div>
 		</div>
+		<?php if($userPriv == 2){ ?>
 		<div class="row mt-1">
 			<div class="col-sm-4">
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Delete a Registered User/Coord</h5>
 						<p class="card-text">Hides a User or a Coordinator.</p>
-						<a href="deactUser.php" class="btn btn-warning">Delete</a>
+						<a href="delUser.php" class="btn btn-warning">Delete</a>
 					</div>
 				</div>
 			</div>
 		</div>
+		<?php } ?>
 		<hr>
 	<?php } ?>
 
