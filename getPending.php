@@ -1,6 +1,6 @@
 <?php 
 require_once "db_connect.php";
-$stmt = $con->prepare("SELECT * FROM mmRelationship_tbl WHERE rejectDate IS NULL AND  startDate IS NULL");
+$stmt = $con->prepare("SELECT * FROM mmRelationship_tbl WHERE rejectDate IS NULL AND startDate IS NULL");
 $stmt->execute(array());
 $string = <<<EOT
 <table  id="userList" class="display table" cellspacing="0" width="100%">

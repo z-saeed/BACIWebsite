@@ -39,12 +39,23 @@ function passwordToDots($password) {
 			<div class="col-sm-4">
 				<div class="card">
 					<div class="card-body">
-						<h5 class="card-title">Delete User</h5>
-						<p class="card-text">Delete a User, Coordinator, or Admin from the database.</p>
-						<a href="deactUser.php" class="btn btn-danger">Delete User</a>
+						<h5 class="card-title">Delete a User/Coord/Admin</h5>
+						<p class="card-text">Hides an User/Coord/Admin.</p>
+						<a href="deactAdmin.php" class="btn btn-danger">Delete</a>
 					</div>
 				</div>
 			</div>
+<!--			
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Activate/Reactivate a User/Coord/Admin</h5>
+						<p class="card-text">Activate a user/coord or Reactivate a user/coord/admin</p>
+						<a href="reactAdmin.php" class="btn btn-danger">Activate/Reactivate</a>
+					</div>
+				</div>
+			</div>
+-->
 		</div>	
 		<hr>
 	<?php } ?>
@@ -56,8 +67,8 @@ function passwordToDots($password) {
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">User List</h5>
-						<p class="card-text">View all users.</p>
-						<a href="listUsers.php" class="btn btn-warning">User List</a>
+						<p class="card-text">View all users (not activated, activated, hidden) .</p>
+						<a href="listUsers.php" class="btn btn-warning">View/Edit</a>
 					</div>
 				</div>
 			</div>
@@ -66,7 +77,7 @@ function passwordToDots($password) {
 					<div class="card-body">
 						<h5 class="card-title">Add User</h5>
 						<p class="card-text">Add a User or Coordinator Manually</p>
-						<a href="addUser.php" class="btn btn-warning">Add User</a>
+						<a href="addUser.php" class="btn btn-warning">Add</a>
 					</div>
 				</div>
 			</div>
@@ -79,7 +90,18 @@ function passwordToDots($password) {
 					</div>
 				</div>
 			</div>
-		</div>	
+		</div>
+		<div class="row mt-1">
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Delete a Registered User/Coord</h5>
+						<p class="card-text">Hides a User or a Coordinator.</p>
+						<a href="deactUser.php" class="btn btn-warning">Delete</a>
+					</div>
+				</div>
+			</div>
+		</div>
 		<hr>
 	<?php } ?>
 
@@ -89,7 +111,7 @@ function passwordToDots($password) {
 			<div class="col-sm-4">
 				<div class="card">
 					<div class="card-body">
-						<h5 class="card-title">User List</h5>
+						<h5 class="card-title">View/Edit User List</h5>
 						<p class="card-text">List of all the registered users in the database.</p>
 						<a href="listUsers.php" class="btn btn-primary">User List</a>
 					</div>
@@ -98,32 +120,14 @@ function passwordToDots($password) {
 			<div class="col-sm-4">
 				<div class="card">
 					<div class="card-body">
-						<h5 class="card-title">Mentor List</h5>
-						<p class="card-text">List of all the registered mentors in the database.</p>
-						<a href="listMentors.php" class="btn btn-primary">Mentor List</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-4">
-				<div class="card">
-					<div class="card-body">
-						<h5 class="card-title">Mentee List</h5>
-						<p class="card-text">List of all the registered mentees in the database.</p>
-						<a href="listMentees.php" class="btn btn-primary">Mentee List</a>
+						<h5 class="card-title">Create New Pair</h5>
+						<p class="card-text">Add a new mentor/mentee pair.</p>
+						<a href="adminPair.php" class="btn btn-primary">New Pair</a>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="row mt-1">
-			<div class="col-sm-4">
-				<div class="card">
-					<div class="card-body">
-						<h5 class="card-title">Pending Pairings</h5>
-						<p class="card-text">View pending mentor/mentee pairs.</p>
-						<a href="listPending.php" class="btn btn-primary">Pending Pairings</a>
-					</div>
-				</div>
-			</div>
 			<div class="col-sm-4">
 				<div class="card">
 					<div class="card-body">
@@ -136,9 +140,18 @@ function passwordToDots($password) {
 			<div class="col-sm-4">
 				<div class="card">
 					<div class="card-body">
-						<h5 class="card-title">Create New Pair</h5>
-						<p class="card-text">Add a new mentor/mentee pair.</p>
-						<a href="adminPair.php" class="btn btn-primary">New Pair</a>
+						<h5 class="card-title">Pending Pairings</h5>
+						<p class="card-text">View pending mentor/mentee pairs.</p>
+						<a href="listPending.php" class="btn btn-primary">Pending Pairings</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Ended/Denied Pairings</h5>
+						<p class="card-text">View pending mentor/mentee pairs.</p>
+						<a href="listEnded.php" class="btn btn-primary">Ended/Denied Pairings</a>
 					</div>
 				</div>
 			</div>
@@ -233,4 +246,5 @@ function passwordToDots($password) {
 
 	</div>
 </section>
-<?php include 'footer.php'; ?>
+<?php 
+include 'footer.php'; ?>

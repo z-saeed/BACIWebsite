@@ -344,7 +344,7 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 						</div>
 						<?php if ($boolUser == false || $admin) { ?>
 						<div class="col-md-8 col-sm-12">
-							<p class="lead"><a href="">Edit Additional Information</a></p>
+							<p class="lead"><a href="editAdditionalInfo.php?id=<?php echo($user->getID()) ?>">Edit Additional Information</a></p>
 						</div>
 						<?php } ?>
 					</div>
@@ -354,7 +354,7 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 							<p class="lead">Facebook Link</p>
 						</div>
 						<div class="col-md-8 col-sm-12">
-							<p class="lead"><a href="https://www.<?php echo($user->getFbLink()); ?>"><?php echo($user->getFbLink()); ?></a></p>
+							<p class="lead"><a href="https://www.facebook.com/<?php echo($user->getFbLink()); ?>"><?php echo"facebook.com/".($user->getFbLink()); ?></a></p>
 						</div>
 					</div>
 					<?php }
@@ -364,7 +364,7 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 							<p class="lead">Twitter Link</p>
 						</div>
 						<div class="col-md-8 col-sm-12">
-							<p class="lead"><a href="https://www.<?php echo($user->getTwLink()); ?>"><?php echo($user->getTwLink()); ?></a></p>
+							<p class="lead"><a href="https://www.twitter.com/<?php echo($user->getTwLink()); ?>"><?php echo"twitter.com/".($user->getTwLink()); ?></a></p>
 						</div>
 					</div>
 					<?php }
@@ -374,7 +374,7 @@ if (isset($_REQUEST["mmSelect"]) && isset($_REQUEST["userID"])) {
 							<p class="lead">LinkedIn Link</p>
 						</div>
 						<div class="col-md-8 col-sm-12">
-							<p class="lead"><a href="https://www.<?php echo($user->getLkLink()); ?>"><?php echo($user->getLkLink()); ?></a></p>
+							<p class="lead"><a href="https://www.linkedIn.com/<?php echo($user->getLkLink()); ?>"><?php echo"linkedIn.com/".($user->getLkLink()); ?></a></p>
 						</div>
 					</div>
 					<?php } ?>

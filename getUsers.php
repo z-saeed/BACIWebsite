@@ -21,6 +21,7 @@ $string = <<<EOT
 <th>Country</th>
 <th>Identity</th>
 <th>Education Level</th>
+<th>Preference</th>
 <th>Registered</th>
 </tr>
 </thead>
@@ -35,6 +36,7 @@ $string = <<<EOT
 <th>Country</th>
 <th>Identity</th>
 <th>Education Level</th>
+<th>Preference</th>
 <th>Registered</th>
 </tr>
 </tfoot>
@@ -94,7 +96,15 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 	$birthYear = $row["birthYear"];
 	$age = $curYear - $birthYear;
-
-	$string = $string."<tr><td><a href='userProfile.php?userID=".$row["ID"]."' class='btn btn-outline-info'>View</a></td><td>".$row["firstName"]." ".$row["lastName"]."</td><td>".$row["email"]."</td><td>".$gender."</td><td>".$age."</td><td>".$state."</td><td>".$country."</td><td>".$identity."</td><td>".$degree."</td><td>".$row["registerDate"]."</td></tr>";
+	$statusUser = $row["userStatus"];
+	if($statusUser == 0)
+		$userStatus = "Mentee";
+	if($statusUser == 1)
+		$userStatus = "Mentor";
+	if($statusUser == 2)
+		$userStatus = "Niether";
+	$string = $string."<tr><td><a href='userProfile.php?userID=".$row["ID"]."' class='btn btn-outline-info'>View</a></td><td>".$row["firstName"]." ".$row["lastName"]."</td>";
+	$string = $string."<td>".$row["email"]."</td><td>".$gender."</td><td>".$age."</td><td>".$state."</td><td>".$country."</td><td>".$identity."</td><td>".$degree."</td>";
+	$string = $string."<td>".$userStatus."</td><td>".$row["registerDate"]."</td></tr>";
 }
 print($string);

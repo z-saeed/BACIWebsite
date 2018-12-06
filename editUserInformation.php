@@ -153,7 +153,7 @@ if (isset($_POST['update'])) {
 						<select id="userType" class="form-control" name="userStatus">
 							<option value="0" <?php if($user->getUserStatus() == "Mentee") echo "selected"  ?>>Mentee</option>
 							<option value="1" <?php if($user->getUserStatus() == "Mentor") echo "selected"  ?>>Mentor</option>
-							<option value="2" <?php if($user->getUserStatus() != "Mentor" && $user->getUserStatus() != "Mentee") echo "selected"  ?>>Other</option>					
+							<option value="2" <?php if($user->getUserStatus() != "Mentor" && $user->getUserStatus() != "Mentee") echo "selected"  ?>>Neither</option>					
 						</select>
 					</div>
 				</div>

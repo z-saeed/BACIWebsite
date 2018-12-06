@@ -164,16 +164,16 @@
 	<hr>
 	<div class="form-row">
 		<div class="form-group col-sm-6 col-md-4 ">
-			<label for="fbLink">Facebook Link</label>
-			<input type="text" class="form-control" id="fbLink" value="<?php print $fbLink; ?>"  name="fbLink">
+			<label for="fbLink">Facebook.com/
+			<input type="text" class="form-control" id="fbLink" value="<?php print $fbLink; ?>"  name="fbLink"></label>
 		</div>
 		<div class="form-group col-sm-6 col-md-4 ">
-			<label for="twLink">Twitter Link</label>
+			<label for="twLink">Twitter.com/
 			<input type="text" class="form-control" id="twLink" value="<?php print $twLink; ?>" name="twLink">
 		</div>
 		<div class="form-group col-sm-6 col-md-4 ">
-			<label for="lkdLink">LinkedIn Link</label>
-			<input type="text" class="form-control" id="lkdLink" value="<?php print $lkdLink; ?>" name="lkdLink">
+			<label for="lkdLink">LinkedIn.com/
+			<input type="text" class="form-control" id="lkdLink" value="<?php print $lkdLink; ?>" name="lkdLink"></label>
 		</div>
 	</div>
 	<?php 

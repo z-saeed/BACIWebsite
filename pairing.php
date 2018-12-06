@@ -59,6 +59,15 @@ if($change == "0" or $change == "4"){
 	$msg = "Pairing Started.";
 	$subject = "Pairing Started by admin.";
 	$body = "A pairing has been started by an admin. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been started by an administator.";
+} 
+
+//needs edited
+else if ($change == "7") {
+	$stmt1 = $con->prepare("UPDATE mmRelationship_tbl SET requester = 2, requestDate =: date, rejectDate = Null, startDate = Null, endDate = Null, WHERE mentorID =: mentor AND menteeID =: mentee)");
+	$stmt1 -> execute(array('date' => $date, 'mentor' => $mentor, 'mentee' => $mentee));
+	$msg = "Pairing Re-requested.";
+	$subject = "Pairing re-requested by coordinator.";
+	$body = "A pairing re-requested by coordinator. ".$mentorRow->firstName." ".$mentorRow->lastName." and ".$menteeRow->firstName." ".$menteeRow->lastName."'s pairing has been started by an administator.";
 }else {
 	$msg = "Error, change not recognized.";
 }
